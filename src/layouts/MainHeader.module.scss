@@ -1,0 +1,179 @@
+/* Header.module.scss */
+
+$header-bar: 64px;
+
+.fiat-icon {
+  font-size: 9px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.text {
+  font-family: 'Roboto';
+  font-size: 9pt;
+  padding-left: 1px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.amount-column {
+  line-height: 30px !important;
+  text-align: left !important;
+}
+
+.amount-wrapper {
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+
+.amount1 {
+  // background-color: blue;
+  width: 90px;
+  height: 30px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.amount2 {
+  // background-color: red;
+  height: 30px;
+  width: 50px;
+}
+
+.amount3 {
+  // background-color: pink;
+  height: 30px;
+  width: 90px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.main-icon {
+  font-size: 30px;
+  display: inline-flex;
+}
+
+.menu-buttons {
+  margin-left: auto;
+}
+
+.header-bar {
+  position: absolute;
+  background-color: var(--bgColorMenu);
+  display: flex;
+  align-items: flex-end;
+  width: 100vw;
+  -webkit-margin-after: 0;
+  margin-block-end: 0;
+  -webkit-margin-before: 0;
+  margin-block-start: 0;
+  -webkit-padding-start: 0;
+  padding-inline-start: 0;
+  top: 0;
+  height: $header-bar;
+  left: 0;
+  z-index: 2;
+  justify-content: center;
+}
+
+.header-logo {
+  color: #fff;
+  width: 122px;
+  height: 14px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: var(--logo-text);
+  display: inline-flex;
+  transform: scale(1.5);
+}
+
+@media screen and (max-width: 700px) {
+  .header-logo {
+    height: 50px !important;
+    width: 50px !important;
+    border-radius: 25px;
+    background-image: var(--LOGO) !important;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 250px) {
+  .content {
+    display: none !important;
+  }
+}
+
+.ETH-logo {
+  background-image: var(--ETH);
+  background-size: 100% auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 160%;
+  height: 160%;
+  transform: scale(0.5);
+}
+
+.MATIC-logo {
+  background-image: var(--MATIC);
+  background-size: 100% auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 50px;
+}
+
+.button-wrapper {
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-icon {
+  color: #fff;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-flex;
+}
+
+.balance-background {
+  height: 30px;
+  width: 230px;
+  background-color: #555555;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center {
+  // height: 50px;
+  // width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.button-background {
+  height: 50px;
+  width: 50px;
+  //background-color: #555555;
+  //border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.container {
+  height: $header-bar;
+}
+
+.column {
+  line-height: $header-bar;
+  text-align: center;
+}

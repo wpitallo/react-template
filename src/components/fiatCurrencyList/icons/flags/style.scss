@@ -1,0 +1,282 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src: url("data:application/x-font-ttf;charset=utf-8;base64,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") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="fiat-flag-icon-"],
+[class*=" fiat-flag-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fiat-flag-icon-RUB .path1 {
+  &:before {
+    content: $fiat-flag-icon-RUB-path1;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-RUB .path2 {
+  &:before {
+    content: $fiat-flag-icon-RUB-path2;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-RUB .path3 {
+  &:before {
+    content: $fiat-flag-icon-RUB-path3;
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-RUB .path4 {
+  &:before {
+    content: $fiat-flag-icon-RUB-path4;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-CNY .path1 {
+  &:before {
+    content: $fiat-flag-icon-CNY-path1;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-CNY .path2 {
+  &:before {
+    content: $fiat-flag-icon-CNY-path2;
+    margin-left: -1em;
+    color: rgb(255, 218, 68);
+  }
+}
+
+.fiat-flag-icon-EUR .path1 {
+  &:before {
+    content: $fiat-flag-icon-EUR-path1;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-EUR .path2 {
+  &:before {
+    content: $fiat-flag-icon-EUR-path2;
+    margin-left: -1em;
+    color: rgb(255, 218, 68);
+  }
+}
+
+.fiat-flag-icon-JPY .path1 {
+  &:before {
+    content: $fiat-flag-icon-JPY-path1;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-JPY .path2 {
+  &:before {
+    content: $fiat-flag-icon-JPY-path2;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-GBP .path1 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path1;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-GBP .path2 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path2;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-GBP .path3 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path3;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-GBP .path4 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path4;
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-GBP .path5 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path5;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-GBP .path6 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path6;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-GBP .path7 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path7;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-GBP .path8 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path8;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-GBP .path9 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path9;
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-GBP .path10 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path10;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-GBP .path11 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path11;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-GBP .path12 {
+  &:before {
+    content: $fiat-flag-icon-GBP-path12;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-ZAR .path1 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path1;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-ZAR .path2 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path2;
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+  }
+}
+
+.fiat-flag-icon-ZAR .path3 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path3;
+    margin-left: -1em;
+    color: rgb(255, 218, 68);
+  }
+}
+
+.fiat-flag-icon-ZAR .path4 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path4;
+    margin-left: -1em;
+    color: rgb(109, 165, 68);
+  }
+}
+
+.fiat-flag-icon-ZAR .path5 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path5;
+    margin-left: -1em;
+    color: rgb(0, 82, 180);
+  }
+}
+
+.fiat-flag-icon-ZAR .path6 {
+  &:before {
+    content: $fiat-flag-icon-ZAR-path6;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-USD .path1 {
+  &:before {
+    content: $fiat-flag-icon-USD-path1;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-USD .path2 {
+  &:before {
+    content: $fiat-flag-icon-USD-path2;
+    margin-left: -1em;
+    color: rgb(216, 0, 39);
+  }
+}
+
+.fiat-flag-icon-USD .path3 {
+  &:before {
+    content: $fiat-flag-icon-USD-path3;
+    margin-left: -1em;
+    color: rgb(46, 82, 178);
+  }
+}
+
+.fiat-flag-icon-USD .path4 {
+  &:before {
+    content: $fiat-flag-icon-USD-path4;
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+}
+
+.fiat-flag-icon-USD .path5 {
+  &:before {
+    content: $fiat-flag-icon-USD-path5;
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+}

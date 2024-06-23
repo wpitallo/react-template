@@ -1,0 +1,94 @@
+@keyframes left {
+  to {
+    transform: rotateY(-60deg);
+  }
+}
+
+@keyframes right {
+  to {
+    transform: rotateY(-60deg);
+  }
+}
+
+.loader-header {
+  color: #fff;
+  position: absolute;
+  margin-top: 300px;
+  width: 500px;
+  height: 56px;
+  max-width: 90vw;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: var(--logo-text);
+}
+
+.loader-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+}
+
+.loader-circle {
+  height: 200px;
+  width: 200px;
+  background-color: black;
+  margin-top: -27px;
+  border-radius: 100px;
+
+  /* border-color: rgb(107, 107, 107);
+  border-style: solid;
+  border-width: 5px; */
+}
+
+.loader {
+  width: 134px;
+  height: 141px;
+  position: absolute;
+}
+
+.bf {
+  height: auto;
+  display: flex;
+  position: absolute;
+}
+
+.bf[class^=wing-] {
+  width: 50%;
+}
+
+.bf[class^=wing-] svg {
+  width: 100%;
+  height: auto;
+}
+
+.bf .wing-left {
+  animation: left 0.5s linear infinite alternate;
+  transform-origin: right;
+}
+
+#wing-left {
+  -webkit-transition: fill 0.5s ease-in;
+  -moz-transition: fill 0.5s ease-in;
+  -o-transition: fill 0.5s ease-in;
+  transition: fill 0.5s ease-in;
+}
+
+#wing-right {
+  -webkit-transition: fill 0.5s ease-in;
+  -moz-transition: fill 0.5s ease-in;
+  -o-transition: fill 0.5s ease-in;
+  transition: fill 0.5s ease-in;
+}
+
+.bf .wing-right {
+  animation: right 0.5s linear infinite alternate;
+  transform-origin: left;
+}
+
+.bf .wing-right svg {
+  transform: scaleX(-1);
+}
