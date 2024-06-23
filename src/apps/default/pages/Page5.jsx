@@ -1,4 +1,4 @@
-import { Cards } from '../components/cards/Cards'
+import { Cards } from '@components/cards/Cards'
 
 const Page = ({ isPage1Visible }) => {
   return (
@@ -14,7 +14,7 @@ const Page = ({ isPage1Visible }) => {
       </div> 
       */}
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

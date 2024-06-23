@@ -1,82 +1,91 @@
-import React, { useState, useEffect, useRef } from 'react';
-import MainLayout from './layouts/MainLayout';
-import MainHeader from './layouts/MainHeader';
-import './styles/Fonts.scss';
-import './styles/Scrollbars.scss';
-import './styles/Svg-fonts.scss';
-import './styles/Layout.scss';
-import './App.scss';
+import React, { useState, useEffect, useRef } from 'react'
+import MainLayout from './layouts/MainLayout'
+import MainHeader from './layouts/MainHeader'
+
+import '@globalStyles/Scrollbars.scss'
+import '@globalStyles/Layout.scss'
+
+import '@styles/Fonts.scss'
+import '@styles/Svg-fonts.scss'
+
+import './App.scss' // need to check what is in here
 
 const App = () => {
-  const [activePage, setActivePage] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const menuMainRef = useRef(null);
-  const buttonRefs = useRef([]);
-  const menuBorderWrapperRef = useRef(null);
+  const [activePage, setActivePage] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const menuMainRef = useRef(null)
+  const buttonRefs = useRef([])
+  const menuBorderWrapperRef = useRef(null)
 
-  const bgColorsBody = ['#181818', '#202020', '#282828', '#242424', '#282828'];
-  let orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+  const bgColorsBody = ['#181818', '#202020', '#282828', '#242424', '#282828']
+  let orientation =
+    window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
 
   useEffect(() => {
     const handleResize = () => {
-      orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
-      _offsetMenuBorder(activeIndex);
-      console.log(window.screen.orientation.type);
-    };
+      orientation =
+        window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+      _offsetMenuBorder(activeIndex)
+      console.log(window.screen.orientation.type)
+    }
 
-    window.addEventListener('resize', handleResize, false);
-    handleClick(1); // Trigger initial click for testing
+    window.addEventListener('resize', handleResize, false)
+    handleClick(1) // Trigger initial click for testing
 
     return () => {
-      window.removeEventListener('resize', handleResize, false);
-    };
-  }, []);
+      window.removeEventListener('resize', handleResize, false)
+    }
+  }, [])
 
   const _offsetMenuBorder = (selectedIndex) => {
-    let left;
+    let left
     if (orientation.includes('portrait')) {
-      left = selectedIndex === 0 ? 0 : 20 * selectedIndex;
-      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`;
+      left = selectedIndex === 0 ? 0 : 20 * selectedIndex
+      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
     } else {
-      left = selectedIndex === 0 ? 0 : 12 * selectedIndex;
-      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`;
+      left = selectedIndex === 0 ? 0 : 12 * selectedIndex
+      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
     }
-  };
+  }
 
   const handleClick = (selectedIndex) => {
-    console.log('Clicked:', selectedIndex); // Debugging log
+    console.log('Clicked:', selectedIndex) // Debugging log
 
-    if (activeIndex === selectedIndex) return;
+    if (activeIndex === selectedIndex) return
 
-    const activeItem = buttonRefs.current[activeIndex];
-    const selectedItem = buttonRefs.current[selectedIndex];
+    const activeItem = buttonRefs.current[activeIndex]
+    const selectedItem = buttonRefs.current[selectedIndex]
 
-    if (activeItem) activeItem.classList.remove('active');
-    if (selectedItem) selectedItem.classList.add('active');
+    if (activeItem) activeItem.classList.remove('active')
+    if (selectedItem) selectedItem.classList.add('active')
 
-    setActivePage(selectedIndex);
-    setActiveIndex(selectedIndex);
-    _offsetMenuBorder(selectedIndex);
-  };
+    setActivePage(selectedIndex)
+    setActiveIndex(selectedIndex)
+    _offsetMenuBorder(selectedIndex)
+  }
 
   return (
     <div style={{ height: '100%' }}>
       <MainHeader />
       <div id="content-main" className="content">
         <MainLayout activePage={activePage} />
-        <div id="menu-backbar" className="menu-backbar" />
+        <div id="menu-backBar" className="menu-backBar" />
         <menu id="menu-main" ref={menuMainRef} className="menu">
-          {['#ff8c00', '#f54888', '#4343f5', '#e0b115', '#65ddb7'].map((color, index) => (
-            <button
-              key={index}
-              ref={(el) => (buttonRefs.current[index] = el)}
-              className={`menu__item ${index === activeIndex ? 'active' : ''}`}
-              style={{ '--bgColorItem': color }}
-              onClick={() => handleClick(index)}
-            >
-              <span className={`icon-${['eggs', 'fish', 'fishbowl', 'stars', 'info'][index]} menu-icon`} />
-            </button>
-          ))}
+          {['#ff8c00', '#f54888', '#4343f5', '#e0b115', '#65ddb7'].map(
+            (color, index) => (
+              <button
+                key={index}
+                ref={(el) => (buttonRefs.current[index] = el)}
+                className={`menu__item ${index === activeIndex ? 'active' : ''}`}
+                style={{ '--bgColorItem': color }}
+                onClick={() => handleClick(index)}
+              >
+                <span
+                  className={`icon-${['eggs', 'fish', 'fishbowl', 'stars', 'info'][index]} menu-icon`}
+                />
+              </button>
+            )
+          )}
           <div ref={menuBorderWrapperRef} className="menu__border__wrapper">
             <div className="menu__border"></div>
           </div>
@@ -98,7 +107,7 @@ const App = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

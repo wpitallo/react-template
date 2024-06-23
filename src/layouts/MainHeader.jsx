@@ -1,8 +1,8 @@
-import { Flag } from '../components/fiatCurrencyList/icons/flags/Flag';
-import styles from './MainHeader.module.scss'; // Import the SCSS module for scoped styles
+import { Flag } from '../components/fiatCurrencyList/icons/flags/Flag'
+import styles from './MainHeader.module.scss' // Import the SCSS module for scoped styles
 
 const MainHeader = () => {
-  const headerBarHeight = '64px'; // You can adjust this value as needed
+  const headerBarHeight = '64px' // You can adjust this value as needed
 
   return (
     <div className={styles['header-bar']}>
@@ -22,7 +22,8 @@ const MainHeader = () => {
                 <div className={styles['amount-wrapper']}>
                   <div className={styles['amount-column']}>
                     <div className={styles.amount1}>
-                      <span className={styles.text}>MATIC</span>&nbsp;<span className={styles.text}>100</span>
+                      <span className={styles.text}>MATIC</span>&nbsp;
+                      <span className={styles.text}>100</span>
                     </div>
                   </div>
                   <div className={styles['amount-column']}>
@@ -30,7 +31,10 @@ const MainHeader = () => {
                   </div>
                   <div className={styles['amount-column']}>
                     <div className={styles.amount3}>
-                      <span className={`${styles.ZAR} ${styles['fiat-icon']}`} />&nbsp;<span className={styles.text}>2000</span>
+                      <span
+                        className={`${styles.ZAR} ${styles['fiat-icon']}`}
+                      />
+                      &nbsp;<span className={styles.text}>2000</span>
                     </div>
                   </div>
                 </div>
@@ -59,7 +63,7 @@ const MainHeader = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default MainHeader;
+export default MainHeader
