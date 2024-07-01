@@ -4,6 +4,8 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 
+import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin';
+
 const APP_KEY = process.env.APP_KEY
 const CONFIG_KEY = process.env.CONFIG_KEY
 
@@ -22,7 +24,10 @@ const CONFIG = {
 }
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    replaceImportsPlugin(CONFIG)
+  ],
   define: {
     CONFIG: JSON.stringify(CONFIG),
   },
@@ -48,7 +53,7 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "src/apps/${APP_KEY}/styles/Variables.scss";`, // Optional: Include global SCSS variables
+        //additionalData: `@import "src/apps/${APP_KEY}/styles/Variables.scss";`, // Optional: Include global SCSS variables
       },
     },
   },

@@ -69,6 +69,14 @@
   z-index: 2;
 }
 
+.menu__item {
+  &.active {
+    > :first-child {
+      color: var(--bgColorMenuIconActive);
+    }
+  }
+}
+
 .menu__item.active {
   transform: translate3d(0, -0.8em, 0);
 }

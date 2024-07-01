@@ -1,0 +1,30 @@
+.photoUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .inputFile {
+    display: none;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .photo {
+    margin-top: 20px;
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  

@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    background-size: cover; /* Cover the entire viewport while maintaining aspect ratio */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-attachment: fixed; /* Ensure the background image is fixed relative to the viewport */
+    min-height: 100%; /* Ensure the body height covers the entire viewport */
+  }
+
+  /* Default background image for portrait mode */
+body {
+    background-image: url('../assets/page-background-portrait.jpg'); /* Update with your image path */
+  }
+  
+  /* Background image for landscape mode */
+  @media (min-aspect-ratio: 1/1) {
+    body {
+        background-image: url('../assets/page-background-landscape.jpg'); /* Update with your image path */
+    }
+  }

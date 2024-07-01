@@ -1,41 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react'
-import MainLayout from './layouts/MainLayout'
-import MainHeader from './layouts/MainHeader'
+import { useState, useEffect, useRef } from 'react'
+import MainLayout from '@components/layouts/default/MainLayout'
 
-import '@globalStyles/Scrollbars.scss'
-import '@globalStyles/Layout.scss'
+import './Menu.scss' // need to check what is in here
 
-import '@styles/Fonts.scss'
-import '@styles/Svg-fonts.scss'
-
-import './App.scss' // need to check what is in here
-
-const App = () => {
+const Menu = () => {
   const [activePage, setActivePage] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
   const menuMainRef = useRef(null)
   const buttonRefs = useRef([])
   const menuBorderWrapperRef = useRef(null)
 
-  const bgColorsBody = ['#181818', '#202020', '#282828', '#242424', '#282828']
-  let orientation =
-    window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+  let orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
 
   useEffect(() => {
     const handleResize = () => {
-      orientation =
-        window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+      orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
       _offsetMenuBorder(activeIndex)
       console.log(window.screen.orientation.type)
     }
 
     window.addEventListener('resize', handleResize, false)
-    handleClick(1) // Trigger initial click for testing
 
     return () => {
       window.removeEventListener('resize', handleResize, false)
     }
-  }, [])
+  }, [activeIndex]) // Ensure useEffect depends on activeIndex
 
   const _offsetMenuBorder = (selectedIndex) => {
     let left
@@ -66,18 +55,17 @@ const App = () => {
 
   return (
     <div style={{ height: '100%' }}>
-      <MainHeader />
       <div id="content-main" className="content">
         <MainLayout activePage={activePage} />
         <div id="menu-backBar" className="menu-backBar" />
         <menu id="menu-main" ref={menuMainRef} className="menu">
-          {['#ff8c00', '#f54888', '#4343f5', '#e0b115', '#65ddb7'].map(
+          {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map(
             (color, index) => (
               <button
                 key={index}
                 ref={(el) => (buttonRefs.current[index] = el)}
                 className={`menu__item ${index === activeIndex ? 'active' : ''}`}
-                style={{ '--bgColorItem': color }}
+                style={{ '--bgColorItem': `var(${color})` }}
                 onClick={() => handleClick(index)}
               >
                 <span
@@ -110,4 +98,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Menu

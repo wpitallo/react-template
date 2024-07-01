@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+
 import Page1 from '@pages/Page1'
 import Page2 from '@pages/Page2'
 import Page3 from '@pages/Page3'
 import Page4 from '@pages/Page4'
 import Page5 from '@pages/Page5'
+
+import './MainLayout.scss'
+
+MainLayout.propTypes = {
+  activePage: PropTypes.number,
+}
 
 function MainLayout({ activePage = 0 }) {
   const [isPage1Visible, setIsPage1Visible] = useState(false)
