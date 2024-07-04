@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 const flags = {
   CNY: '',
@@ -18,6 +19,10 @@ const Flag = ({ flagCode }) => {
   }, [flagCode])
 
   return <img src={flag} alt="Flag" width="30" />
+}
+
+Flag.propTypes = {
+  flagCode: PropTypes.string,
 }
 
 export { Flag }

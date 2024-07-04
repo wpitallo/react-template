@@ -1,4 +1,3 @@
-import React from 'react';
 import UserProfilePhotoUpload from './UserProfilePhotoUpload';
 
 export default {

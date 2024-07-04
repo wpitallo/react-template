@@ -1,6 +1,19 @@
 {
-    "componentMap": {
-        "menu": "bubbleMenu",
-        "header": "crypto"
+    "pageTitle": "Champion Fan",
+    "componentConfig": {
+        "menu": {
+            "key": "bubbleMenu",
+            "items": [
+                "create",
+                "play",
+                "logo",
+                "leaderboard",
+                "profile"
+            ]
+        },
+        "header": {
+            "key": "default",
+            "overrideStyle": true
+        }
     }
 }

@@ -1,6 +1,6 @@
 import styles from './Cards.module.scss'
 
-const Cards = ({}) => {
+const Cards = () => {
   return (
     <div>
       <div className={styles['scroll-container']}>

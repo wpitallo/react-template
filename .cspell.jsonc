@@ -28,8 +28,9 @@
     "node_modules/**",
     "vite.svg",
     "Fonts.scss",
+    "**/dist/**",
     "**/styles/fonts/**",
     "**/src/assets/**",
-    "**/fiatCurrencyList/icons/**",
+    "**/fiatCurrencyList/icons/**"
   ],
 }

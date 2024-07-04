@@ -43,39 +43,6 @@ $headerBarHeight: 64px;
   justify-content: center;
 }
 
-.balanceBackground {
-  height: 30px;
-  width: 230px;
-  background-color: #555555;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.amountWrapper {
-  display: flex;
-  height: 50px;
-  align-items: center;
-}
-
-.amountColumn {
-  line-height: 30px !important;
-  text-align: left !important;
-}
-
-.amount1, .amount3 {
-  width: 90px;
-  height: 30px;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.amount2 {
-  height: 30px;
-  width: 50px;
-}
-
 .fiatIcon {
   font-size: 9px;
   display: inline-block;
@@ -115,24 +82,6 @@ $headerBarHeight: 64px;
   .content {
     display: none !important;
   }
-}
-
-.ETHLogo, .MATICLogo {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.ETHLogo {
-  background-image: var(--ETH);
-  width: 160%;
-  height: 160%;
-  transform: scale(0.5);
-}
-
-.MATICLogo {
-  background-image: var(--MATIC);
-  width: 50px;
-  height: 50px;
 }
 
 .buttonBackground {

@@ -1,0 +1,22 @@
+@import url('@components/headers/<<componentConfig.header.key>>/MainHeader.module.scss');
+
+.headerLogo {
+  color: #fff;
+  width: 122px;
+  height: var(--logo-text-height);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: var(--logo-text);
+  display: inline-flex;
+  transform: scale(1.5);
+}
+
+@media screen and (max-width: 700px) {
+  .headerLogo {
+    height: 50px !important;
+    width: 50px !important;
+    border-radius: 0px;
+    background-image: var(--LOGO) !important;
+    transform: scale(1);
+  }
+}

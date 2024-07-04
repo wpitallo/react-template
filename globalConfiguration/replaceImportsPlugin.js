@@ -1,15 +1,20 @@
 // vite-plugin-replace-imports.js
 export default function replaceImportsPlugin(config) {
 
-    const componentMap = config.appConfig.componentMap
+    const componentConfig = config.appConfig.componentConfig
 
     return {
         name: 'vite-plugin-replace-imports',
+        enforce: 'pre',
         transform(code, id) {
-            if (id.endsWith('.js') || id.endsWith('.jsx') || id.endsWith('.ts') || id.endsWith('.tsx')) {
+            if (id.endsWith('.js') || id.endsWith('.jsx') || id.endsWith('.scss')) {
                 // Replace the placeholder in import statements
-                return code.replace(/<<componentMap.header>>/g, componentMap.header)
-                    .replace(/<<componentMap.menu>>/g, componentMap.menu)
+                code = code.replace(/<<componentConfig.header.key>>/g, componentConfig.header.key)
+                code = code.replace(/<<componentConfig.menu.key>>/g, componentConfig.menu.key)
+
+                code = (componentConfig.header.overrideStyle) ? code.replace(/<<@styles>>/g, "@styles") : code.replace(/<<@styles>>/g, ".")
+
+                return code
             }
             return code;
         }

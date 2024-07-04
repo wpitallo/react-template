@@ -1,6 +1,6 @@
-import { Cards } from '@components/cards/Cards'
 
-const Page = ({ isPage1Visible }) => {
+
+const Page = () => {
   return (
     <div>
 

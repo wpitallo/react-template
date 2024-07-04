@@ -16,30 +16,7 @@ const MainHeader = () => {
           </div>
 
           <div className={styles.column}>
-            <div className={styles.buttonWrapper}>
-              <div className={styles.balanceBackground}>
-                <div className={styles.amountWrapper}>
-                  <div className={styles.amountColumn}>
-                    <div className={styles.amount1}>
-                      <span className={styles.text}>MATIC</span>&nbsp;
-                      <span className={styles.text}>100</span>
-                    </div>
-                  </div>
-                  <div className={styles.amountColumn}>
-                    <div className={styles.amount2} />
-                  </div>
-                  <div className={styles.amountColumn}>
-                    <div className={styles.amount3}>
-                      <span className={`${styles.ZAR} ${styles.fiatIcon}`} />
-                      &nbsp;<span className={styles.text}>2000</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={styles.buttonBackground}>
-                  <div className={styles.MATICLogo} />
-                </div>
-              </div>
-            </div>
+
           </div>
 
           <div className={styles.column}>

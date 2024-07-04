@@ -20,3 +20,61 @@ body {
         background-image: url('../assets/page-background-landscape.jpg'); /* Update with your image path */
     }
   }
+
+  .icon-play:before{
+    display: inline-block;
+     font-family: 'svg font';
+     font-style: normal;
+     font-weight: normal;
+     line-height: 1;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     padding-left:5px;
+  }
+
+/* Customize the FirebaseUI email button */
+.firebaseui-idp-button.firebaseui-idp-password {
+  background-color: var(--mainButtonColor) !important; /* Custom background color */
+  color: white !important; /* Custom text color */
+}
+
+/* Optional: Customize the hover effect */
+.firebaseui-idp-button.firebaseui-idp-password:hover {
+  background-color: var(--mainButtonHoverColor) !important; /* Custom background color on hover */
+}
+
+/* Optionally, customize the icon */
+.firebaseui-idp-icon-wrapper img {
+  filter: invert(0%); /* Example: Invert colors of the icon */
+}
+
+/* Customize the text inside the button */
+.firebaseui-idp-text {
+  font-weight: bold; /* Example: Make text bold */
+}
+
+#firebaseui_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 220px;
+}
+
+.firebaseui-tos {
+  color: #FFFFFF !important;
+}
+
+.firebaseui-link {
+  color: #FFFFFF !important;
+  text-decoration: underline;
+}
+
+#firebaseui-auth-container.hidden {
+  display: none;
+}
+
+.firebaseui-idp-list {
+  margin-left: -24px !important;
+}

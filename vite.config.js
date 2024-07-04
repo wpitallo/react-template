@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 
 import fs from 'fs'
 import path from 'path'
-
 import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin';
 
 const APP_KEY = process.env.APP_KEY
@@ -23,10 +22,28 @@ const CONFIG = {
   appConfig
 }
 
+// Custom plugin to handle alias replacements in HTML files
+function htmlAliasPlugin() {
+  return {
+    name: 'html-alias-plugin',
+    transformIndexHtml(html) {
+      return html.replace(/@app\//g, '/src/');
+    },
+  };
+}
+
 export default defineConfig({
+  server: {
+    https: {
+      key: './cert/key.pem',
+      cert: './cert/cert.pem'
+    }
+  },
+  publicDir: path.resolve(__dirname, `src/apps/${APP_KEY}/public`),
   plugins: [
-    react(),
-    replaceImportsPlugin(CONFIG)
+    replaceImportsPlugin(CONFIG),
+    htmlAliasPlugin(),
+    react()
   ],
   define: {
     CONFIG: JSON.stringify(CONFIG),
@@ -41,9 +58,11 @@ export default defineConfig({
       '@': '/src',
       '@globalStyles': `/src/styles`,
       '@app': `/src/apps/${APP_KEY}`,
+      '@configuration': `/src/apps/${APP_KEY}/configuration`,
       '@styles': `/src/apps/${APP_KEY}/styles`,
       '@pages': `/src/apps/${APP_KEY}/pages`,
       '@components': '/src/components',
+      '@helpers': '/src/helpers',
     },
   },
   css: {

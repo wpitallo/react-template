@@ -1,6 +1,18 @@
 {
-    "componentMap": {
-        "menu": "bubbleMenu",
-        "header": "crypto"
+    "pageTitle": "Demo App",
+    "componentConfig": {
+        "menu": {
+            "key": "bubbleMenu",
+            "items": [
+                "eggs",
+                "fish",
+                "fishbowl",
+                "stars",
+                "info"
+            ]
+        },
+        "header": {
+            "key": "crypto"
+        }
     }
 }

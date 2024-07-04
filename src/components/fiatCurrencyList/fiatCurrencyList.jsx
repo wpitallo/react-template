@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './icons/default/style.scss'
 import './icons/flags/style.scss'
 import './icons/symbols/style.scss'
@@ -53,9 +53,9 @@ const FiatCurrencyList = () => {
   // Optional: Initialize translator or any other side effects can be managed here
 
   // Function to find a specific fiat currency item
-  const getFiatCurrencyItem = (fiatCurrencyCode) => {
-    return listItems.find((item) => item.fiatCurrencyCode === fiatCurrencyCode)
-  }
+  // const getFiatCurrencyItem = (fiatCurrencyCode) => {
+  //   return listItems.find((item) => item.fiatCurrencyCode === fiatCurrencyCode)
+  // }
 
   return (
     <div>

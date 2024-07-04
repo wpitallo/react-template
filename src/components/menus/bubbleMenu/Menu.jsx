@@ -1,20 +1,34 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import MainLayout from '@components/layouts/default/MainLayout'
 
 import './Menu.scss' // need to check what is in here
 
+const componentConfig = window.CONFIG.appConfig.componentConfig.menu
+
 const Menu = () => {
   const [activePage, setActivePage] = useState(0)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
+
   const menuMainRef = useRef(null)
   const buttonRefs = useRef([])
   const menuBorderWrapperRef = useRef(null)
 
-  let orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+  const _offsetMenuBorder = useCallback((selectedIndex) => {
+    let left
+    if (orientation.includes('portrait')) {
+      left = selectedIndex === 0 ? 0 : 20 * selectedIndex
+      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
+    } else {
+      left = selectedIndex === 0 ? 0 : 12 * selectedIndex
+      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
+    }
+  }, [orientation])
 
   useEffect(() => {
     const handleResize = () => {
-      orientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+      const newOrientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+      setOrientation(newOrientation)
       _offsetMenuBorder(activeIndex)
       console.log(window.screen.orientation.type)
     }
@@ -24,18 +38,7 @@ const Menu = () => {
     return () => {
       window.removeEventListener('resize', handleResize, false)
     }
-  }, [activeIndex]) // Ensure useEffect depends on activeIndex
-
-  const _offsetMenuBorder = (selectedIndex) => {
-    let left
-    if (orientation.includes('portrait')) {
-      left = selectedIndex === 0 ? 0 : 20 * selectedIndex
-      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
-    } else {
-      left = selectedIndex === 0 ? 0 : 12 * selectedIndex
-      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
-    }
-  }
+  }, [activeIndex, _offsetMenuBorder])
 
   const handleClick = (selectedIndex) => {
     console.log('Clicked:', selectedIndex) // Debugging log
@@ -69,7 +72,7 @@ const Menu = () => {
                 onClick={() => handleClick(index)}
               >
                 <span
-                  className={`icon-${['eggs', 'fish', 'fishbowl', 'stars', 'info'][index]} menu-icon`}
+                  className={`icon-${componentConfig.items[index]} menu-icon`}
                 />
               </button>
             )
