@@ -58,6 +58,7 @@ export default defineConfig({
       '@': '/src',
       '@globalStyles': `/src/styles`,
       '@app': `/src/apps/${APP_KEY}`,
+      '@assets': `/src/apps/${APP_KEY}/assets`,
       '@configuration': `/src/apps/${APP_KEY}/configuration`,
       '@styles': `/src/apps/${APP_KEY}/styles`,
       '@pages': `/src/apps/${APP_KEY}/pages`,

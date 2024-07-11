@@ -1,17 +1,20 @@
-body {
+html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 
+body {
+  background-image: url('../assets/page-background-portrait.jpg'); /* Update with your image path */
     background-size: cover; /* Cover the entire viewport while maintaining aspect ratio */
-    background-position: center center; /* Center the image */
+    background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-attachment: fixed; /* Ensure the background image is fixed relative to the viewport */
-    min-height: 100%; /* Ensure the body height covers the entire viewport */
-  }
-
-  /* Default background image for portrait mode */
-body {
-    background-image: url('../assets/page-background-portrait.jpg'); /* Update with your image path */
+    min-height: 100vh; /* Ensure the body height covers the entire viewport */
+    display: flex;
+    justify-content: center;
   }
   
   /* Background image for landscape mode */
@@ -30,6 +33,7 @@ body {
      -webkit-font-smoothing: antialiased;
      -moz-osx-font-smoothing: grayscale;
      padding-left:5px;
+     padding-top:2px;
   }
 
 /* Customize the FirebaseUI email button */

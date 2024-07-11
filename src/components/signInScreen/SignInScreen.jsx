@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth.js';
 import { firebase } from '@configuration/firebaseConfig'
 
+import loginLogo from '@assets/login-logo.png';
+
 // Configure FirebaseUI.
 const uiConfig = {
     signInFlow: 'popup', // Changed to 'redirect'
@@ -28,13 +30,13 @@ function SignInScreen() {
 
     if (!isSignedIn) {
         return (
-            <div style={{ height: '100%' }}>
-                <div style={{ position: 'absolute' }}>
-                    <h1>My App</h1 >
-                    <p>Please sign-in:</p>
+            <div style={{ height: '100%', position: 'relative' }}>
+                <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', marginBottom: '0px', marginTop: '-10vh' }}>
+                    <img src={loginLogo} style={{ width: '225px' }} alt="Login Logo" />
                 </div>
-
-                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                <div style={{ position: 'relative', zIndex: 0 }}>
+                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                </div>
             </div>
         );
     }

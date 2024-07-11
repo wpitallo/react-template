@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev-championFan": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev vite --host --open",
-    "dev-default": "npm run clear && cross-env APP_KEY=default CONFIG_KEY=dev vite --host --open",
+    "dev-championFan": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev vite --open",
+    "dev-championFan-https": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev vite --host --open",
+    "dev-default": "npm run clear && cross-env APP_KEY=default CONFIG_KEY=dev vite --open",
     "build": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev vite build",
     "lint": "npm run clear && eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
