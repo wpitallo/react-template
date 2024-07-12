@@ -32,13 +32,26 @@ function htmlAliasPlugin() {
   };
 }
 
-export default defineConfig({
+// Determine if HTTPS should be used
+const useHttps = process.env.HTTPS === 'true';
+
+const serverConfig = useHttps ? {
   server: {
     https: {
       key: './cert/key.pem',
       cert: './cert/cert.pem'
     }
-  },
+  }
+} : {
+  server: {
+    // Non-HTTPS server configuration
+    port: 3000, // Default port
+    open: true, // Automatically open the browser on server start
+  }
+};
+
+export default defineConfig({
+  ...serverConfig,
   publicDir: path.resolve(__dirname, `src/apps/${APP_KEY}/public`),
   plugins: [
     replaceImportsPlugin(CONFIG),

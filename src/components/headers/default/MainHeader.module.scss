@@ -1,8 +1,8 @@
-$headerBarHeight: 64px;
+
 
 .headerBar {
   position: absolute;
-  background-color: var(--bgColorMenu);
+  background-color: var(--bgColorHeaderBackground);
   display: flex;
   align-items: flex-end;
   width: 100vw;
@@ -10,7 +10,7 @@ $headerBarHeight: 64px;
   margin-block-start: 0;
   padding-inline-start: 0;
   top: 0;
-  height: $headerBarHeight;
+  height: var(--headerBarHeight);
   left: 0;
   z-index: 2;
   justify-content: center;
@@ -23,7 +23,7 @@ $headerBarHeight: 64px;
 
 .container {
   display: flex;
-  height: $headerBarHeight;
+  height: var(--headerBarHeight);
   flex: 1;
 }
 

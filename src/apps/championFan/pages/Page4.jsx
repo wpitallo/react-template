@@ -1,20 +1,17 @@
-import { Cards } from '@components/cards/Cards'
+import PageTemplate from './PageTemplate';
+import PropTypes from 'prop-types'
 
-const Page = () => {
+function Page({ isVisible }) {
   return (
-    <div>
-      <Cards></Cards>
-      {/* 
-      <div className="container">
-        <div className="column" style={{ background: 'grey', opacity: 0.9 }}>Column 1</div>
-        <div className="column" style={{ background: 'pink', opacity: 0.9 }}>Column 2</div>
-        <div className="column" style={{ background: 'grey', opacity: 0.9 }}>Column 3</div>
-        <div className="column" style={{ background: 'pink', opacity: 0.9 }}>Column 4</div>
-        <div className="column" style={{ background: 'grey', opacity: 0.9 }}>Column 5</div>
-      </div> 
-      */}
-    </div>
-  )
+    <PageTemplate isVisible={isVisible}>
+      <h1>Page 4</h1>
+      {/* Your page content */}
+    </PageTemplate>
+  );
 }
 
-export default Page
+Page.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+};
+
+export default Page;

@@ -1,11 +1,17 @@
+import PageTemplate from './PageTemplate';
+import PropTypes from 'prop-types'
 
-
-const Page = () => {
+function Page({ isVisible }) {
   return (
-    <div>
-
-    </div>
-  )
+    <PageTemplate isVisible={isVisible}>
+      <h1>Page 1</h1>
+      {/* Your page content */}
+    </PageTemplate>
+  );
 }
 
-export default Page
+Page.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+};
+
+export default Page;

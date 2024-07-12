@@ -7,7 +7,6 @@ const componentConfig = window.CONFIG.appConfig.componentConfig.menu
 
 const Menu = () => {
   const [activePage, setActivePage] = useState(0)
-  const [activeIndex, setActiveIndex] = useState(0)
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
   const menuMainRef = useRef(null)
@@ -16,6 +15,9 @@ const Menu = () => {
 
   const _offsetMenuBorder = useCallback((selectedIndex) => {
     let left
+
+    console.log(`Called _offsetMenuBorder newOrientation ${orientation} selectedIndex: ${selectedIndex}`)
+
     if (orientation.includes('portrait')) {
       left = selectedIndex === 0 ? 0 : 20 * selectedIndex
       menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
@@ -29,31 +31,37 @@ const Menu = () => {
     const handleResize = () => {
       const newOrientation = window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
       setOrientation(newOrientation)
-      _offsetMenuBorder(activeIndex)
-      console.log(window.screen.orientation.type)
+    }
+
+    const handleFullscreenChange = () => {
+      handleResize()
     }
 
     window.addEventListener('resize', handleResize, false)
+    document.addEventListener('fullscreenchange', handleFullscreenChange, false)
 
     return () => {
       window.removeEventListener('resize', handleResize, false)
+      document.removeEventListener('fullscreenchange', handleFullscreenChange, false)
     }
-  }, [activeIndex, _offsetMenuBorder])
+  }, [])
+
+  useEffect(() => {
+    _offsetMenuBorder(activePage)
+  }, [orientation, activePage, _offsetMenuBorder])
 
   const handleClick = (selectedIndex) => {
     console.log('Clicked:', selectedIndex) // Debugging log
 
-    if (activeIndex === selectedIndex) return
+    if (activePage === selectedIndex) return
 
-    const activeItem = buttonRefs.current[activeIndex]
+    const activeItem = buttonRefs.current[activePage]
     const selectedItem = buttonRefs.current[selectedIndex]
 
     if (activeItem) activeItem.classList.remove('active')
     if (selectedItem) selectedItem.classList.add('active')
 
     setActivePage(selectedIndex)
-    setActiveIndex(selectedIndex)
-    _offsetMenuBorder(selectedIndex)
   }
 
   return (
@@ -67,7 +75,7 @@ const Menu = () => {
               <button
                 key={index}
                 ref={(el) => (buttonRefs.current[index] = el)}
-                className={`menu__item ${index === activeIndex ? 'active' : ''}`}
+                className={`menu__item ${index === activePage ? 'active' : ''}`}
                 style={{ '--bgColorItem': `var(${color})` }}
                 onClick={() => handleClick(index)}
               >
