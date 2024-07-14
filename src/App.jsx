@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-// import { FirebaseAuthUI } from '@helpers/firebase';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainHeader';
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu';
 
-import { auth } from '@configuration/firebaseConfig.js'
+import { app } from '@configuration/firebaseConfig.js'
 import SignInScreen from '@components/signInScreen/SignInScreen';
 
 import './App.scss';
@@ -21,23 +21,23 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setUser(user);
+
+    const unsubscribe = onAuthStateChanged(getAuth(app), (user) => {
+      console.log(user);
+      setUser(!!user);
     });
 
-  }, []);
+    return () => {
+      unsubscribe();
+    };
+  }, [user, setUser]);
 
   return (
     <div style={{ height: '100%' }}>
 
       {user ? (
         <div style={{ height: '100%' }}>
-          <button onClick={() => auth.signOut()} style={{
-            position: 'fixed',
-            top: '10px',
-            right: '10px',
-            zIndex: 1000
-          }}>Sign out</button>
+
           <MainHeader />
           <Menu />
         </div>

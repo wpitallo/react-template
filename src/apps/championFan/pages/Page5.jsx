@@ -1,3 +1,6 @@
+import { getAuth } from "firebase/auth";
+import { app } from '@configuration/firebaseConfig'
+
 import PropTypes from 'prop-types';
 import PageTemplate from './PageTemplate';
 import styles from './Page1.module.scss';
@@ -8,15 +11,7 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible} >
       <h1 className={templateStyles.header1}>Page 5</h1>
       <div className={styles.container}>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
+        <button onClick={() => getAuth(app).signOut()} style={{}}>Sign out</button>
       </div>
 
       <div className={styles.container}>

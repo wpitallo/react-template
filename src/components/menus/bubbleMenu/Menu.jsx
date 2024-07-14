@@ -87,7 +87,7 @@ const Menu = () => {
               </button>
             )
           )}
-          <div className='fadeblock'></div>
+          <div className='gradient-block'></div>
           <div ref={menuBorderWrapperRef} className="menu__border__wrapper">
             <div className="menu__border"></div>
           </div>

@@ -1,9 +1,16 @@
 // Import FirebaseAuth and firebase.
 import { useEffect, useState } from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth.js';
-import { firebase } from '@configuration/firebaseConfig'
+import { app } from '@configuration/firebaseConfig'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebase from "firebase/compat/app";
 
 import loginLogo from '@assets/login-logo.png';
+
+// imports pre-built UI for firebase authentication
+import * as firebaseui from "firebaseui";
+// imports the firebaseui styles using the CDN
+import "firebaseui/dist/firebaseui.css";
+
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -15,18 +22,33 @@ const uiConfig = {
     callbacks: {
         signInSuccessWithAuthResult: () => false,
     },
+    // required to enable one-tap sign-up credential helper
+    credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 };
 
 function SignInScreen() {
     const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
 
-    // Listen to the Firebase Auth state and set the local state.
     useEffect(() => {
-        const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+
+        const unsubscribe = onAuthStateChanged(getAuth(app), (user) => {
             setIsSignedIn(!!user);
         });
-        return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-    }, []);
+
+        const ui =
+            firebaseui.auth.AuthUI.getInstance() ||
+            // since Firebase v9 and above service are imported when needed instead of being a namespace
+            new firebaseui.auth.AuthUI(getAuth(app));
+        ui.start("#firebaseui-auth-container", uiConfig)
+
+        return () => {
+            unsubscribe();
+        };
+
+
+    }, [setIsSignedIn]);
+
+
 
     if (!isSignedIn) {
         return (
@@ -35,7 +57,7 @@ function SignInScreen() {
                     <img src={loginLogo} style={{ width: '225px' }} alt="Login Logo" />
                 </div>
                 <div style={{ position: 'relative', zIndex: 0 }}>
-                    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                    <div id="firebaseui-auth-container"></div>
                 </div>
             </div>
         );
@@ -44,7 +66,6 @@ function SignInScreen() {
         <div>
             <h1>My App</h1>
             <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-            <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
         </div>
     );
 }
