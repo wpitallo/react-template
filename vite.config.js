@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs'
 import path from 'path'
 import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const APP_KEY = process.env.APP_KEY
 const CONFIG_KEY = process.env.CONFIG_KEY
@@ -55,7 +56,11 @@ export default defineConfig({
   plugins: [
     replaceImportsPlugin(CONFIG),
     htmlAliasPlugin(),
-    react()
+    react(),
+    visualizer({
+      filename: './bundle-stats.html',
+      open: true,
+    }),
   ],
   define: {
     CONFIG: JSON.stringify(CONFIG),

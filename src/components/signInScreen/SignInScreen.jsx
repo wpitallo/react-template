@@ -1,23 +1,19 @@
 // Import FirebaseAuth and firebase.
 import { useEffect, useState } from 'react';
-import { app } from '@configuration/firebaseConfig'
+import { app } from '@configuration/firebaseConfig';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import firebase from "firebase/compat/app";
-
+import { GoogleAuthProvider, EmailAuthProvider } from "firebase/auth"; // Named imports
+import * as firebaseui from "firebaseui";
 import loginLogo from '@assets/login-logo.png';
 
-// imports pre-built UI for firebase authentication
-import * as firebaseui from "firebaseui";
-// imports the firebaseui styles using the CDN
 import "firebaseui/dist/firebaseui.css";
-
 
 // Configure FirebaseUI.
 const uiConfig = {
     signInFlow: 'popup', // Changed to 'redirect'
     signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.EmailAuthProvider.PROVIDER_ID
+        GoogleAuthProvider.PROVIDER_ID,
+        EmailAuthProvider.PROVIDER_ID
     ],
     callbacks: {
         signInSuccessWithAuthResult: () => false,
@@ -30,25 +26,19 @@ function SignInScreen() {
     const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
 
     useEffect(() => {
-
-        const unsubscribe = onAuthStateChanged(getAuth(app), (user) => {
+        const auth = getAuth(app);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             setIsSignedIn(!!user);
         });
 
-        const ui =
-            firebaseui.auth.AuthUI.getInstance() ||
-            // since Firebase v9 and above service are imported when needed instead of being a namespace
-            new firebaseui.auth.AuthUI(getAuth(app));
-        ui.start("#firebaseui-auth-container", uiConfig)
+        // Check if AuthUI instance already exists
+        const uiInstance = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth);
+        uiInstance.start("#firebaseui-auth-container", uiConfig);
 
         return () => {
             unsubscribe();
         };
-
-
     }, [setIsSignedIn]);
-
-
 
     if (!isSignedIn) {
         return (
@@ -65,7 +55,7 @@ function SignInScreen() {
     return (
         <div>
             <h1>My App</h1>
-            <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
+            <p>Welcome {getAuth(app).currentUser.displayName}! You are now signed-in!</p>
         </div>
     );
 }

@@ -33,6 +33,7 @@
     "vite.svg",
     "Fonts.scss",
     "**/dist/**",
+    "./bundle-stats.html",
     "**/styles/fonts/**",
     "**/src/assets/**",
     "**/fiatCurrencyList/icons/**",
