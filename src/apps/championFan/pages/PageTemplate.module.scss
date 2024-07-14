@@ -1,3 +1,9 @@
+
+.header1 {
+  font-family: 'bebas_neuebold';
+  text-transform: uppercase;
+}
+
 .page {
   position: relative;
   width: 100%;
@@ -18,6 +24,13 @@
   background: url('../assets/page-background-landscape.jpg') no-repeat top center;
   background-size: cover;
   z-index: -1;
+}
+
+/* Background image for landscape mode */
+@media (min-aspect-ratio: 1/1) {
+  .background-image {
+    background: none; /* Unsets the background image */
+  }
 }
 
 .content-container {

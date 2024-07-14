@@ -8,7 +8,7 @@ import { auth } from '@configuration/firebaseConfig.js'
 import SignInScreen from '@components/signInScreen/SignInScreen';
 
 import './App.scss';
-import '@globalStyles/Scrollbars.scss';
+import '@styles/Scrollbars.scss';
 import '@styles/Fonts.scss';
 import '@styles/Svg-fonts.scss';
 import '@app/styles/Variables.scss';

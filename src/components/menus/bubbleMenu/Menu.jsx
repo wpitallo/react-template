@@ -68,7 +68,9 @@ const Menu = () => {
     <div style={{ height: '100%' }}>
       <div id="content-main" className="content">
         <MainLayout activePage={activePage} />
+
         <div id="menu-backBar" className="menu-backBar" />
+
         <menu id="menu-main" ref={menuMainRef} className="menu">
           {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map(
             (color, index) => (
@@ -85,10 +87,13 @@ const Menu = () => {
               </button>
             )
           )}
+          <div className='fadeblock'></div>
           <div ref={menuBorderWrapperRef} className="menu__border__wrapper">
             <div className="menu__border"></div>
           </div>
+
         </menu>
+
         <div className="svg-container">
           <svg viewBox="0 0 245 4.5">
             <clipPath
@@ -104,6 +109,7 @@ const Menu = () => {
             </clipPath>
           </svg>
         </div>
+
       </div>
     </div>
   )

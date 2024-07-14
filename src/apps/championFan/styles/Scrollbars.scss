@@ -1,0 +1,21 @@
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: none; /* Hide scrollbar */
+  scrollbar-color: transparent transparent; /* Hide scrollbar thumb and track */
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0px; /* Hide scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; /* Hide scrollbar track */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Hide scrollbar thumb */
+  border-radius: 0; /* Optional: adjust to your preference */
+  border: none; /* Hide any border */
+}
