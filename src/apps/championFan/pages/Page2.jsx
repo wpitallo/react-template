@@ -3,9 +3,9 @@ import PageTemplate from './PageTemplate';
 import styles from './Page1.module.scss';
 import templateStyles from './PageTemplate.module.scss';
 
-function Page({ isVisible }) {
+function Page({ pageId, isVisible }) {
   return (
-    <PageTemplate isVisible={isVisible}>
+    <PageTemplate pageId={pageId} isVisible={isVisible} >
       <h1 className={templateStyles.header1}>Page 2</h1>
       <div className={styles.container}>
         <div className={styles.square}>
@@ -60,6 +60,7 @@ function Page({ isVisible }) {
 
 Page.propTypes = {
   isVisible: PropTypes.bool.isRequired,
+  pageId: PropTypes.string.isRequired,
 };
 
 export default Page;

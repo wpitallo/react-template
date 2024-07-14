@@ -5,16 +5,40 @@
 }
 
 .page {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 100%;
-  overflow: hidden; /* Hide overflow to handle scrolling inside the scroll-container */
-  transition: opacity 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.button {
+  height: 40px;
+  flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
+  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+  background-color: var(--mainButtonColor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .button {
+    height: 40px;
+    aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
+  }
 }
 
 .scroll-container {
   height: 100vh;
   overflow-y: scroll;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.scroll-container.visible {
+  opacity: 1 !important;
+  visibility: visible;
 }
 
 .background-image {
@@ -41,14 +65,8 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-  opacity: 0;
   padding-top: 10px; /* Ensure the content is pushed down below the background image */
   padding-bottom: 90px;
-}
-
-.content-container.visible {
-  opacity: 1;
-  visibility: visible;
 }
 
 .content-box {

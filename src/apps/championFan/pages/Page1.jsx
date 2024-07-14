@@ -2,11 +2,23 @@ import PropTypes from 'prop-types';
 import PageTemplate from './PageTemplate';
 import styles from './Page1.module.scss';
 import templateStyles from './PageTemplate.module.scss';
+import { translator } from '@globalHelpers/translations';
 
-function Page({ isVisible }) {
+function Page({ pageId, isVisible }) {
   return (
-    <PageTemplate isVisible={isVisible}>
-      <h1 className={templateStyles.header1}>Page 1</h1>
+    <PageTemplate pageId={pageId} isVisible={isVisible} >
+
+      <div className={styles.container}>
+        <div className={templateStyles.button}>
+          <div className={styles['square-content']}></div>
+        </div>
+        <div className={templateStyles.button}>
+          <div className={styles['square-content']}></div>
+        </div>
+      </div>
+
+      <h1 className={templateStyles.header1}>{translator('featuredPools')}</h1>
+
       <div className={styles.container}>
         <div className={styles.square}>
           <div className={styles['square-content']}></div>
@@ -60,6 +72,7 @@ function Page({ isVisible }) {
 
 Page.propTypes = {
   isVisible: PropTypes.bool.isRequired,
+  pageId: PropTypes.string.isRequired,
 };
 
 export default Page;

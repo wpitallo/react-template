@@ -22,11 +22,11 @@ function MainLayout({ activePage = 2 }) {
 
   return (
     <div className="main-layout-container">
-      <Page1 isVisible={visiblePage === 0} />
-      <Page2 isVisible={visiblePage === 1} />
-      <Page3 isVisible={visiblePage === 2} />
-      <Page4 isVisible={visiblePage === 3} />
-      <Page5 isVisible={visiblePage === 4} />
+      <Page1 pageId="page1" isVisible={visiblePage === 0} />
+      <Page2 pageId="page2" isVisible={visiblePage === 1} />
+      <Page3 pageId="page3" isVisible={visiblePage === 2} />
+      <Page4 pageId="page4" isVisible={visiblePage === 3} />
+      <Page5 pageId="page5" isVisible={visiblePage === 4} />
     </div>
   );
 }

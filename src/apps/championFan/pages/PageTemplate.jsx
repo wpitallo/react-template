@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './PageTemplate.module.scss';
 
-function PageTemplate({ isVisible, children }) {
+function PageTemplate({ pageId, isVisible, children }) {
     useEffect(() => {
-        const scrollContainer = document.getElementById('scroll-container');
+        const scrollContainer = document.getElementById(`scroll-container-${pageId}`);
         let isDragging = false;
         let startY = 0;
         let initialScrollTop = 0;
@@ -61,13 +61,16 @@ function PageTemplate({ isVisible, children }) {
             document.removeEventListener('touchmove', handleTouchMove);
             document.removeEventListener('touchend', handleTouchEnd);
         };
-    }, []);
+    }, [pageId]);
 
     return (
         <div className={styles.page}>
-            <div className={styles['scroll-container']} id="scroll-container">
+            <div
+                className={`${styles['scroll-container']} ${isVisible ? styles.visible : ''}`}
+                id={`scroll-container-${pageId}`}
+            >
                 <div className={styles['background-image']}></div>
-                <div className={`${styles['content-container']} ${isVisible ? styles.visible : ''}`}>
+                <div className={styles['content-container']}>
                     <div className={styles['content-box']}>
                         {children}
                     </div>
@@ -78,6 +81,7 @@ function PageTemplate({ isVisible, children }) {
 }
 
 PageTemplate.propTypes = {
+    pageId: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
 };

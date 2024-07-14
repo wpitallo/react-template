@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
 import fs from 'fs'
 import path from 'path'
-import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin';
+import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin'
+import crossOriginIsolation from 'vite-plugin-cross-origin-isolation'
 
 const APP_KEY = process.env.APP_KEY
 const CONFIG_KEY = process.env.CONFIG_KEY
@@ -56,7 +56,8 @@ export default defineConfig({
   plugins: [
     replaceImportsPlugin(CONFIG),
     htmlAliasPlugin(),
-    react()
+    react(),
+    crossOriginIsolation()
   ],
   define: {
     CONFIG: JSON.stringify(CONFIG),
@@ -70,13 +71,14 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@globalStyles': `/src/styles`,
+      '@globalHelpers': `/src/helpers`,
       '@app': `/src/apps/${APP_KEY}`,
       '@assets': `/src/apps/${APP_KEY}/assets`,
       '@configuration': `/src/apps/${APP_KEY}/configuration`,
       '@styles': `/src/apps/${APP_KEY}/styles`,
       '@pages': `/src/apps/${APP_KEY}/pages`,
-      '@components': '/src/components',
-      '@helpers': '/src/helpers',
+      '@translations': `/src/apps/${APP_KEY}/translations`,
+      '@components': '/src/components'
     },
   },
   css: {
@@ -89,5 +91,5 @@ export default defineConfig({
         //additionalData: `@import "src/apps/${APP_KEY}/styles/Variables.scss";`, // Optional: Include global SCSS variables
       },
     },
-  },
+  }
 })
