@@ -1,47 +1,43 @@
- 
-  .page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 255px;
-    background: url('../assets/page-background-landscape.jpg') no-repeat top center;
-    background-size: cover;
-    z-index: -1;
-  }
-  
-  .content-container {
-    position: absolute;
-    top: 215px;
-    min-height: 100vh;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow-y: auto;
-    background-color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-  }
-  
-  .content-container.visible {
-    opacity: 1;
-    visibility: visible;
-  }
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Hide overflow to handle scrolling inside the scroll-container */
+  transition: opacity 0.5s ease-in-out;
+}
 
-  .content-box {
-    position: relative;
-    top: -500px;
-    padding-top: 500px;
-  }
-  
+.scroll-container {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.background-image {
+  position: relative;
+  width: 100%;
+  height: 255px;
+  background: url('../assets/page-background-landscape.jpg') no-repeat top center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.content-container {
+  position: relative;
+  margin-top: -40px;
+  min-height: calc(100vh - 255px); /* Adjust for the height of the background image */
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  padding-top: 10px; /* Ensure the content is pushed down below the background image */
+  padding-bottom: 90px;
+}
+
+.content-container.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.content-box {
+  padding: 10px;
+}

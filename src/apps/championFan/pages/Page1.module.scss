@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  box-sizing: border-box;
+  gap: 5px;
+}
+
+.square {
+  flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
+  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+  background-color: var(--mainButtonColor);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .square {
+    height: 115px;
+    aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
+  }
+}
