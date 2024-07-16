@@ -2,11 +2,14 @@ import PropTypes from 'prop-types';
 import PageTemplate from './PageTemplate';
 import styles from './Page1.module.scss';
 import templateStyles from './PageTemplate.module.scss';
+import { translator } from '@globalHelpers/translations';
 
 function Page({ pageId, isVisible }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} >
-      <h1 className={templateStyles.header1}>Page 2</h1>
+
+      <div className={`${templateStyles.contentHeader1} ${templateStyles.centeredText} ${templateStyles.headerMarginBottom} `}>{translator('findAPool')}</div>
+
       <div className={styles.container}>
         <div className={styles.square}>
           <div className={styles['square-content']}></div>

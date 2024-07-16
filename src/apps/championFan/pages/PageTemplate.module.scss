@@ -1,13 +1,60 @@
-
-.header1 {
-  font-family: 'bebas_neuebold';
+.contentHeader1 {
   text-transform: uppercase;
+  padding-left: 5px;
+  display: block;
+  font-size: 2em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
 }
 
-.page {
+.headerMarginTop {
+  margin-block-start: 0.5em;
+}
+
+.headerMarginBottom {
+  margin-block-end: 0.5em;
+}
+
+.headerMarginTopBottom {
+  margin-block-end: 0.5em;
+  margin-block-start: 0.5em;
+}
+
+.contentHeader2 {
+  text-transform: uppercase;
+  padding-left: 5px;
+  margin-block-end: 0.67em;
+}
+
+.largeButton {
+  font-size: 20px;
+  height: 100%;
+}
+
+.selected {
+  color: var(--themeColor2);
+  background-color: var(--mainButtonColor); /* You can adjust this if needed */
+}
+
+.notSelected {
+  color: grey;
+  background-color: var(--mainButtonColor); /* You can adjust this if needed */
+}
+
+.centeredText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.pageTemplate {
   position: absolute;
   width: 100%;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .button {
@@ -28,20 +75,22 @@
   }
 }
 
-.scroll-container {
+.scrollContainer {
   height: 100vh;
   overflow-y: scroll;
   opacity: 0;
   transition: opacity 0.3s ease;
   position: relative;
+  pointer-events: none;
 }
 
-.scroll-container.visible {
+.scrollContainer.visible {
   opacity: 1 !important;
   visibility: visible;
+  pointer-events: all;
 }
 
-.background-image {
+.backgroundImage {
   position: relative;
   width: 100%;
   height: 255px;
@@ -52,12 +101,12 @@
 
 /* Background image for landscape mode */
 @media (min-aspect-ratio: 1/1) {
-  .background-image {
+  .backgroundImage {
     background: none; /* Un sets the background image */
   }
 }
 
-.content-container {
+.contentContainer {
   position: relative;
   margin-top: -40px;
   min-height: calc(100vh - 255px); /* Adjust for the height of the background image */
@@ -69,6 +118,7 @@
   padding-bottom: 90px;
 }
 
-.content-box {
+.contentBox {
   padding: 10px;
 }
+

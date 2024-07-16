@@ -1,0 +1,58 @@
+.playerHeader {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  top: 80px;
+  color: var(--themeTextColor1);
+  font-family: var(--themeTextColor1);
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.centerAlign {
+  justify-content: center;
+  align-items: center;
+}
+
+.leftAlign {
+  justify-content: center;
+  align-items: flex-start; 
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.defaultImage {
+  background-image: url('@assets/logo-in-circle.png');
+}
+
+.userName {
+  font-size: x-large;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+.row:last-child {
+  border-bottom: none;
+}

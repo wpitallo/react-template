@@ -7,12 +7,11 @@ html, body {
 }
 
 body {
-    background-image: url('../assets/page-background-portrait.jpg'); /* Update with your image path */
+    background-image: url('@assets/page-background-portrait.jpg'); /* Update with your image path */
     background-size: cover; /* Cover the entire viewport while maintaining aspect ratio */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     background-attachment: fixed; /* Ensure the background image is fixed relative to the viewport */
-    min-height: 100vh; /* Ensure the body height covers the entire viewport */
     display: flex;
     justify-content: center;
   }
@@ -20,7 +19,7 @@ body {
   /* Background image for landscape mode */
   @media (min-aspect-ratio: 1/1) {
     body {
-        background-image: url('../assets/page-background-landscape.jpg'); /* Update with your image path */
+        background-image: url('@assets/page-background-landscape.jpg'); /* Update with your image path */
     }
   }
 

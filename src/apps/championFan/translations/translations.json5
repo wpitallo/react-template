@@ -1,0 +1,35 @@
+{
+  en: {
+    // shared
+    join: 'Join',
+    create: 'Create',
+    sports: 'Sports',
+
+    // playerHeader
+    caps: 'Caps',
+    strikeRate: 'Strike Rate',
+    tournaments: 'Tournaments',
+
+    // page 1 - Create Pool
+    createPool: 'Create Pool',
+    poolName: 'Pool Name',
+    public: 'Public',
+    inviteOnly: 'Invite Only',
+
+    createPoolSportsSubHeading: 'Filter leagues / tournaments by sport',
+
+    // page 2 - Join / Find a pool
+    findAPool: 'Find a pool',
+
+    // page 3 - Featured Pools
+
+    featuredPools: 'Featured Pools',
+    featuredPoolsSubHeading: 'Join a global featured pool',
+    sportsSubHeading: 'Search for a pool by sport',
+
+    // page 4 - Active Pools
+    activePools: 'Active Pools',
+
+    // page 5 - Menu
+  },
+}

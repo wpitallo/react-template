@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin'
 import { visualizer } from 'rollup-plugin-visualizer'
+import json5 from 'vite-plugin-json5';
 
 const APP_KEY = process.env.APP_KEY
 const CONFIG_KEY = process.env.CONFIG_KEY
@@ -51,6 +52,9 @@ const serverConfig = useHttps ? {
 };
 
 export default defineConfig({
+  build: {
+    assetsInlineLimit: 12288 // Set the threshold to 8KB
+  },
   ...serverConfig,
   publicDir: path.resolve(__dirname, `src/apps/${APP_KEY}/public`),
   plugins: [
@@ -61,13 +65,13 @@ export default defineConfig({
       filename: './bundle-stats.html',
       open: true,
     }),
+    json5()
   ],
   define: {
     CONFIG: JSON.stringify(CONFIG),
   },
   optimizeDeps: {
     include: [
-      'json5', // Include json5 library for parsing JSON5 files
     ]
   },
   resolve: {
@@ -75,6 +79,7 @@ export default defineConfig({
       '@': '/src',
       '@globalStyles': `/src/styles`,
       '@globalHelpers': `/src/helpers`,
+      '@providers': `/src/apps/${APP_KEY}/providers`,
       '@app': `/src/apps/${APP_KEY}`,
       '@assets': `/src/apps/${APP_KEY}/assets`,
       '@configuration': `/src/apps/${APP_KEY}/configuration`,
