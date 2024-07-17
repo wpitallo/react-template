@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-import Page1 from '@pages/Page1';
-import Page2 from '@pages/Page2';
-import Page3 from '@pages/Page3';
-import Page4 from '@pages/Page4';
-import Page5 from '@pages/Page5';
+import Page1 from '@pages/Page1'
+import Page2 from '@pages/Page2'
+import Page3 from '@pages/Page3'
+import Page4 from '@pages/Page4'
+import Page5 from '@pages/Page5'
 
-import './MainLayout.scss';
+import './MainLayout.scss'
 
 MainLayout.propTypes = {
   activePage: PropTypes.number,
-};
+}
 
 function MainLayout({ activePage = 2 }) {
-  const [visiblePage, setVisiblePage] = useState(activePage);
+  const [visiblePage, setVisiblePage] = useState(activePage)
 
   useEffect(() => {
-    setVisiblePage(activePage);
-  }, [activePage]);
+    setVisiblePage(activePage)
+  }, [activePage])
 
   return (
     <div className="main-layout-container">
@@ -28,7 +28,7 @@ function MainLayout({ activePage = 2 }) {
       <Page4 pageId="page4" isVisible={visiblePage === 3} />
       <Page5 pageId="page5" isVisible={visiblePage === 4} />
     </div>
-  );
+  )
 }
 
-export default MainLayout;
+export default MainLayout

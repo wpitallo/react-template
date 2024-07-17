@@ -4,6 +4,18 @@
     join: 'Join',
     create: 'Create',
     sports: 'Sports',
+    comingSoon: 'Coming Soon',
+
+    // sports
+    afl: 'Afl',
+    americanFootball: 'American Football',
+    baseball: 'Baseball',
+    basketball: 'Basketball',
+    cricket: 'cricket',
+    iceHockey: 'Ice Hockey',
+    rugby: 'Rugby',
+    soccer: 'Soccer',
+    tennis: 'Tennis',
 
     // playerHeader
     caps: 'Caps',

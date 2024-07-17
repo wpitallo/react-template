@@ -1,4 +1,8 @@
-.menu-icon {
+.menuContainer {
+  height: 100%;
+}
+
+.menuIcon {
   color: white;
   font-size: 20pt;
   z-index: 10;
@@ -14,7 +18,7 @@
   opacity: 1;
 }
 
-.menu-backBar {
+.menuBackBar {
   position: absolute;
   background-color: var(--bgColorMenu);
   display: flex;
@@ -39,7 +43,7 @@
   padding-inline-start: 0;
 }
 
-.menu__item {
+.menuItem {
   all: unset;
   flex-grow: 1;
   z-index: 100;
@@ -56,34 +60,29 @@
   width: 12vw;
 }
 
-.menu__item::before {
-  content: '';
+.menuItem::before {
+  content: "";
   z-index: -1;
   width: 4.2em;
   height: 4.2em;
   border-radius: 50%;
   position: absolute;
   transform: scale(0);
-  transition: background-color var(--duration), transform var(--duration);
+  transition:
+    background-color var(--duration),
+    transform var(--duration);
   z-index: 2;
 }
 
-.menu__item {
-  &.active {
-    > :first-child {
-      color: var(--bgColorMenuIconActive);
-    }
-  }
-}
-
-.menu__item.active {
+.menuItem.active {
   transform: translate3d(0, -0.8em, 0);
 }
 
-.menu__item.active::before {
+.menuItem.active::before {
   transform: scale(1);
   background-color: var(--bgColorItem);
   z-index: 2;
+  align-items: center;
 }
 
 .icon {
@@ -99,14 +98,23 @@
   z-index: 2;
 }
 
-.menu__item.active .icon {
+.menuItem.active .icon {
   animation: stroke 1.5s reverse;
   z-index: 2;
 }
 
-.menu__item.active .menu-icon {
+.menuItem {
+  &.active {
+    > :first-child {
+      color: var(--bgColorMenuIconActive);
+    }
+  }
+}
+
+.menuItem.active .menuIcon {
   animation: stroke 1.5s reverse;
   font-size: 25pt;
+  display: flex;
   z-index: 2;
 }
 
@@ -116,7 +124,7 @@
   }
 }
 
-.menu__border__wrapper {
+.menuBorderWrapper {
   height: 39px;
   position: absolute;
   will-change: transform;
@@ -130,7 +138,7 @@
   z-index: 1;
 }
 
-.menu__border {
+.menuBorder {
   width: 180px;
   clip-path: url(#menu);
   height: 2.4em;
@@ -142,7 +150,7 @@
   display: inline-flexbox;
 }
 
-.svg-container {
+.svgContainer {
   width: 0;
   height: 0;
 }
@@ -155,11 +163,11 @@
   .content {
     width: 100vw !important;
   }
-  .menu__border__wrapper {
+  .menuBorderWrapper {
     width: 20vw;
     height: 35px;
   }
-  .menu__item {
+  .menuItem {
     width: 20vw;
   }
 }
@@ -170,13 +178,13 @@
   }
 }
 
-.gradient-block {
-  background: linear-gradient(to top, rgb(249 201 0 / 60%), rgba(4, 58, 14, 0));
-  height: 120px;
+.gradientBlock {
+  // background: linear-gradient(to top, rgba(37, 37, 37, 0.8), rgba(4, 58, 14, 0));
+  background: linear-gradient(to top, rgb(112 112 112 / 80%), rgb(255 255 255 / 0%));
+  height: 180px;
   width: 100vw !important;
   position: fixed;
   left: 0;
   display: flex;
   align-items: flex-end;
 }
-

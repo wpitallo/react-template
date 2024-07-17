@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "npm run dev-championFan",
     "dev-championFan": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev vite --host --open",
     "dev-championFan-https": "npm run clear && cross-env APP_KEY=championFan CONFIG_KEY=dev HTTPS=true vite --host --open",
     "dev-default": "npm run clear && cross-env APP_KEY=default CONFIG_KEY=dev vite --host --open",
@@ -34,7 +35,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "opencommit": "^3.0.16",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
