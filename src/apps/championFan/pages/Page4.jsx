@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import PageTemplate from './PageTemplate'
-import styles from './Page1.module.scss'
 import templateStyles from './PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 
@@ -9,51 +8,51 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible}>
       <div className={`${templateStyles.contentHeader1} ${templateStyles.centeredText} ${templateStyles.headerMarginBottom} `}>{translator('activePools')}</div>
 
-      <div className={styles.container}>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+      <div className={templateStyles.container}>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
-      </div>
-
-      <div className={styles.container}>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
-        </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
       </div>
 
-      <div className={styles.container}>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+      <div className={templateStyles.container}>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
       </div>
 
-      <div className={styles.container}>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+      <div className={templateStyles.container}>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
-        <div className={styles.square}>
-          <div className={styles['square-content']}></div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
+      </div>
+
+      <div className={templateStyles.container}>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
         </div>
       </div>
     </PageTemplate>

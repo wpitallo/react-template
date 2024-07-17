@@ -5,6 +5,7 @@
   top: 80px;
   color: var(--themeTextColor1);
   font-family: var(--themeTextColor1);
+  z-index: 2;
 }
 
 .column {
@@ -20,7 +21,7 @@
 
 .leftAlign {
   justify-content: center;
-  align-items: flex-start; 
+  align-items: flex-start;
 }
 
 .imageContainer {
@@ -37,7 +38,7 @@
 }
 
 .defaultImage {
-  background-image: url('@assets/logo-in-circle.png');
+  background-image: url("@assets/logo-in-circle.png");
 }
 
 .userName {
