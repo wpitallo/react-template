@@ -1,5 +1,6 @@
 {
     "pageTitle": "Champion Fan",
+    "url": "http://championfan.co/",
     "componentConfig": {
         "menu": {
             "key": "bubbleMenu",

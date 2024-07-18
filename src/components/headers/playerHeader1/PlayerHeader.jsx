@@ -12,16 +12,19 @@ const PlayerHeader = ({ imageSrc }) => {
       <div className={`${styles.column} ${styles.centerAlign}`}>
         <div className={`${styles.imageContainer} ${!imageSrc ? styles.defaultImage : ''}`} style={{ backgroundImage: imageSrc ? `url(${imageSrc})` : '' }}></div>
       </div>
-      <div className={`${styles.column} ${styles.leftAlign}`}>
-        <div className={`${styles.row} ${styles.userName}`}>{user ? user.displayName : 'Guest'}</div>
-        <div className={styles.row}>
-          {translator('caps')}: {data ? JSON.stringify(data) : 'Loading...'}
-        </div>
-        <div className={styles.row}>
-          {translator('strikeRate')}: {data ? JSON.stringify(data) : 'Loading...'}
-        </div>
-        <div className={styles.row}>
-          {translator('tournaments')}: {data ? JSON.stringify(data) : 'Loading...'}
+      <div className={`${styles.column} ${styles.leftAlign} ${styles.doubleColumn}`}>
+        <div className={styles.innerColumn}></div>
+        <div className={styles.innerColumn}>
+          <div className={`${styles.row} ${styles.userName}`}>{user ? user.displayName : 'Guest'}</div>
+          <div className={styles.row}>
+            {translator('caps')}: {data ? JSON.stringify(data) : 'Loading...'}
+          </div>
+          <div className={styles.row}>
+            {translator('strikeRate')}: {data ? JSON.stringify(data) : 'Loading...'}
+          </div>
+          <div className={styles.row}>
+            {translator('tournaments')}: {data ? JSON.stringify(data) : 'Loading...'}
+          </div>
         </div>
       </div>
     </div>

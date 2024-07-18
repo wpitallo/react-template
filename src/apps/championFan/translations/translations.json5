@@ -27,6 +27,9 @@
     poolName: 'Pool Name',
     public: 'Public',
     inviteOnly: 'Invite Only',
+    createPool: 'Create Pool',
+    sendInvitation: 'Send Invitation',
+    copiedToClipboard: 'Copied to clipboard',
 
     createPoolSportsSubHeading: 'Filter leagues / tournaments by sport',
 

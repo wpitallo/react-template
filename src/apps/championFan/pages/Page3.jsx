@@ -2,15 +2,16 @@ import PropTypes from 'prop-types'
 import PageTemplate from './PageTemplate'
 import templateStyles from './PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
+import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 
 function Page({ pageId, isVisible }) {
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible}>
-      <div className={templateStyles.container}>
-        <div className={templateStyles.button}>
+    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
+      <div className={`${templateStyles.container}`}>
+        <div className={`${templateStyles.button} ${templateStyles.default}`}>
           <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('join')}</div>
         </div>
-        <div className={templateStyles.button}>
+        <div className={`${templateStyles.button} ${templateStyles.default}`}>
           <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('create')}</div>
         </div>
       </div>

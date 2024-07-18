@@ -2,34 +2,38 @@
     height: 100%;
 
     --headerBarHeight: 64px;
-    --bgColorHeaderBackground: ;
-    
-    --themeFont1: 'bebas_neuebold';
-    --themeFont2: 'rockwellregular';
+    --bgColorHeaderBackground: #043a0e;
+
+    --themeFont1: "bebas_neuebold";
+    --themeFont2: "rockwellregular";
 
     --mainButtonColor: #043a0e;
-    --mainButtonHoverColor: #F9C900;
-    
+    --mainButtonHoverColor: #f9c900;
+
     --themeColor1: #043a0e;
-    --themeColor2:#F9C900;
+    --themeColor2: #f9c900;
 
-    --themeTextColor1:#FFFFFF;
+    --themeColor3: #135121;
+    --themeColor4: #d39c00;
+    --themeColor5: #e1e2cc;
+    --themeColor6: #ededed;
 
-    --menu1Color: #F9C900;
-    --menu2Color: #F9C900;
-    --menu3Color: #F9C900;
-    --menu4Color: #F9C900;
-    --menu5Color: #F9C900;
+    --themeTextColor1: #ededed;
+
+    --menu1Color: #f9c900;
+    --menu2Color: #f9c900;
+    --menu3Color: #f9c900;
+    --menu4Color: #f9c900;
+    --menu5Color: #f9c900;
 
     --bgColorMenu: #043a0e;
     --bgColorMenuIconActive: #043a0e;
 
     --logo-text-height: 50px;
 
-    --LOGO: url('@assets/login-logo.png');
-    }
-    
+    --LOGO: url("@assets/login-logo.png");
+}
 
 html {
-    --logo-text: url('@assets/login-logo.png');
-   }
+    --logo-text: url("@assets/login-logo.png");
+}
