@@ -284,6 +284,12 @@ $placeholderOpacity: 0.6;
   align-items: center;
 }
 
+.square:hover {
+  background-color: var(--themeColor3); /* Change background color on hover */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
 .squareInner {
   width: 100%;
   height: 100%;
@@ -342,8 +348,65 @@ $placeholderOpacity: 0.6;
   font-size: 1em; /* Set a base font size for scaling */
 }
 
+.squareContent .sportName {
+  transition: transform 0.1s linear;
+}
+
+.squareContent:hover .sportName {
+  // transform: scale(1.1); /* Increase image size on hover */
+}
+
+.squareContent:hover .sportName {
+  transform: scale(1.1); /* Increase image size on hover */
+}
+
 .squareContent div {
-  margin: 5px 0; /* Adjust the margin as needed */
+  margin: 5px 0;
+  max-height: 100%;
+}
+
+.imageButton {
+  height: clamp(50px, 10vh, 100px); /* Default values */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  transition: height 0.3s ease; /* Smooth transition for height changes */
+}
+
+@media (max-width: 600px) {
+  .imageButton {
+    height: clamp(30px, 8vh, 80px); /* Values for small screens */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .imageButton {
+    height: clamp(40px, 12vh, 90px); /* Values for medium screens */
+  }
+}
+
+@media (min-width: 1201px) {
+  .imageButton {
+    height: clamp(50px, 15vh, 110px); /* Values for large screens */
+  }
+}
+
+.imageButton img {
+  max-height: 80%;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease; /* Smooth transition for image size */
+}
+
+.imageButton:hover {
+  background-color: var(--themeColor3); /* Change background color on hover */
+  cursor: pointer;
+}
+
+.imageButton:hover img {
+  transform: scale(1.1); /* Increase image size on hover */
 }
 
 .squareAfl::before {
@@ -397,4 +460,34 @@ $placeholderOpacity: 0.6;
   .sportName {
     font-size: clamp(1em, 2vw, 1.5rem);
   }
+}
+
+.eventItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  background-color: var(--mainButtonColor);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.eventItem div {
+  text-align: center;
+  flex: 1;
+}
+
+.eventsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+  padding: 5px;
+  box-sizing: border-box;
+  gap: 5px;
 }

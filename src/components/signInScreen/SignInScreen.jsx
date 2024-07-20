@@ -1,8 +1,7 @@
-// Import FirebaseAuth and firebase.
 import { useEffect, useState } from 'react'
 import { app } from '@configuration/firebaseConfig'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth' // Named imports
+import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
 import loginLogo from '@assets/login-logo.png'
 
@@ -10,12 +9,11 @@ import 'firebaseui/dist/firebaseui.css'
 
 // Configure FirebaseUI.
 const uiConfig = {
-  signInFlow: 'popup', // Changed to 'redirect'
+  signInFlow: 'popup',
   signInOptions: [GoogleAuthProvider.PROVIDER_ID, EmailAuthProvider.PROVIDER_ID],
   callbacks: {
     signInSuccessWithAuthResult: () => false,
   },
-  // required to enable one-tap sign-up credential helper
   credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
 }
 
@@ -28,14 +26,20 @@ function SignInScreen() {
       setIsSignedIn(!!user)
     })
 
-    // Check if AuthUI instance already exists
-    const uiInstance = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
-    uiInstance.start('#firebaseui-auth-container', uiConfig)
+    // Initialize FirebaseUI Auth
+    const initializeFirebaseUI = () => {
+      const uiInstance = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
+      uiInstance.start('#firebaseui-auth-container', uiConfig)
+    }
+
+    if (!isSignedIn) {
+      initializeFirebaseUI()
+    }
 
     return () => {
       unsubscribe()
     }
-  }, [setIsSignedIn])
+  }, [isSignedIn, setIsSignedIn])
 
   if (!isSignedIn) {
     return (

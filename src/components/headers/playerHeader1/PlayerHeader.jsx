@@ -5,7 +5,7 @@ import DataContext from '@providers/DataProvider'
 import { translator } from '@globalHelpers/translations'
 
 const PlayerHeader = ({ imageSrc }) => {
-  const { user, data } = useContext(DataContext)
+  const { user } = useContext(DataContext)
 
   return (
     <div className={styles.playerHeader}>
@@ -17,13 +17,14 @@ const PlayerHeader = ({ imageSrc }) => {
         <div className={styles.innerColumn}>
           <div className={`${styles.row} ${styles.userName}`}>{user ? user.displayName : 'Guest'}</div>
           <div className={styles.row}>
-            {translator('caps')}: {data ? JSON.stringify(data) : 'Loading...'}
+            {/* {translator('caps')}: {data ? JSON.stringify(data) : 'Loading...'} */}
+            {translator('caps')} {'Loading...'}
           </div>
           <div className={styles.row}>
-            {translator('strikeRate')}: {data ? JSON.stringify(data) : 'Loading...'}
+            {translator('strikeRate')}: {'Loading...'}
           </div>
           <div className={styles.row}>
-            {translator('tournaments')}: {data ? JSON.stringify(data) : 'Loading...'}
+            {translator('tournaments')}: {'Loading...'}
           </div>
         </div>
       </div>

@@ -30,6 +30,8 @@
     createPool: 'Create Pool',
     sendInvitation: 'Send Invitation',
     copiedToClipboard: 'Copied to clipboard',
+    leaguesTournaments: 'Leagues / Tournaments',
+    timeFrame: 'Time Frame',
 
     createPoolSportsSubHeading: 'Filter leagues / tournaments by sport',
 

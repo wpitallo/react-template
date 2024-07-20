@@ -15,7 +15,6 @@ const Menu = () => {
   const _offsetMenuBorder = useCallback(
     (selectedIndex) => {
       let left
-      console.log(`Called _offsetMenuBorder newOrientation ${orientation} selectedIndex: ${selectedIndex}`)
       if (orientation.includes('portrait')) {
         left = selectedIndex === 0 ? 0 : 20 * selectedIndex
         menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`

@@ -1,13 +1,23 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import PageTemplate from './PageTemplate'
 import templateStyles from './PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import ModalAlert from '@components/modals/alert/ModalAlert'
+import DataContext from '@providers/DataProvider'
 
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
+}
+
+// Helper function to chunk the sports array
+const chunkArray = (array, chunkSize) => {
+  const chunks = []
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize))
+  }
+  return chunks
 }
 
 function Page({ pageId, isVisible }) {
@@ -16,7 +26,20 @@ function Page({ pageId, isVisible }) {
   const [guid, setGuid] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [showShareLink, setShowShareLink] = useState(false)
+  const [selectedSport, setSelectedSport] = useState('soccer')
+  const [selectedLeagueTeams, setSelectedLeagueTeams] = useState({})
+  const [eventsData, setEventsData] = useState([])
   const inputRef = useRef(null)
+  const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
+
+  const sports = [
+    { sportsKey: 'soccer', comingSoon: false },
+    { sportsKey: 'rugby', comingSoon: false },
+    { sportsKey: 'cricket', comingSoon: true },
+    { sportsKey: 'tennis', comingSoon: true },
+    { sportsKey: 'basketball', comingSoon: true },
+    // Add more sports here if needed
+  ]
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType)
@@ -47,6 +70,16 @@ function Page({ pageId, isVisible }) {
     setTimeout(() => setShowModal(false), 2000) // Hide modal after 2 seconds
   }
 
+  const handleLeagueClick = async (league) => {
+    // Clear the events data and the events container
+    setEventsData([])
+    const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
+    setEventsData(events)
+    setSelectedLeagueTeams(teams)
+
+    console.log(selectedLeagueTeams)
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
@@ -54,7 +87,15 @@ function Page({ pageId, isVisible }) {
     }
   }, [])
 
+  useEffect(() => {
+    // Reset events data and leagues data when selected sport changes
+    setEventsData([])
+  }, [selectedSport])
+
   const inviteUrl = `${window.CONFIG.appConfig.url}?invite=${guid}`
+
+  // Split sports array into chunks of 5
+  const sportsChunks = chunkArray(sports, 5)
 
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
@@ -78,47 +119,19 @@ function Page({ pageId, isVisible }) {
       <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('sports')}</div>
       <div className={templateStyles.contentHeader2}>{translator('createPoolSportsSubHeading')}</div>
 
-      <div className={templateStyles.container}>
-        <div className={`${templateStyles.square} ${templateStyles.squareSoccer}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('soccer')}</div>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-          </div>
+      {sportsChunks.map((chunk, chunkIndex) => (
+        <div key={chunkIndex} className={templateStyles.container}>
+          {chunk.map((sport, index) => (
+            <div key={index} className={`${templateStyles.square} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]}`} onClick={() => setSelectedSport(sport.sportsKey)}>
+              <div className={templateStyles.squareContent}>
+                <div className={templateStyles.comingSoon}> &nbsp;</div>
+                <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
+                {sport.comingSoon ? <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div> : <div className={templateStyles.comingSoon}>&nbsp;</div>}
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareRugby}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('rugby')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareCricket}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('cricket')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareTennis}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('tennis')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareBasketball}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('basketball')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-      </div>
+      ))}
 
       {showShareLink && (
         <div>
@@ -136,6 +149,34 @@ function Page({ pageId, isVisible }) {
           </div>
         </div>
       )}
+
+      {leaguesData.sports[selectedSport] && Object.keys(leaguesData.sports[selectedSport]).length > 0 && (
+        <div id="leaguesTournaments">
+          <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('leaguesTournaments')}</div>
+
+          <div className={templateStyles.container}>
+            {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
+              <div key={leagueId} className={`${templateStyles.square} ${templateStyles.imageButton}`} onClick={() => handleLeagueClick(leaguesData.sports[selectedSport][leagueId])}>
+                <img src={leaguesData.sports[selectedSport][leagueId].strLogo} alt={leaguesData.sports[selectedSport][leagueId].strLeague} className={templateStyles.leagueLogo} />
+              </div>
+            ))}
+          </div>
+
+          {eventsData.length > 0 && (
+            <div className={templateStyles.eventsContainer}>
+              <div className={templateStyles.contentHeader1}>{translator('events')}</div>
+              {eventsData.map((event, index) => (
+                <div key={index} className={templateStyles.eventItem}>
+                  <div>{event.strEvent}</div>
+                  <div>{event.dateEvent}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('timeFrame')}</div>
 
       {!showShareLink && (
         <div className={templateStyles.container}>
