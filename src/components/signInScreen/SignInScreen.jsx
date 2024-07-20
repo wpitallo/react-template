@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useContext } from 'react'
 import { app } from '@configuration/firebaseConfig'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth'
 import * as firebaseui from 'firebaseui'
 import loginLogo from '@assets/login-logo.png'
+import { DataContext } from '@providers/DataProvider'
 
 import 'firebaseui/dist/firebaseui.css'
 
-// Configure FirebaseUI.
 const uiConfig = {
   signInFlow: 'popup',
   signInOptions: [GoogleAuthProvider.PROVIDER_ID, EmailAuthProvider.PROVIDER_ID],
@@ -18,30 +18,19 @@ const uiConfig = {
 }
 
 function SignInScreen() {
-  const [isSignedIn, setIsSignedIn] = useState(false) // Local signed-in state.
+  const { user } = useContext(DataContext)
 
   useEffect(() => {
     const auth = getAuth(app)
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsSignedIn(!!user)
-    })
-
-    // Initialize FirebaseUI Auth
     const initializeFirebaseUI = () => {
       const uiInstance = firebaseui.auth.AuthUI.getInstance() || new firebaseui.auth.AuthUI(auth)
       uiInstance.start('#firebaseui-auth-container', uiConfig)
     }
 
-    if (!isSignedIn) {
-      initializeFirebaseUI()
-    }
+    initializeFirebaseUI()
+  }, [])
 
-    return () => {
-      unsubscribe()
-    }
-  }, [isSignedIn, setIsSignedIn])
-
-  if (!isSignedIn) {
+  if (!user) {
     return (
       <div style={{ height: '100%', position: 'relative' }}>
         <div
@@ -61,12 +50,7 @@ function SignInScreen() {
       </div>
     )
   }
-  return (
-    <div>
-      <h1>My App</h1>
-      <p>Welcome {getAuth(app).currentUser.displayName}! You are now signed-in!</p>
-    </div>
-  )
+  return <div></div>
 }
 
 export default SignInScreen

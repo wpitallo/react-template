@@ -3,7 +3,7 @@ import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainH
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu'
 import SignInScreen from '@components/signInScreen/SignInScreen'
 import { DataProvider, DataContext } from '@providers/DataProvider'
-import LoadingSVG from '@components/loaders/loader1/Loader1'
+import Loader from '@components/loaders/loader1/Loader1'
 import './App.scss'
 import '@styles/Scrollbars.scss'
 import '@styles/Fonts.scss'
@@ -12,14 +12,12 @@ import '@app/styles/Variables.scss'
 import '@styles/Custom.scss'
 
 const AppContent = () => {
-  const { user, dataFetched } = useContext(DataContext)
-  const [loading, setLoading] = useState(true)
+  const { user, dataFetched, checkedAuthenticated } = useContext(DataContext)
   const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
     if (dataFetched) {
       setFadeOut(true)
-      setTimeout(() => setLoading(false), 500) // Wait for fade-out animation to complete
     }
   }, [dataFetched])
 
@@ -38,17 +36,22 @@ const AppContent = () => {
   }, [])
 
   return (
-    <DataProvider style={{ height: '100%' }}>
-      {user ? (
-        <div style={{ height: '100%' }}>
+    <div style={{ height: '100%' }}>
+      {user && dataFetched ? (
+        <>
           <MainHeader />
           <Menu />
-        </div>
+        </>
+      ) : checkedAuthenticated ? (
+        user ? (
+          <Loader fadeOut={fadeOut} />
+        ) : (
+          <SignInScreen />
+        )
       ) : (
-        <SignInScreen />
+        <Loader fadeOut={fadeOut} />
       )}
-      {loading && <LoadingSVG fadeOut={fadeOut} />}
-    </DataProvider>
+    </div>
   )
 }
 

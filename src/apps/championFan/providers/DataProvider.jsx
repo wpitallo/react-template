@@ -7,10 +7,11 @@ import PropTypes from 'prop-types'
 const DataContext = createContext()
 
 export const DataProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null) // Initial state set to null for clarity
+
+  const [checkedAuthenticated, setCheckedAuthenticated] = useState(false)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
   const [dataFetched, setDataFetched] = useState(false) // New state to track if data has been fetched
-  const auth = getAuth(app)
   const db = getFirestore(app)
 
   const fetchData = useCallback(async () => {
@@ -84,22 +85,25 @@ export const DataProvider = ({ children }) => {
   )
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      if (user) {
-        if (!dataFetched) {
+    const auth = getAuth(app)
+    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
+      if (newUser || newUser !== user) {
+        setUser(newUser)
+        if (newUser && !dataFetched) {
+          if (document.getElementById('firebaseui-auth-container')) document.getElementById('firebaseui-auth-container').style.opacity = 0
           fetchData()
+        } else if (!newUser) {
+          setLeaguesData({ sports: {} })
+          setDataFetched(false) // Reset flag when user logs out
         }
       } else {
-        setLeaguesData({ sports: {} })
-        setDataFetched(false) // Reset flag when user logs out
+        setCheckedAuthenticated(true)
       }
     })
-
     return () => unsubscribe()
-  }, [auth, fetchData, dataFetched])
+  }, [user, fetchData, dataFetched])
 
-  return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData, dataFetched }}>{children}</DataContext.Provider>
+  return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData, dataFetched, checkedAuthenticated }}>{children}</DataContext.Provider>
 }
 
 DataProvider.propTypes = {
