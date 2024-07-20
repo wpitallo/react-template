@@ -466,7 +466,7 @@ $placeholderOpacity: 0.6;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
+  height: 100px; // Adjust height as needed
   width: 100%;
   background-color: var(--mainButtonColor);
   border-radius: 10px;
@@ -476,18 +476,34 @@ $placeholderOpacity: 0.6;
   padding-bottom: 5px;
 }
 
-.eventItem div {
-  text-align: center;
+.eventColumn {
   flex: 1;
-}
-
-.eventsContainer {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 100%;
-  justify-content: space-around;
-  padding: 5px;
-  box-sizing: border-box;
-  gap: 5px;
+  text-align: center;
+}
+
+.eventColumn img {
+  width: 50px; // Set an appropriate width
+  height: auto;
+  margin-right: 10px;
+}
+
+.teamName {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.eventDate {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  flex: 1; // Allow this to take up the remaining space
+}
+
+.leagueLogo {
+  width: 50px; // Adjust the size as needed
+  height: auto;
 }

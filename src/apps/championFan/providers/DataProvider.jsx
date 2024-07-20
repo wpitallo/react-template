@@ -9,6 +9,7 @@ const DataContext = createContext()
 export const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
+  const [dataFetched, setDataFetched] = useState(false) // New state to track if data has been fetched
   const auth = getAuth(app)
   const db = getFirestore(app)
 
@@ -33,10 +34,11 @@ export const DataProvider = ({ children }) => {
 
       await Promise.all(sports.map((sport) => fetchSportData(sport)))
       setLeaguesData(newLeaguesData)
+      setDataFetched(true) // Set flag to true after fetching data
     } catch (error) {
       console.error('Error fetching data: ', error)
     }
-  }, [db, leaguesData])
+  }, [db, leaguesData.sports])
 
   const fetchEventsAndTeamsData = useCallback(
     async (league, strCurrentSeason, sport) => {
@@ -78,21 +80,24 @@ export const DataProvider = ({ children }) => {
         return { events: [], teams: [] }
       }
     },
-    [db, leaguesData]
+    [db, leaguesData.sports]
   )
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       if (user) {
-        fetchData()
+        if (!dataFetched) {
+          fetchData()
+        }
       } else {
         setLeaguesData({ sports: {} })
+        setDataFetched(false) // Reset flag when user logs out
       }
     })
 
     return () => unsubscribe()
-  }, [auth, fetchData])
+  }, [auth, fetchData, dataFetched])
 
   return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData }}>{children}</DataContext.Provider>
 }
