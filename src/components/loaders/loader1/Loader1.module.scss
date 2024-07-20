@@ -1,0 +1,36 @@
+.loadingContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--themeColor1);
+    padding-top: 20vh; /* Adjust this value to move the content down from the top */
+    transition: opacity 0.5s ease-out; /* Add transition for opacity */
+    opacity: 1; /* Initial opacity */
+    z-index: 9999;
+}
+
+.fadeOut {
+    opacity: 0; /* Final opacity for fade-out */
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    margin-bottom: 20px; /* Space between the logo and the SVG */
+    max-width: 60vw; /* Clamp the width of the image to 80% of the viewport width */
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+svg {
+    max-width: 10vw;
+}

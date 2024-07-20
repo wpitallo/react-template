@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { useEffect, useState, useContext } from 'react'
 import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainHeader'
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu'
-import { app } from '@configuration/firebaseConfig.js'
 import SignInScreen from '@components/signInScreen/SignInScreen'
-import { DataProvider } from '@providers/DataProvider'
+import { DataProvider, DataContext } from '@providers/DataProvider'
+import LoadingSVG from '@components/loaders/loader1/Loader1'
 import './App.scss'
 import '@styles/Scrollbars.scss'
 import '@styles/Fonts.scss'
@@ -12,18 +11,17 @@ import '@styles/Svg-fonts.scss'
 import '@app/styles/Variables.scss'
 import '@styles/Custom.scss'
 
-const App = () => {
-  const [user, setUser] = useState(null)
+const AppContent = () => {
+  const { user, dataFetched } = useContext(DataContext)
+  const [loading, setLoading] = useState(true)
+  const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(app), (user) => {
-      setUser(!!user)
-    })
-
-    return () => {
-      unsubscribe()
+    if (dataFetched) {
+      setFadeOut(true)
+      setTimeout(() => setLoading(false), 500) // Wait for fade-out animation to complete
     }
-  }, [user, setUser])
+  }, [dataFetched])
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,8 +47,15 @@ const App = () => {
       ) : (
         <SignInScreen />
       )}
+      {loading && <LoadingSVG fadeOut={fadeOut} />}
     </DataProvider>
   )
 }
+
+const App = () => (
+  <DataProvider>
+    <AppContent />
+  </DataProvider>
+)
 
 export default App

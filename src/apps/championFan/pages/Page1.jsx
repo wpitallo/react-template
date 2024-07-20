@@ -5,7 +5,7 @@ import templateStyles from './PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import ModalAlert from '@components/modals/alert/ModalAlert'
-import DataContext from '@providers/DataProvider'
+import { DataContext } from '@providers/DataProvider'
 
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
@@ -198,7 +198,7 @@ function Page({ pageId, isVisible }) {
                 <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
                 <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
               </div>
-              <div className={templateStyles.eventDate}>
+              <div className={templateStyles.eventMiddleColumn}>
                 <div>VS</div>
                 <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
                 <div>{event.dateEvent}</div>

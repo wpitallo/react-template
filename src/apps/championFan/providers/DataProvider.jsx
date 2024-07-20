@@ -99,11 +99,11 @@ export const DataProvider = ({ children }) => {
     return () => unsubscribe()
   }, [auth, fetchData, dataFetched])
 
-  return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData }}>{children}</DataContext.Provider>
+  return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData, dataFetched }}>{children}</DataContext.Provider>
 }
 
 DataProvider.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default DataContext
+export { DataContext }

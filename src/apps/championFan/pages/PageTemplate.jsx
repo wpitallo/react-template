@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './PageTemplate.module.scss'
 
@@ -6,15 +6,26 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
   const scrollContainerRef = useRef(null)
   const isDraggingRef = useRef(false) // Use a ref to keep track of dragging state across renders
   const isVisibleRef = useRef(isVisible) // Use a ref to keep track of visibility across renders
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false)
+
+  const scrollToTop = () => {
+    scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   useEffect(() => {
+    const scrollTopButtonDistance = 1000
     const scrollContainer = scrollContainerRef.current
     let startY = 0
     let initialScrollTop = 0
     const dragThreshold = 5 // Define a threshold to differentiate drag from click
+    const scrollSpeedMultiplier = 3 // Adjust this multiplier to speed up the scroll
+
+    const isExceptionElement = (element) => {
+      return element.tagName === 'INPUT' || element.classList.contains(styles.scrollTopButton)
+    }
 
     const handleMouseDown = (e) => {
-      if (!isVisibleRef.current || e.target.tagName === 'INPUT') return
+      if (!isVisibleRef.current || isExceptionElement(e.target)) return
       isDraggingRef.current = false
       startY = e.clientY
       initialScrollTop = scrollContainer.scrollTop
@@ -29,7 +40,7 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
         const deltaY = e.clientY - startY
         if (Math.abs(deltaY) > dragThreshold) {
           isDraggingRef.current = true
-          scrollContainer.scrollTop = initialScrollTop - deltaY
+          scrollContainer.scrollTop = initialScrollTop - deltaY * scrollSpeedMultiplier
         }
       } else {
         handleMouseUp(e) // If mouse button is released, call the pointer up handler
@@ -46,7 +57,7 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
     }
 
     const handleTouchStart = (e) => {
-      if (!isVisibleRef.current || e.target.tagName === 'INPUT') return
+      if (!isVisibleRef.current || isExceptionElement(e.target)) return
       isDraggingRef.current = false
       startY = e.touches[0].clientY
       initialScrollTop = scrollContainer.scrollTop
@@ -57,7 +68,7 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
       const deltaY = e.touches[0].clientY - startY
       if (Math.abs(deltaY) > dragThreshold) {
         isDraggingRef.current = true
-        scrollContainer.scrollTop = initialScrollTop - deltaY
+        scrollContainer.scrollTop = initialScrollTop - deltaY * scrollSpeedMultiplier
         e.preventDefault() // Prevent default scrolling behavior
       }
     }
@@ -89,6 +100,16 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
 
     const debouncedHandleWheel = debounce(handleWheel, 100) // Adjust debounce wait time as needed
 
+    const handleScroll = () => {
+      if (scrollContainer.scrollTop > scrollTopButtonDistance) {
+        setShowScrollTopButton(true)
+      } else {
+        setShowScrollTopButton(false)
+      }
+    }
+
+    scrollContainer.addEventListener('scroll', handleScroll)
+
     document.addEventListener('mousedown', handleMouseDown)
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
@@ -100,6 +121,8 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
     document.addEventListener('wheel', debouncedHandleWheel, { passive: false })
 
     return () => {
+      scrollContainer.removeEventListener('scroll', handleScroll)
+
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
@@ -126,6 +149,7 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
 
   return (
     <div className={styles.pageTemplate}>
+      {showScrollTopButton && <div className={`${styles.scrollTopButton} icon-scroll-top`} onClick={scrollToTop}></div>}
       <div className={`${styles.scrollContainer} ${isVisible ? styles.visible : ''}`} id={`scrollContainer-${pageId}`} ref={scrollContainerRef}>
         {Header && <Header />} {/* Render the header component if provided */}
         <div className={styles.backgroundImage}></div>

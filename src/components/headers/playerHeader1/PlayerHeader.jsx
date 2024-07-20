@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styles from './PlayerHeader.module.scss'
-import DataContext from '@providers/DataProvider'
+import { DataContext } from '@providers/DataProvider'
 import { translator } from '@globalHelpers/translations'
 
 const PlayerHeader = ({ imageSrc }) => {
