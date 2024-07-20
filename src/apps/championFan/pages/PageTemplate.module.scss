@@ -92,7 +92,6 @@ $placeholderOpacity: 0.6;
   display: flex;
   align-items: center;
   width: 100%;
-  padding-right: 10px;
 }
 
 .inputField {
@@ -259,16 +258,17 @@ $placeholderOpacity: 0.6;
 }
 
 .contentBox {
-  padding: 10px;
+  padding: 20px;
   width: 800px;
 }
 
 .container {
   display: flex;
   justify-content: space-around;
-  padding: 5px;
   box-sizing: border-box;
   gap: 5px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .square {
@@ -469,11 +469,9 @@ $placeholderOpacity: 0.6;
   height: 100px; // Adjust height as needed
   width: 100%;
   background-color: var(--mainButtonColor);
-  border-radius: 10px;
+  border-radius: 15px;
   transition: all 0.3s ease;
-  margin-bottom: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .eventColumn {
@@ -488,19 +486,39 @@ $placeholderOpacity: 0.6;
 .eventColumn img {
   width: 50px; // Set an appropriate width
   height: auto;
-  margin-right: 10px;
 }
 
 .teamName {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 2.5vw;
+  color: var(--themeTextColor1);
+  font-family: var(--themeFont2);
+  margin-top: 7px;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .teamName {
+    font-size: clamp(1em, 2vw, 1.5rem);
+  }
 }
 
 .eventDate {
   font-size: 14px;
   color: #666;
   text-align: center;
-  flex: 1; // Allow this to take up the remaining space
+  flex: 1;
+  color: var(--themeTextColor1);
+  font-family: var(--themeFont2);
+  font-size: 2.5vw;
+}
+
+.eventDateMiddle {
+  font-size: 1vw !important;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .eventDate {
+    font-size: clamp(1em, 2vw, 1.5rem);
+  }
 }
 
 .leagueLogo {

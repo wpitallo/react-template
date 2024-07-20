@@ -195,14 +195,16 @@ function Page({ pageId, isVisible }) {
           {eventsData.map((event, index) => (
             <div key={index} className={templateStyles.eventItem}>
               <div className={templateStyles.eventColumn}>
-                <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} logo`} />
+                <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
                 <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
               </div>
               <div className={templateStyles.eventDate}>
+                <div>VS</div>
+                <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
                 <div>{event.dateEvent}</div>
               </div>
               <div className={templateStyles.eventColumn}>
-                <img src={getTeamBadge(event.strAwayTeam)} alt={`${event.strAwayTeam} logo`} />
+                <img src={getTeamBadge(event.strAwayTeam)} alt={`${event.strAwayTeam} leagueLogo`} />
                 <div className={templateStyles.teamName}>{event.strAwayTeam}</div>
               </div>
             </div>
