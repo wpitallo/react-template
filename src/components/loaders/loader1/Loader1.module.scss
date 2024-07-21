@@ -12,6 +12,7 @@
     transition: opacity 0.5s ease-out; /* Add transition for opacity */
     opacity: 1; /* Initial opacity */
     z-index: 9999;
+    pointer-events: none;
 }
 
 .fadeOut {

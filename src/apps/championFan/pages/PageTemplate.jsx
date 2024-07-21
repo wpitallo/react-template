@@ -9,7 +9,9 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
 
   const scrollToTop = () => {
-    scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    if (showScrollTopButton) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   useEffect(() => {
@@ -144,13 +146,14 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
           scrollContainer.scrollTop = 0 // Reset scroll position
         }
       }, 400) // Delay of 0.4s
+      setShowScrollTopButton(false)
     }
   }, [isVisible])
 
   return (
     <div className={styles.pageTemplate}>
-      {showScrollTopButton && <div className={`${styles.scrollTopButton} icon-scroll-top`} onClick={scrollToTop}></div>}
       <div className={`${styles.scrollContainer} ${isVisible ? styles.visible : ''}`} id={`scrollContainer-${pageId}`} ref={scrollContainerRef}>
+        <div className={`${styles.scrollTopButton} icon-scroll-top`} style={{ opacity: showScrollTopButton ? 1 : 0 }} onClick={scrollToTop}></div>
         {Header && <Header />} {/* Render the header component if provided */}
         <div className={styles.backgroundImage}></div>
         <div className={styles.contentContainer}>

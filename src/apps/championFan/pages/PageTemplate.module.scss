@@ -1,6 +1,7 @@
 $controlsFontSize: 20px;
 $placeholderColor: var(--themeColor4);
 $placeholderOpacity: 0.6;
+$selectedBorder: 3px;
 
 .contentHeader1 {
   text-transform: uppercase;
@@ -139,11 +140,12 @@ $placeholderOpacity: 0.6;
 .selected {
   color: var(--themeColor2);
   background-color: var(--mainButtonColor);
+  border: solid $selectedBorder var(--themeColor2) !important;
   cursor: pointer;
 }
 
 .notSelected {
-  color: grey;
+  color: var(--themeTextColor1);
   background-color: var(--mainButtonColor);
   cursor: pointer;
 }
@@ -189,7 +191,7 @@ $placeholderOpacity: 0.6;
 }
 
 .button {
-  height: 40px;
+  height: 36px;
   flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
   aspect-ratio: 1 / 1; /* Ensures the height equals the width */
   background-color: var(--mainButtonColor);
@@ -197,11 +199,16 @@ $placeholderOpacity: 0.6;
   transition: all 0.3s ease;
   margin-bottom: 5px;
   margin-top: 10px;
+  border: solid $selectedBorder var(--themeColor1);
+}
+
+.button:hover {
+  background-color: var(--themeColor3);
+  border: solid $selectedBorder var(--themeColor3);
 }
 
 @media (min-aspect-ratio: 1/1) {
   .button {
-    height: 40px;
     aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
   }
 }
@@ -231,7 +238,7 @@ $placeholderOpacity: 0.6;
   background-color: var(--themeColor2);
   color: var(--themeColor1);
   font-family: var(--themeFont2);
-  font-size: 3vw;
+  font-size: clamp(20px, 1vh, 70px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -239,6 +246,7 @@ $placeholderOpacity: 0.6;
   cursor: pointer;
   z-index: 2000;
   pointer-events: all;
+  transition: opacity 0.6s ease;
 }
 
 .backgroundImage {
@@ -265,7 +273,7 @@ $placeholderOpacity: 0.6;
   border-top-right-radius: 20px;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
   padding-top: 10px; /* Ensure the content is pushed down below the background image */
-  padding-bottom: 150px;
+  padding-bottom: 180px;
   display: flex;
   justify-content: center;
 }
@@ -292,7 +300,7 @@ $placeholderOpacity: 0.6;
 }
 
 .square {
-  flex: 1 1 calc(33.33% - 10px);
+  flex: 1 1 calc(33.33% - 14px);
   aspect-ratio: 1 / 1;
   background-color: var(--mainButtonColor);
   border-radius: 15px;
@@ -302,12 +310,25 @@ $placeholderOpacity: 0.6;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: solid $selectedBorder var(--themeColor1);
+}
+
+.squareDisabled {
+  background-color: var(--themeColor1) !important;
+  opacity: 0.7;
+  cursor: default;
 }
 
 .square:hover {
-  background-color: var(--themeColor3); /* Change background color on hover */
+  background-color: var(--themeColor3);
+  border: solid $selectedBorder var(--themeColor3);
+  // border: 4px solid var(--themeColor3);
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.selectedSquare > .squareContent {
+  color: var(--themeColor2) !important;
 }
 
 .squareInner {
@@ -335,7 +356,7 @@ $placeholderOpacity: 0.6;
 
 @media (min-aspect-ratio: 1/1) {
   .square {
-    height: 115px;
+    height: 110px;
     aspect-ratio: auto;
   }
 
@@ -377,7 +398,7 @@ $placeholderOpacity: 0.6;
 }
 
 .squareContent:hover .sportName {
-  transform: scale(1.1); /* Increase image size on hover */
+  // transform: scale(1.1); /* Increase image size on hover */
 }
 
 .squareContent div {
@@ -391,7 +412,8 @@ $placeholderOpacity: 0.6;
   justify-content: center;
   align-items: center;
   width: 100%;
-  transition: height 0.3s ease; /* Smooth transition for height changes */
+  transition: height 0.3s ease;
+  border: solid $selectedBorder var(--themeColor1);
 }
 
 @media (max-width: 600px) {
@@ -417,16 +439,17 @@ $placeholderOpacity: 0.6;
   max-width: 100%;
   width: auto;
   object-fit: contain;
-  transition: transform 0.3s ease; /* Smooth transition for image size */
+  transition: transform 0.3s ease;
 }
 
 .imageButton:hover {
-  background-color: var(--themeColor3); /* Change background color on hover */
+  background-color: var(--themeColor3);
+  border: solid $selectedBorder var(--themeColor3);
   cursor: pointer;
 }
 
 .imageButton:hover img {
-  transform: scale(1.1); /* Increase image size on hover */
+  transform: scale(1.1);
 }
 
 .squareAfl::before {
@@ -468,7 +491,7 @@ $placeholderOpacity: 0.6;
 .comingSoon {
   font-family: var(--themeFont2);
   font-size: xx-small;
-  color: var(--themeColor2);
+  color: var(--themeColor4);
   font-size: clamp(0em, 1.5vw, 1.1rem);
 }
 
@@ -492,6 +515,7 @@ $placeholderOpacity: 0.6;
   border-radius: 15px;
   transition: all 0.3s ease;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .eventColumn {
@@ -542,4 +566,21 @@ $placeholderOpacity: 0.6;
 .leagueLogo {
   width: 50px; // Adjust the size as needed
   height: auto;
+}
+
+.checkbox {
+  color: var(--themeColor2);
+  font-size: clamp(1em, 4vw, 1.5rem);
+  cursor: pointer;
+  position: absolute; /* Add this line */
+  top: 10px; /* Adjust the position as needed */
+  left: 10px; /* Adjust the position as needed */
+}
+
+.unSelected {
+  opacity: 0.5;
+}
+
+.unSelected .eventColumn .checkbox {
+  opacity: 1 !important;
 }

@@ -27,12 +27,14 @@ function Page({ pageId, isVisible }) {
   const [showModal, setShowModal] = useState(false)
   const [showShareLink, setShowShareLink] = useState(false)
   const [selectedSport, setSelectedSport] = useState('soccer')
+  const [selectedLeague, setSelectedLeague] = useState(null)
   const [selectedLeagueTeams, setSelectedLeagueTeams] = useState({})
   const [eventsData, setEventsData] = useState([])
   const [currentLeague, setCurrentLeague] = useState(null)
-  const [loading, setLoading] = useState(false) // New loading state
+  const [loading, setLoading] = useState(false)
   const inputRef = useRef(null)
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
+  const [selectedEvents, setSelectedEvents] = useState({})
 
   const sports = [
     { sportsKey: 'soccer', comingSoon: false },
@@ -40,12 +42,11 @@ function Page({ pageId, isVisible }) {
     { sportsKey: 'cricket', comingSoon: true },
     { sportsKey: 'tennis', comingSoon: true },
     { sportsKey: 'basketball', comingSoon: true },
-    // Add more sports here if needed
   ]
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType)
-    setShowShareLink(false) // Hide the share link button when a new selection is made
+    setShowShareLink(false)
   }
 
   const handleInputChange = (event) => {
@@ -69,45 +70,50 @@ function Page({ pageId, isVisible }) {
     event.preventDefault()
     navigator.clipboard.writeText(`${window.CONFIG.appConfig.url}?invite=${guid}`)
     setShowModal(true)
-    setTimeout(() => setShowModal(false), 2000) // Hide modal after 2 seconds
+    setTimeout(() => setShowModal(false), 2000)
   }
 
   const handleLeagueClick = async (league) => {
-    // If the selected league is the same as the current league, do nothing
     if (currentLeague && league.id === currentLeague.id) {
       return
     }
 
-    // Update the current league
     setCurrentLeague(league)
+    setSelectedLeague(league.id) // Set the selected league
 
-    // Clear the events data and the events container
     setEventsData([])
     const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
     setEventsData(events)
     setSelectedLeagueTeams(teams)
+
+    // Initialize selectedEvents state for new events
+    const initialSelectedEvents = {}
+    events.forEach((event) => {
+      initialSelectedEvents[event.eventKey] = { isSelected: true }
+    })
+    setSelectedEvents(initialSelectedEvents)
   }
 
   const handleSportClick = (sportKey) => {
-    // If the selected sport is the same as the current sport, do nothing
     if (sportKey === selectedSport) {
       return
     }
     if (loading === false) {
-      // Set loading state to true
       setLoading(true)
-
-      // Update the selected sport
       setSelectedSport(sportKey)
-
-      // Reset events data and leagues data
       setEventsData([])
       setSelectedLeagueTeams({})
-      // setCurrentLeague(null)
-
-      // Set loading state to false after resetting data
+      setCurrentLeague(null)
+      setSelectedLeague(null) // Reset selected league
       setLoading(false)
     }
+  }
+
+  const toggleEventSelection = (eventKey) => {
+    setSelectedEvents((prevState) => ({
+      ...prevState,
+      [eventKey]: { isSelected: !prevState[eventKey].isSelected },
+    }))
   }
 
   useEffect(() => {
@@ -119,7 +125,6 @@ function Page({ pageId, isVisible }) {
 
   const inviteUrl = `${window.CONFIG.appConfig.url}?invite=${guid}`
 
-  // Split sports array into chunks of 5
   const sportsChunks = chunkArray(sports, 5)
 
   const getTeamBadge = (teamName) => {
@@ -151,15 +156,25 @@ function Page({ pageId, isVisible }) {
 
       {sportsChunks.map((chunk, chunkIndex) => (
         <div key={chunkIndex} className={templateStyles.container}>
-          {chunk.map((sport, index) => (
-            <div key={index} className={`${templateStyles.square} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]}`} onClick={() => handleSportClick(sport.sportsKey)}>
-              <div className={templateStyles.squareContent}>
-                <div className={templateStyles.comingSoon}> &nbsp;</div>
-                <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
-                {sport.comingSoon ? <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div> : <div className={templateStyles.comingSoon}>&nbsp;</div>}
+          {chunk.map((sport, index) =>
+            sport.comingSoon ? (
+              <div key={index} className={`${templateStyles.square} ${templateStyles.squareDisabled} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]} ${selectedSport === sport.sportsKey ? templateStyles.selectedSquare : ''}`}>
+                <div className={templateStyles.squareContent}>
+                  <div className={templateStyles.comingSoon}> &nbsp;</div>
+                  <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
+                  <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ) : (
+              <div key={index} className={`${templateStyles.square} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]} ${selectedSport === sport.sportsKey ? `${templateStyles.selectedSquare} ${templateStyles.selected}` : ''}`} onClick={() => handleSportClick(sport.sportsKey)}>
+                <div className={templateStyles.squareContent}>
+                  <div className={templateStyles.comingSoon}> &nbsp;</div>
+                  <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
+                  <div className={templateStyles.comingSoon}>&nbsp;</div>
+                </div>
+              </div>
+            )
+          )}
         </div>
       ))}
 
@@ -186,15 +201,16 @@ function Page({ pageId, isVisible }) {
 
           <div className={templateStyles.container}>
             {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
-              <div key={leagueId} className={`${templateStyles.square} ${templateStyles.imageButton}`} onClick={() => handleLeagueClick(leaguesData.sports[selectedSport][leagueId])}>
+              <div key={leagueId} className={`${templateStyles.square} ${templateStyles.imageButton} ${selectedLeague === leagueId ? templateStyles.selected : ''}`} onClick={() => handleLeagueClick(leaguesData.sports[selectedSport][leagueId])}>
                 <img src={leaguesData.sports[selectedSport][leagueId].strLogo} alt={leaguesData.sports[selectedSport][leagueId].strLeague} className={templateStyles.leagueLogo} />
               </div>
             ))}
           </div>
 
           {eventsData.map((event, index) => (
-            <div key={index} className={templateStyles.eventItem}>
-              <div className={templateStyles.eventColumn}>
+            <div key={index} className={`${templateStyles.eventItem} ${!selectedEvents[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`}>
+              <div className={templateStyles.eventColumn} onClick={() => toggleEventSelection(event.eventKey)}>
+                <div className={`${templateStyles.checkbox} ${selectedEvents[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
                 <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
                 <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
               </div>
