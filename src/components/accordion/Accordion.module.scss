@@ -1,0 +1,19 @@
+.accordion {
+    margin-bottom: 10px;
+    border: 1px solid var(--themeColor1);
+    border-radius: 15px;
+}
+
+.accordionHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.accordionContent {
+    padding: 10px;
+    background-color: var(--themeColor6);
+}
