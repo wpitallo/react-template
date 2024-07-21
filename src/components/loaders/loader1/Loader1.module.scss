@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: flex-start;
     background-color: var(--themeColor1);
-    padding-top: 20vh; /* Adjust this value to move the content down from the top */
+    padding-top: 25vh; /* Adjust this value to move the content down from the top */
     transition: opacity 0.5s ease-out; /* Add transition for opacity */
     opacity: 1; /* Initial opacity */
     z-index: 9999;
@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 250px;
 }
 
 .logo {
@@ -32,5 +33,5 @@
 }
 
 svg {
-    max-width: 10vw;
+    max-width: 60px;
 }

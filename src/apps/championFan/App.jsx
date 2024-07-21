@@ -17,7 +17,7 @@ const AppContent = () => {
 
   useEffect(() => {
     if (dataFetched) {
-      setFadeOut(true)
+      setTimeout(() => setFadeOut(true), 100)
     }
   }, [dataFetched])
 
@@ -39,6 +39,7 @@ const AppContent = () => {
     <div style={{ height: '100%' }}>
       {user && dataFetched ? (
         <>
+          <Loader fadeOut={fadeOut} />
           <MainHeader />
           <Menu />
         </>
