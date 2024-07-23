@@ -1,39 +1,41 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 body {
-    background-image: url('@assets/page-background-portrait.jpg'); /* Update with your image path */
-    background-size: cover; /* Cover the entire viewport while maintaining aspect ratio */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-attachment: fixed; /* Ensure the background image is fixed relative to the viewport */
-    display: flex;
-    justify-content: center;
-  }
-  
-  /* Background image for landscape mode */
-  @media (min-aspect-ratio: 1/1) {
-    body {
-        background-image: url('@assets/page-background-landscape.jpg'); /* Update with your image path */
-    }
-  }
+  background-image: url("@assets/page-background-portrait.jpg"); /* Update with your image path */
+  background-size: cover; /* Cover the entire viewport while maintaining aspect ratio */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-attachment: fixed; /* Ensure the background image is fixed relative to the viewport */
+  display: flex;
+  justify-content: center;
+}
 
-  .icon-play:before{
-    display: inline-block;
-     font-family: 'svg font';
-     font-style: normal;
-     font-weight: normal;
-     line-height: 1;
-     -webkit-font-smoothing: antialiased;
-     -moz-osx-font-smoothing: grayscale;
-     padding-left:5px;
-     padding-top:2px;
+/* Background image for landscape mode */
+@media (min-aspect-ratio: 1/1) {
+  body {
+    background-image: url("@assets/page-background-landscape.jpg"); /* Update with your image path */
   }
+}
+
+.icon-play:before {
+  display: inline-block;
+  font-family: "svg font";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-play {
+  padding-left: 5px;
+}
 
 /* Customize the FirebaseUI email button */
 .firebaseui-idp-button.firebaseui-idp-password {
@@ -66,11 +68,11 @@ body {
 }
 
 .firebaseui-tos {
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 
 .firebaseui-link {
-  color: #FFFFFF !important;
+  color: #ffffff !important;
   text-decoration: underline;
 }
 

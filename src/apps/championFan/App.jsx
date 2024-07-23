@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useCallback } from 'react'
 import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainHeader'
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu'
 import SignInScreen from '@components/signInScreen/SignInScreen'
@@ -11,9 +11,12 @@ import '@styles/Svg-fonts.scss'
 import '@app/styles/Variables.scss'
 import '@styles/Custom.scss'
 
+import MainLayout from '@components/layouts/default/MainLayout'
+
 const AppContent = () => {
   const { user, dataFetched, checkedAuthenticated } = useContext(DataContext)
   const [fadeOut, setFadeOut] = useState(false)
+  const [activePage, setActivePage] = useState(0)
 
   useEffect(() => {
     if (dataFetched) {
@@ -35,13 +38,18 @@ const AppContent = () => {
     }
   }, [])
 
+  const handleMenuClick = useCallback((selectedPage) => {
+    setActivePage(selectedPage)
+  }, [])
+
   return (
     <div style={{ height: '100%' }}>
       {user && dataFetched ? (
         <>
           <Loader fadeOut={fadeOut} />
           <MainHeader />
-          <Menu />
+          <MainLayout activePage={activePage} />
+          <Menu onMenuClick={handleMenuClick} />
         </>
       ) : checkedAuthenticated ? (
         user ? (

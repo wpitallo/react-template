@@ -267,15 +267,17 @@ $selectedBorder: 3px;
 .contentContainer {
   position: relative;
   margin-top: -40px;
-  min-height: calc(100vh - 255px); /* Adjust for the height of the background image */
+  min-height: calc(100vh - 255px);
   background-color: var(--themeColor6);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
-  padding-top: 10px; /* Ensure the content is pushed down below the background image */
+  padding-top: 10px;
   padding-bottom: 180px;
   display: flex;
   justify-content: center;
+  width: 100vw;
+  left: 0;
 }
 
 .contentBoxWrapper {
@@ -363,6 +365,11 @@ $selectedBorder: 3px;
   .squareInner {
     width: 155px;
     height: 155px;
+  }
+
+  .contentContainer {
+    width: var(--gridWidth);
+    left: 10vw;
   }
 }
 
@@ -509,13 +516,14 @@ $selectedBorder: 3px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px; // Adjust height as needed
+  height: 70px; // Adjust height as needed
   width: 100%;
   background-color: var(--mainButtonColor);
   border-radius: 15px;
   transition: all 0.3s ease;
   margin-bottom: 10px;
   position: relative;
+  pointer-events: none;
 }
 
 .eventColumn {
@@ -528,7 +536,7 @@ $selectedBorder: 3px;
 }
 
 .eventColumn img {
-  width: 50px; // Set an appropriate width
+  width: 35px; // Set an appropriate width
   height: auto;
 }
 

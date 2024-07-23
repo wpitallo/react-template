@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import MainLayout from '@components/layouts/default/MainLayout'
+import PropTypes from 'prop-types'
 import styles from './Menu.module.scss' // Import the SCSS module
 
 const componentConfig = window.CONFIG.appConfig.componentConfig.menu
 
-const Menu = () => {
+const Menu = ({ onMenuClick }) => {
   const [activePage, setActivePage] = useState(0)
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
@@ -61,15 +61,13 @@ const Menu = () => {
     if (selectedItem) selectedItem.classList.add(styles.active)
 
     setActivePage(selectedIndex)
+    onMenuClick(selectedIndex)
   }
 
   return (
-    <div className={styles.menuContainer}>
-      <div id="content-main" className={styles.content}>
-        <MainLayout activePage={activePage} />
-
-        <div id="menu-backBar" className={styles.menuBackBar} />
-
+    <div>
+      <div id="menu-backBar" className={styles.menuBackBar} />
+      <div className={styles.menuContainer}>
         <menu id="menu-main" ref={menuMainRef} className={styles.menu}>
           {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map((color, index) => (
             <button key={index} ref={(el) => (buttonRefs.current[index] = el)} className={`${styles.menuItem} ${index === activePage ? styles.active : ''}`} style={{ '--bgColorItem': `var(${color})` }} onClick={() => handleClick(index)}>
@@ -96,6 +94,10 @@ const Menu = () => {
       </div>
     </div>
   )
+}
+
+Menu.propTypes = {
+  onMenuClick: PropTypes.func.isRequired,
 }
 
 export default Menu

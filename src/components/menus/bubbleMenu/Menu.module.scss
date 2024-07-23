@@ -1,5 +1,7 @@
 .menuContainer {
-  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 20vw;
 }
 
 .menuIcon {
@@ -7,15 +9,8 @@
   font-size: 20pt;
   z-index: 10;
   line-height: 30px;
-}
-
-.content {
-  width: var(--contentWidth);
-  height: 100%;
-  background-color: rgba(16, 16, 16, 0);
-  display: flex;
-  align-items: flex-end;
-  opacity: 1;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .menuBackBar {
@@ -29,6 +24,7 @@
   padding-inline-start: 0;
   height: 64px;
   left: 0;
+  bottom: 0;
   z-index: 1;
 }
 
@@ -125,7 +121,7 @@
 }
 
 .menuBorderWrapper {
-  height: 39px;
+  height: 38px;
   position: absolute;
   will-change: transform;
   left: 0;
@@ -165,10 +161,12 @@
   }
   .menuBorderWrapper {
     width: 20vw;
-    height: 35px;
   }
-  .menuItem {
-    width: 20vw;
+
+  .menuContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 }
 
