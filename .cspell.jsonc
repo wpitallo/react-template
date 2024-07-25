@@ -6,6 +6,7 @@
   "language": "en_US",
   "dictionaries": ["css", "fonts", "html", "node"],
   // words - list of words to be always considered correct
+  // prettier-ignore
   "words": [
     "mkdirp",
     "tsmerge",
@@ -25,11 +26,20 @@
     "neuebold",
     "firestore",
     "rockwellregular",
+    "Avataaar",
+    "avataaars",
+    "Avataaar",
+    "Eyepatch",
+    "Frida",
+    "Magestic",
+    "Cumbia",
+    "Unibrow",
   ],
   // flagWords - list of words to be always considered incorrect
   // This is useful for offensive words and common spelling errors.
   // For example "hte" should be "the"
   "flagWords": ["hte"],
+  // prettier-ignore
   "ignorePaths": [
     "node_modules/**",
     "vite.svg",
@@ -39,5 +49,6 @@
     "**/styles/fonts/**",
     "**/src/assets/**",
     "**/fiatCurrencyList/icons/**",
+    "**/src/components/avatar/avataaars"
   ],
 }

@@ -5,7 +5,7 @@ import styles from './Menu.module.scss' // Import the SCSS module
 const componentConfig = window.CONFIG.appConfig.componentConfig.menu
 
 const Menu = ({ onMenuClick }) => {
-  const [activePage, setActivePage] = useState(0)
+  const [activePage, setActivePage] = useState(1)
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
   const menuMainRef = useRef(null)
@@ -16,10 +16,10 @@ const Menu = ({ onMenuClick }) => {
     (selectedIndex) => {
       let left
       if (orientation.includes('portrait')) {
-        left = selectedIndex === 0 ? 0 : 20 * selectedIndex
+        left = selectedIndex === 1 ? 0 : 20 * (selectedIndex - 1)
         menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
       } else {
-        left = selectedIndex === 0 ? 0 : 12 * selectedIndex
+        left = selectedIndex === 1 ? 0 : 12 * (selectedIndex - 1)
         menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
       }
     },
@@ -54,8 +54,8 @@ const Menu = ({ onMenuClick }) => {
 
     if (activePage === selectedIndex) return
 
-    const activeItem = buttonRefs.current[activePage]
-    const selectedItem = buttonRefs.current[selectedIndex]
+    const activeItem = buttonRefs.current[activePage - 1]
+    const selectedItem = buttonRefs.current[selectedIndex - 1]
 
     if (activeItem) activeItem.classList.remove(styles.active)
     if (selectedItem) selectedItem.classList.add(styles.active)
@@ -69,11 +69,14 @@ const Menu = ({ onMenuClick }) => {
       <div id="menu-backBar" className={styles.menuBackBar} />
       <div className={styles.menuContainer}>
         <menu id="menu-main" ref={menuMainRef} className={styles.menu}>
-          {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map((color, index) => (
-            <button key={index} ref={(el) => (buttonRefs.current[index] = el)} className={`${styles.menuItem} ${index === activePage ? styles.active : ''}`} style={{ '--bgColorItem': `var(${color})` }} onClick={() => handleClick(index)}>
-              <span className={`icon-${componentConfig.items[index]} ${styles.menuIcon}`} />
-            </button>
-          ))}
+          {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map((color, index) => {
+            const itemIndex = index + 1
+            return (
+              <button key={itemIndex} ref={(el) => (buttonRefs.current[index] = el)} className={`${styles.menuItem} ${itemIndex === activePage ? styles.active : ''}`} style={{ '--bgColorItem': `var(${color})` }} onClick={() => handleClick(itemIndex)}>
+                <span className={`icon-${componentConfig.items[index]} ${styles.menuIcon}`} />
+              </button>
+            )
+          })}
           <div className={styles.gradientBlock}></div>
           <div ref={menuBorderWrapperRef} className={styles.menuBorderWrapper}>
             <div className={styles.menuBorder}></div>

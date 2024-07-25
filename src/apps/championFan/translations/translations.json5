@@ -1,5 +1,8 @@
 {
   en: {
+    //
+    displayName: 'Display Name',
+
     // shared
     join: 'Join',
     create: 'Create',

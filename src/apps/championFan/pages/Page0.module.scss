@@ -4,18 +4,21 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    margin-top: -165px;
 }
 
 .row {
     display: flex;
     justify-content: center;
     width: 100%;
+    max-width: 300px;
 }
 
 .column {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%; /* Ensure column takes full width */
 }
 
 form {
@@ -47,6 +50,7 @@ select {
     justify-content: center;
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .colorColumn {
@@ -54,4 +58,15 @@ select {
     height: 50px;
     border-radius: 50%;
     margin: 0 10px;
+}
+
+.iconButtonNoBackground {
+    color: red;
+    font-size: 30px;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0; /* Adjust as needed for spacing */
 }
