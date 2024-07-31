@@ -7,6 +7,10 @@ import { translator } from '@globalHelpers/translations'
 const PlayerHeader = ({ imageSrc }) => {
   const { user } = useContext(DataContext)
 
+  if (!user || !user.hasSignedUp) {
+    return null // or return a placeholder component if needed
+  }
+
   return (
     <div className={styles.playerHeader}>
       <div className={`${styles.column} ${styles.centerAlign}`}>
@@ -15,10 +19,9 @@ const PlayerHeader = ({ imageSrc }) => {
       <div className={`${styles.column} ${styles.leftAlign} ${styles.doubleColumn}`}>
         <div className={styles.innerColumn}></div>
         <div className={styles.innerColumn}>
-          <div className={`${styles.row} ${styles.userName}`}>{user ? user.displayName : 'Guest'}</div>
+          <div className={`${styles.row} ${styles.userName}`}>{user.displayName}</div>
           <div className={styles.row}>
-            {/* {translator('caps')}: {data ? JSON.stringify(data) : 'Loading...'} */}
-            {translator('caps')} {'Loading...'}
+            {translator('caps')}: {'Loading...'}
           </div>
           <div className={styles.row}>
             {translator('strikeRate')}: {'Loading...'}

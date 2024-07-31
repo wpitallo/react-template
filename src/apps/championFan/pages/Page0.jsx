@@ -8,28 +8,106 @@ import styles from './Page0.module.scss'
 import { translator } from '@globalHelpers/translations'
 
 function Page({ pageId, isVisible }) {
+  const pageTemplateRef = useRef(null)
+
   const [avatarConfig, setAvatarConfig] = useState({
-    topType: 'LongHairMiaWallace',
-    accessoriesType: 'Prescription02',
-    hairColor: 'BrownDark',
-    facialHairType: 'Blank',
-    facialHairColor: 'BrownDark',
-    clotheType: 'Hoodie',
-    clotheColor: 'PastelBlue',
-    eyeType: 'Happy',
-    eyebrowType: 'Default',
-    mouthType: 'Smile',
-    skinColor: 'Light',
+    topType: '',
+    accessoriesType: '',
+    hairColor: '',
+    hatColor: '',
+    facialHairType: '',
+    facialHairColor: '',
+    clotheType: '',
+    clotheColor: '',
+    eyeType: '',
+    eyebrowType: '',
+    mouthType: '',
+    skinColor: '',
+    graphicType: '',
   })
 
   const [displayName, setDisplayName] = useState('')
   const inputRef = useRef(null)
+  const formRef = useRef(null)
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [modalOptions, setModalOptions] = useState([])
+  const [currentSelectName, setCurrentSelectName] = useState('')
+  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 })
+  const modalRef = useRef(null)
+  const [isFormVisible, setFormVisible] = useState(false)
 
-  const handleButtonClick = () => {}
+  // Function to get a random option from the list of options
+  const getRandomOption = (name) => {
+    const options = getOptions(name)
+    const randomIndex = Math.floor(Math.random() * options.length)
+    return options[randomIndex]
+  }
+
+  // Randomly set avatar config on page load
+  useEffect(() => {
+    const initialConfig = {
+      topType: getRandomOption('topType'),
+      accessoriesType: getRandomOption('accessoriesType'),
+      hairColor: getRandomOption('hairColor'),
+      hatColor: getRandomOption('hatColor'),
+      facialHairType: getRandomOption('facialHairType'),
+      facialHairColor: getRandomOption('facialHairColor'),
+      clotheType: getRandomOption('clotheType'),
+      clotheColor: getRandomOption('clotheColor'),
+      eyeType: getRandomOption('eyeType'),
+      eyebrowType: getRandomOption('eyebrowType'),
+      mouthType: getRandomOption('mouthType'),
+      skinColor: getRandomOption('skinColor'),
+      graphicType: getRandomOption('graphicType'),
+    }
+
+    setAvatarConfig(initialConfig)
+
+    console.log('Avatar config initialized:', initialConfig)
+
+    const handleResize = () => {
+      const viewportWidth = window.innerWidth
+      const scaleValue = clamp(1, viewportWidth / 170, 4) // Adjust these values as needed
+      document.documentElement.style.setProperty('--avatar-scale', scaleValue)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Function to randomize avatar config on button click
+  const randomizeAvatarConfig = () => {
+    const randomConfig = {
+      topType: getRandomOption('topType'),
+      accessoriesType: getRandomOption('accessoriesType'),
+      hairColor: getRandomOption('hairColor'),
+      hatColor: getRandomOption('hatColor'),
+      facialHairType: getRandomOption('facialHairType'),
+      facialHairColor: getRandomOption('facialHairColor'),
+      clotheType: getRandomOption('clotheType'),
+      clotheColor: getRandomOption('clotheColor'),
+      eyeType: getRandomOption('eyeType'),
+      eyebrowType: getRandomOption('eyebrowType'),
+      mouthType: getRandomOption('mouthType'),
+      skinColor: getRandomOption('skinColor'),
+      graphicType: getRandomOption('graphicType'),
+    }
+
+    setAvatarConfig(randomConfig)
+    console.log('Avatar config randomized:', randomConfig)
+  }
+
+  const handleButtonClick = () => {
+    setFormVisible(!isFormVisible)
+  }
 
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
       inputRef.current.blur()
+    }
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setModalOpen(false)
     }
   }
 
@@ -37,71 +115,115 @@ function Page({ pageId, isVisible }) {
     setDisplayName(event.target.value)
   }
 
+  const clamp = (min, val, max) => {
+    return Math.min(Math.max(val, min), max)
+  }
+
   useEffect(() => {
-    console.log('Avatar config updated:', avatarConfig)
-  }, [avatarConfig])
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setAvatarConfig((prevConfig) => ({
-      ...prevConfig,
-      [name]: value,
-    }))
-
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
+  }, [])
+
+  useEffect(() => {
+    if (isModalOpen && formRef.current) {
+      const formRect = formRef.current.getBoundingClientRect()
+      setModalPosition({
+        top: formRect.bottom + window.scrollY + 10, // Adjust based on desired spacing
+        left: formRect.left + window.scrollX,
+      })
+    }
+  }, [isModalOpen])
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target
+  //   setAvatarConfig((prevConfig) => ({
+  //     ...prevConfig,
+  //     [name]: value,
+  //   }))
+  // }
+
+  const openModal = (name) => {
+    setModalOptions(getOptions(name))
+    setCurrentSelectName(name)
+    setModalOpen(true)
+  }
+
+  const handleModalOptionClick = (value) => {
+    setAvatarConfig((prevConfig) => ({
+      ...prevConfig,
+      [currentSelectName]: value,
+    }))
+    setModalOpen(false)
+
+    pageTemplateRef.current.scrollToTop()
   }
 
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
+    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader} pageTopMarginStyle={'page0TopMarginStyle'} ref={pageTemplateRef}>
       <div className={templateStyles.container}>
         <div className={styles.container}>
-          <div className={styles.row}>
+          <div className={styles.avatarRow}>
             <div className={styles.column}>
-              <Avataaar style={{ width: '200px', height: '200px', transform: 'scale(4)' }} avatarStyle="Circle" {...avatarConfig} />
+              <Avataaar className={styles.avatar} avatarStyle="Circle" {...avatarConfig} />
             </div>
           </div>
-          <div className={styles.row}>
+          <div className={`${styles.row} ${styles.iconButtonRow}`}>
+            <div className={styles.column}></div>
             <div className={styles.column}>
-              <div className={`${styles.iconButtonNoBackground} icon-swap`}> </div>
+              <div className={`${styles.iconButtonNoBackground} icon-swap`} onClick={randomizeAvatarConfig}>
+                {' '}
+              </div>
             </div>
             <div className={styles.column}>
-              <div className={`${styles.iconButtonNoBackground} icon-edit`}> </div>
+              <div className={`${styles.iconButtonNoBackground} ${isFormVisible ? 'icon-check' : 'icon-edit'}`} onClick={handleButtonClick}></div>
+            </div>
+            <div className={styles.column}></div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={`${templateStyles.halfWidth}`} ref={formRef}>
+              <input type="text" value={displayName} onChange={handleInputChange} placeholder={translator('displayName')} className={templateStyles.inputField} ref={inputRef} />
             </div>
           </div>
-          <div className={styles.row}>
-            <div className={styles.column}>
-              <input type="text" value={displayName} onChange={handleInputChange} placeholder={translator('displayName')} className={styles.inputField} ref={inputRef} />
-            </div>
-          </div>
-          <div className={styles.colorsRow}>
-            {['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FF8C33', '#33FFF1'].map((color, index) => (
-              <div className={styles.colorColumn} key={index} style={{ backgroundColor: color }}></div>
-            ))}
-          </div>
-          <div className={styles.row}>
-            <form>
-              {['topType', 'accessoriesType', 'hatColor', 'hairColor', 'facialHairType', 'facialHairColor', 'clotheType', 'clotheColor', 'graphicType', 'eyeType', 'eyebrowType', 'mouthType', 'skinColor'].map((name) => (
-                <div className={styles.formGroup} key={name}>
-                  <label>
-                    {name.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}:
-                    <select name={name} value={avatarConfig[name]} onChange={handleChange}>
-                      {getOptions(name).map((option) => (
-                        <option value={option} key={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+
+          <div className={styles.rowSpacer}></div>
+          {isFormVisible && (
+            <div className={styles.row}>
+              {isModalOpen && (
+                <div style={{ top: modalPosition.top, left: modalPosition.left }}>
+                  <div className={styles.modalContent} ref={modalRef}>
+                    {modalOptions.map((option) => (
+                      <div key={option} className={styles.modalOption} onClick={() => handleModalOptionClick(option)}>
+                        {option}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
-            </form>
-          </div>
+              )}
+              {!isModalOpen && (
+                <form>
+                  {['topType', 'accessoriesType', 'hatColor', 'hairColor', 'facialHairType', 'facialHairColor', 'clotheType', 'clotheColor', 'graphicType', 'eyeType', 'eyebrowType', 'mouthType', 'skinColor'].map((name) => (
+                    <div className={styles.formGroup} key={name}>
+                      <label>
+                        <div className={styles.labelContent}>
+                          <span className={`${styles.labelText} ${styles.flexColum}`}>{name.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => str.toUpperCase())}</span>
+                          <span className={`${styles.separator}`}>:</span>
+                          <span onClick={() => openModal(name)} className={`${styles.selectBox} ${styles.flexColum}`}>
+                            {avatarConfig[name]}
+                          </span>
+                        </div>
+                      </label>
+                    </div>
+                  ))}
+                </form>
+              )}
+            </div>
+          )}
           <div className={styles.row}>
-            <div className={`${templateStyles.button}`} onClick={() => handleButtonClick()}>
-              <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('inviteOnly')}</div>
+            <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={() => handleButtonClick()}>
+              <div className={`${templateStyles.centeredText} ${templateStyles.largeButton} icon-check`}></div>
             </div>
           </div>
         </div>
@@ -126,13 +248,12 @@ const getOptions = (name) => {
     mouthType: ['Concerned', 'Default', 'Disbelief', 'Eating', 'Grimace', 'Sad', 'ScreamOpen', 'Serious', 'Smile', 'Tongue', 'Twinkle', 'Vomit'],
     skinColor: ['Tanned', 'Yellow', 'Pale', 'Light', 'Brown', 'DarkBrown', 'Black'],
   }
-
   return options[name] || []
 }
 
 Page.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
   pageId: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
 }
 
 export default Page

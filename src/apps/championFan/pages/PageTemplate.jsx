@@ -1,11 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef, useImperativeHandle, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './PageTemplate.module.scss'
 
-function PageTemplate({ pageId, isVisible, children, header: Header }) {
+const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle }, ref) {
   const scrollContainerRef = useRef(null)
   const isVisibleRef = useRef(isVisible)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
+
+  // Expose scrollToTop function to parent component
+  useImperativeHandle(ref, () => ({
+    scrollToTop() {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    },
+  }))
 
   const scrollToTop = () => {
     if (showScrollTopButton) {
@@ -32,19 +41,20 @@ function PageTemplate({ pageId, isVisible, children, header: Header }) {
         <div className={`${styles.scrollTopButton} icon-scroll-top`} style={{ opacity: showScrollTopButton ? 1 : 0 }} onClick={scrollToTop}></div>
         {Header && <Header />}
         <div className={styles.backgroundImage}></div>
-        <div className={styles.contentContainer}>
+        <div className={`${styles.contentContainer} ${styles[pageTopMarginStyle]}`}>
           <div className={styles.contentBox}>{children}</div>
         </div>
       </div>
     </div>
   )
-}
+})
 
 PageTemplate.propTypes = {
   pageId: PropTypes.string.isRequired,
   isVisible: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   header: PropTypes.elementType,
+  pageTopMarginStyle: PropTypes.string,
 }
 
 export default PageTemplate

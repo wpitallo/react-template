@@ -1,14 +1,14 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { app } from '@configuration/firebaseConfig'
-import { getFirestore, collection, getDocs } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore'
 import PropTypes from 'prop-types'
 
 const DataContext = createContext()
 
 export const DataProvider = ({ children }) => {
   const [user, setUser] = useState(null) // Initial state set to null for clarity
-
+  const [userDoc, setUserDoc] = useState(null) // Initial state set to null for clarity
   const [checkedAuthenticated, setCheckedAuthenticated] = useState(false)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
   const [dataFetched, setDataFetched] = useState(false) // New state to track if data has been fetched
@@ -81,29 +81,49 @@ export const DataProvider = ({ children }) => {
         return { events: [], teams: [] }
       }
     },
-    [db, leaguesData.sports]
+    [db, leaguesData.sports],
   )
 
   useEffect(() => {
     const auth = getAuth(app)
-    const unsubscribe = onAuthStateChanged(auth, (newUser) => {
-      if (newUser || newUser !== user) {
+    const unsubscribe = onAuthStateChanged(auth, async (newUser) => {
+      if (newUser) {
         setUser(newUser)
-        if (newUser && !dataFetched) {
-          if (document.getElementById('firebaseui-auth-container')) document.getElementById('firebaseui-auth-container').style.opacity = 0
+
+        const userDocRef = doc(db, 'users', newUser.uid)
+        const userDocSnap = await getDoc(userDocRef)
+
+        if (userDocSnap.exists()) {
+          // If user document exists, retrieve and set it
+          const userData = userDocSnap.data()
+          setUserDoc(userData)
+        } else {
+          // If user document does not exist, create it with hasSignedUp = false
+          await setDoc(userDocRef, { hasSignedUp: false })
+          setUserDoc({ hasSignedUp: false })
+        }
+
+        if (!dataFetched) {
+          if (document.getElementById('firebaseui-auth-container')) {
+            document.getElementById('firebaseui-auth-container').style.opacity = 0
+          }
           fetchData()
-        } else if (!newUser) {
-          setLeaguesData({ sports: {} })
-          setDataFetched(false) // Reset flag when user logs out
         }
       } else {
-        setCheckedAuthenticated(true)
+        // Handle the case when user is logged out
+        setUser(null)
+        setUserDoc(null)
+        setLeaguesData({ sports: {} })
+        setDataFetched(false) // Reset flag when user logs out
       }
-    })
-    return () => unsubscribe()
-  }, [user, fetchData, dataFetched])
 
-  return <DataContext.Provider value={{ user, leaguesData, fetchEventsAndTeamsData, dataFetched, checkedAuthenticated }}>{children}</DataContext.Provider>
+      setCheckedAuthenticated(true)
+    })
+
+    return () => unsubscribe()
+  }, [db, dataFetched, fetchData]) // Include db in the dependency array
+
+  return <DataContext.Provider value={{ user, userDoc, leaguesData, fetchEventsAndTeamsData, dataFetched, checkedAuthenticated }}>{children}</DataContext.Provider>
 }
 
 DataProvider.propTypes = {

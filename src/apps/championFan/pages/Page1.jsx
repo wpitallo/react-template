@@ -172,7 +172,7 @@ function Page({ pageId, isVisible }) {
                   <div className={templateStyles.comingSoon}>&nbsp;</div>
                 </div>
               </div>
-            )
+            ),
           )}
         </div>
       ))}
@@ -235,7 +235,7 @@ function Page({ pageId, isVisible }) {
 
       {!showShareLink && (
         <div className={templateStyles.container}>
-          <div className={`${templateStyles.button} ${templateStyles.style2} ${templateStyles.halfWidth}`} onClick={handleCreatePoolClick}>
+          <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={handleCreatePoolClick}>
             <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('createPool')}</div>
           </div>
         </div>
