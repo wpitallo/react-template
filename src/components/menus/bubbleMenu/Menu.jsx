@@ -5,7 +5,7 @@ import styles from './Menu.module.scss' // Import the SCSS module
 const componentConfig = window.CONFIG.appConfig.componentConfig.menu
 
 const Menu = ({ onMenuClick }) => {
-  const [activePage, setActivePage] = useState(1)
+  const [activePage, setActivePage] = useState(3)
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
   const menuMainRef = useRef(null)
@@ -23,7 +23,7 @@ const Menu = ({ onMenuClick }) => {
         menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
       }
     },
-    [orientation]
+    [orientation],
   )
 
   useEffect(() => {

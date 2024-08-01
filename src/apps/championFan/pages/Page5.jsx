@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import PageTemplate from './PageTemplate'
 import templateStyles from './PageTemplate.module.scss'
 
-function Page({ pageId, isVisible }) {
+function Page({ pageId, isVisible, setVisiblePage }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible}>
       <h1 className={templateStyles.header1}>Page 5</h1>
@@ -12,6 +12,8 @@ function Page({ pageId, isVisible }) {
         <button onClick={() => getAuth(app).signOut()} style={{}}>
           Sign out
         </button>
+
+        <button onClick={() => setVisiblePage(0)}>Profile</button>
       </div>
 
       <div className={templateStyles.container}>
@@ -56,6 +58,7 @@ function Page({ pageId, isVisible }) {
 Page.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   pageId: PropTypes.string.isRequired,
+  setVisiblePage: PropTypes.func.isRequired,
 }
 
 export default Page

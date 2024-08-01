@@ -3,6 +3,7 @@ $placeholderColor: var(--themeColor4);
 $placeholderOpacity: 0.6;
 $selectedBorder: 3px;
 $headerGap: 255px;
+$placeholderColorValidationFailed: red;
 
 .contentHeader1 {
   text-transform: uppercase;
@@ -123,6 +124,27 @@ $headerGap: 255px;
   cursor: text;
 }
 
+.validationFailed {
+  color: red !important;
+}
+
+// Include vendor prefixes for better browser support
+.validationFailed::-webkit-input-placeholder {
+  color: $placeholderColorValidationFailed !important;
+}
+
+.validationFailed:-moz-placeholder {
+  color: $placeholderColorValidationFailed !important;
+}
+
+.validationFailed::-moz-placeholder {
+  color: $placeholderColorValidationFailed !important;
+}
+
+.validationFailed:-ms-input-placeholder {
+  color: $placeholderColorValidationFailed !important;
+}
+
 .icon-send {
   margin-left: 10px;
   cursor: pointer;
@@ -184,6 +206,32 @@ $headerGap: 255px;
   background-color: var(--themeColor4) !important;
   cursor: pointer;
   border-color: var(--themeColor4) !important;
+}
+
+.closeButton {
+  color: var(--themeTextColor1) !important;
+  background-color: var(--themeColor1) !important;
+  border-color: var(--themeColor1) !important;
+}
+
+.closeButton:hover {
+  color: var(--themeTextColor1) !important;
+  background-color: var(--themeColor3) !important;
+  cursor: pointer;
+  border-color: var(--themeColor3) !important;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .closeButtonContainer {
+    scale: 0.8 !important;
+  }
+}
+
+.closeButtonContainer {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  scale: 0.6;
 }
 
 .centeredText {
@@ -622,4 +670,22 @@ $headerGap: 255px;
 
 .unSelected .eventColumn .checkbox {
   opacity: 1 !important;
+}
+
+.iconButtonNoBackground {
+  color: var(--themeColor1);
+  background-color: var(--themeColor2);
+  margin-top: 10px;
+  border-radius: clamp(1rem, 5vw, 1.5rem);
+  font-size: clamp(1rem, 5vw, 1.5rem);
+  height: clamp(2rem, 10vw, 3rem);
+  width: clamp(2rem, 10vw, 3rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconButtonNoBackground:hover {
+  cursor: pointer;
+  background-color: var(--themeColor4);
 }

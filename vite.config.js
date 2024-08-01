@@ -86,7 +86,8 @@ export default defineConfig({
       '@styles': `/src/apps/${APP_KEY}/styles`,
       '@pages': `/src/apps/${APP_KEY}/pages`,
       '@translations': `/src/apps/${APP_KEY}/translations`,
-      '@components': '/src/components'
+      '@components': '/src/components',
+      '@services': `/src/apps/${APP_KEY}/providers/services`,
     },
   },
   css: {

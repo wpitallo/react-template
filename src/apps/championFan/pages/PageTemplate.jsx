@@ -43,6 +43,9 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
         <div className={styles.backgroundImage}></div>
         <div className={`${styles.contentContainer} ${styles[pageTopMarginStyle]}`}>
           <div className={styles.contentBox}>{children}</div>
+          <div className={`${styles.closeButtonContainer}`} onClick={() => {}}>
+            <div className={`${styles.iconButtonNoBackground} ${styles.closeButton} icon-close`}></div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,87 +1,30 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { app } from '@configuration/firebaseConfig'
-import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore'
 import PropTypes from 'prop-types'
+import { fetchData } from './services/fetchData'
+import { fetchEventsAndTeamsData } from './services/fetchEventsAndTeamsData'
 
 const DataContext = createContext()
 
 export const DataProvider = ({ children }) => {
-  const [user, setUser] = useState(null) // Initial state set to null for clarity
-  const [userDoc, setUserDoc] = useState(null) // Initial state set to null for clarity
+  const [user, setUser] = useState(null)
+  const [userDoc, setUserDoc] = useState(null)
   const [checkedAuthenticated, setCheckedAuthenticated] = useState(false)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
-  const [dataFetched, setDataFetched] = useState(false) // New state to track if data has been fetched
+  const [dataFetched, setDataFetched] = useState(false)
   const db = getFirestore(app)
 
-  const fetchData = useCallback(async () => {
-    const sports = ['soccer', 'rugby'] // Add more sports as needed
-    const newLeaguesData = { sports: {} }
+  const fetchDataCallback = useCallback(() => {
+    fetchData(db, leaguesData, setLeaguesData, setDataFetched)
+  }, [db, leaguesData])
 
-    try {
-      const fetchSportData = async (sport) => {
-        if (leaguesData.sports[sport]) {
-          newLeaguesData.sports[sport] = leaguesData.sports[sport]
-          return
-        }
-
-        const querySnapshot = await getDocs(collection(db, 'sports', sport, 'leagues'))
-        const documents = querySnapshot.docs.reduce((acc, doc) => {
-          acc[doc.id] = { id: doc.id, ...doc.data() }
-          return acc
-        }, {})
-        newLeaguesData.sports[sport] = documents
-      }
-
-      await Promise.all(sports.map((sport) => fetchSportData(sport)))
-      setLeaguesData(newLeaguesData)
-      setDataFetched(true) // Set flag to true after fetching data
-    } catch (error) {
-      console.error('Error fetching data: ', error)
-    }
-  }, [db, leaguesData.sports])
-
-  const fetchEventsAndTeamsData = useCallback(
-    async (league, strCurrentSeason, sport) => {
-      try {
-        // Check if events and teams already exist in leaguesData
-        if (leaguesData.sports[sport] && leaguesData.sports[sport][league] && leaguesData.sports[sport][league].events && leaguesData.sports[sport][league].teams) {
-          return {
-            events: leaguesData.sports[sport][league].events,
-            teams: leaguesData.sports[sport][league].teams,
-          }
-        }
-
-        // Fetch events
-        const eventsQuerySnapshot = await getDocs(collection(db, 'sports', sport, 'leagues', league, 'seasons', strCurrentSeason, 'events'))
-        const events = eventsQuerySnapshot.docs.map((doc) => doc.data())
-
-        // Fetch teams
-        const teamsQuerySnapshot = await getDocs(collection(db, 'sports', sport, 'leagues', league, 'seasons', strCurrentSeason, 'teams'))
-        const teams = teamsQuerySnapshot.docs.map((doc) => doc.data())
-
-        // Update leaguesData
-        setLeaguesData((prevLeaguesData) => {
-          const newLeaguesData = { ...prevLeaguesData }
-          if (!newLeaguesData.sports[sport]) {
-            newLeaguesData.sports[sport] = {}
-          }
-          if (!newLeaguesData.sports[sport][league]) {
-            newLeaguesData.sports[sport][league] = {}
-          }
-
-          newLeaguesData.sports[sport][league].events = events
-          newLeaguesData.sports[sport][league].teams = teams
-          return newLeaguesData
-        })
-
-        return { events, teams }
-      } catch (error) {
-        console.error('Error fetching events and teams data: ', error)
-        return { events: [], teams: [] }
-      }
+  const fetchEventsAndTeamsDataCallback = useCallback(
+    (league, strCurrentSeason, sport) => {
+      return fetchEventsAndTeamsData(db, leaguesData, setLeaguesData, league, strCurrentSeason, sport)
     },
-    [db, leaguesData.sports],
+    [db, leaguesData],
   )
 
   useEffect(() => {
@@ -94,36 +37,60 @@ export const DataProvider = ({ children }) => {
         const userDocSnap = await getDoc(userDocRef)
 
         if (userDocSnap.exists()) {
-          // If user document exists, retrieve and set it
           const userData = userDocSnap.data()
           setUserDoc(userData)
+
+          // Ensure tournaments collection exists within the user document
+          const tournamentsCollectionRef = collection(userDocRef, 'tournaments')
+          const tournamentsQuery = await getDocs(tournamentsCollectionRef)
+
+          if (tournamentsQuery.empty) {
+            // Create a default document or leave it empty
+            await setDoc(doc(tournamentsCollectionRef, 'defaultTournament'), { name: 'Default Tournament' })
+          }
         } else {
-          // If user document does not exist, create it with hasSignedUp = false
-          await setDoc(userDocRef, { hasSignedUp: false })
-          setUserDoc({ hasSignedUp: false })
+          // Handle case where user document does not exist
+          await setDoc(userDocRef, {})
+          setUserDoc({})
+
+          // Ensure tournaments collection exists within the user document
+          const tournamentsCollectionRef = collection(userDocRef, 'tournaments')
+          await setDoc(doc(tournamentsCollectionRef, 'defaultTournament'), { name: 'Default Tournament' })
         }
 
         if (!dataFetched) {
           if (document.getElementById('firebaseui-auth-container')) {
             document.getElementById('firebaseui-auth-container').style.opacity = 0
           }
-          fetchData()
+          fetchDataCallback()
         }
       } else {
-        // Handle the case when user is logged out
         setUser(null)
         setUserDoc(null)
         setLeaguesData({ sports: {} })
-        setDataFetched(false) // Reset flag when user logs out
+        setDataFetched(false)
       }
 
       setCheckedAuthenticated(true)
     })
 
     return () => unsubscribe()
-  }, [db, dataFetched, fetchData]) // Include db in the dependency array
+  }, [db, dataFetched, fetchDataCallback])
 
-  return <DataContext.Provider value={{ user, userDoc, leaguesData, fetchEventsAndTeamsData, dataFetched, checkedAuthenticated }}>{children}</DataContext.Provider>
+  return (
+    <DataContext.Provider
+      value={{
+        user,
+        userDoc,
+        leaguesData,
+        fetchEventsAndTeamsData: fetchEventsAndTeamsDataCallback,
+        dataFetched,
+        checkedAuthenticated,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  )
 }
 
 DataProvider.propTypes = {

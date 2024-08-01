@@ -106,9 +106,6 @@
 .icon-check:before {
     content: "\0064";
 }
-.icon-start:before {
-    content: "\0065";
-}
 .icon-private:before {
     content: "\0066";
 }
@@ -120,4 +117,16 @@
 }
 .icon-swap:before {
     content: "\0069";
+}
+.icon-continue:before {
+    content: "\006a";
+}
+.icon-refresh:before {
+    content: "\006b";
+}
+.icon-star:before {
+    content: "\006d";
+}
+.icon-starred:before {
+    content: "\006e";
 }

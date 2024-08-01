@@ -16,7 +16,7 @@ import MainLayout from '@components/layouts/default/MainLayout'
 const AppContent = () => {
   const { user, dataFetched, checkedAuthenticated } = useContext(DataContext)
   const [fadeOut, setFadeOut] = useState(false)
-  const [activePage, setActivePage] = useState(0)
+  const [activePage, setActivePage] = useState(3)
 
   useEffect(() => {
     if (dataFetched) {
@@ -43,7 +43,7 @@ const AppContent = () => {
   }, [])
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%', position: 'relative' }}>
       {user && dataFetched ? (
         <>
           <Loader fadeOut={fadeOut} />
