@@ -5,6 +5,9 @@ $selectedBorder: 3px;
 $headerGap: 255px;
 $placeholderColorValidationFailed: red;
 
+@import "./_templateStyles/verticalContainer.scss";
+@import "./_templateStyles/avatar.scss";
+
 .contentHeader1 {
   text-transform: uppercase;
   padding-left: 5px;
@@ -688,4 +691,10 @@ $placeholderColorValidationFailed: red;
 .iconButtonNoBackground:hover {
   cursor: pointer;
   background-color: var(--themeColor4);
+}
+
+.saveAnimationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: -13px;
 }

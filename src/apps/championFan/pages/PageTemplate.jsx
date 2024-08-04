@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useEffect, useRef, useState } from 're
 import PropTypes from 'prop-types'
 import styles from './PageTemplate.module.scss'
 
-const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle }, ref) {
+const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle, exitMenuPage }, ref) {
   const scrollContainerRef = useRef(null)
   const isVisibleRef = useRef(isVisible)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
@@ -43,9 +43,11 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
         <div className={styles.backgroundImage}></div>
         <div className={`${styles.contentContainer} ${styles[pageTopMarginStyle]}`}>
           <div className={styles.contentBox}>{children}</div>
-          <div className={`${styles.closeButtonContainer}`} onClick={() => {}}>
-            <div className={`${styles.iconButtonNoBackground} ${styles.closeButton} icon-close`}></div>
-          </div>
+          {exitMenuPage && (
+            <div className={`${styles.closeButtonContainer}`} onClick={exitMenuPage}>
+              <div className={`${styles.iconButtonNoBackground} ${styles.closeButton} icon-close`}></div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -58,6 +60,7 @@ PageTemplate.propTypes = {
   children: PropTypes.node.isRequired,
   header: PropTypes.elementType,
   pageTopMarginStyle: PropTypes.string,
+  exitMenuPage: PropTypes.func,
 }
 
 export default PageTemplate

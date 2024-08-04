@@ -1,0 +1,80 @@
+.avatarEditor {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.avatarOptions {
+    width: 100%;
+}
+
+label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.labelContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.labelText {
+    text-align: right;
+}
+
+.separator {
+    margin: 0 5px;
+}
+
+.selectBox {
+    text-align: left;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    top: 430px;
+    height: 441px;
+    min-width: 300px;
+    align-content: center;
+    align-items: center;
+}
+
+.modalOption {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.modalOption:hover {
+    background-color: #f0f0f0;
+}
+
+.flexColum {
+    width: 100%;
+    flex: 1;
+}

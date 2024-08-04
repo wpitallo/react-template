@@ -1,0 +1,6 @@
+.avatar {
+    width: 200px;
+    height: 200px;
+    transform: scale(var(--avatar-scale, 1));
+    // transition: transform 0.2s ease-in-out;
+}

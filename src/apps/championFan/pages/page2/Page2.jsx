@@ -1,19 +1,23 @@
-import { getAuth } from 'firebase/auth'
-import { app } from '@configuration/firebaseConfig'
 import PropTypes from 'prop-types'
-import PageTemplate from './PageTemplate'
-import templateStyles from './PageTemplate.module.scss'
+import PageTemplate from '../PageTemplate'
+import templateStyles from '../PageTemplate.module.scss'
+import { translator } from '@globalHelpers/translations'
 
-function Page({ pageId, isVisible, setVisiblePage }) {
+function Page({ pageId, isVisible }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible}>
-      <h1 className={templateStyles.header1}>Page 5</h1>
-      <div className={templateStyles.container}>
-        <button onClick={() => getAuth(app).signOut()} style={{}}>
-          Sign out
-        </button>
+      <div className={`${templateStyles.contentHeader1} ${templateStyles.centeredText} ${templateStyles.headerMarginBottom} `}>{translator('findAPool')}</div>
 
-        <button onClick={() => setVisiblePage(0)}>Profile</button>
+      <div className={templateStyles.container}>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
+        <div className={templateStyles.square}>
+          <div className={templateStyles['square-content']}></div>
+        </div>
       </div>
 
       <div className={templateStyles.container}>
@@ -58,7 +62,6 @@ function Page({ pageId, isVisible, setVisiblePage }) {
 Page.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   pageId: PropTypes.string.isRequired,
-  setVisiblePage: PropTypes.func.isRequired,
 }
 
 export default Page

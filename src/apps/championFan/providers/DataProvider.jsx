@@ -82,6 +82,7 @@ export const DataProvider = ({ children }) => {
       value={{
         user,
         userDoc,
+        setUserDoc, // Add the setter function to the context value
         leaguesData,
         fetchEventsAndTeamsData: fetchEventsAndTeamsDataCallback,
         dataFetched,

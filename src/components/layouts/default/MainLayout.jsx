@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import Page0 from '@pages/Page0'
-import Page1 from '@pages/Page1'
-import Page2 from '@pages/Page2'
-import Page3 from '@pages/Page3'
-import Page4 from '@pages/Page4'
-import Page5 from '@pages/Page5'
+import Page0 from '@pages/page0/Page0'
+import Page1 from '@pages/page1/Page1'
+import Page2 from '@pages/page2/Page2'
+import Page3 from '@pages/page3/Page3'
+import Page4 from '@pages/page4/Page4'
+import Page5 from '@pages/page5/Page5'
 
 import './MainLayout.scss'
 
