@@ -5,11 +5,16 @@ import Modal from '@components/modals/fullScreen/ModalFullScreen'
 
 const Accordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <>
       <div className={styles.accordion}>
         <div className={styles.accordionHeader}>
-          <div className={`${styles.checkbox} ${isOpen ? 'icon-checked' : 'icon-unchecked'}`}></div>
+          <div className={`${styles.checkbox} ${isOpen ? 'icon-checked' : 'icon-unchecked'}`} onClick={toggleAccordion}></div>
           <span>{title}</span>
         </div>
       </div>

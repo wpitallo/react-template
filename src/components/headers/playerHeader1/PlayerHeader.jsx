@@ -1,21 +1,34 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './PlayerHeader.module.scss'
 import { DataContext } from '@providers/DataProvider'
 import { translator } from '@globalHelpers/translations'
+import usePage from '@providers/hooks/usePage'
+import Avatar from '@components/avatar/Avatar'
 
-const PlayerHeader = ({ imageSrc }) => {
-  const { user } = useContext(DataContext)
-  const { userDoc } = useContext(DataContext)
+const PlayerHeader = () => {
+  const { user, userDoc } = useContext(DataContext)
+  const { activePage } = usePage()
+  const [isVisible, setIsVisible] = useState(false)
 
-  if (!user || !userDoc.hasSignedUp) {
+  useEffect(() => {
+    if (activePage === 0 || activePage === 5) {
+      setIsVisible(false)
+    } else {
+      setIsVisible(true)
+    }
+  }, [activePage])
+
+  if (!user || !userDoc?.hasSignedUp || !isVisible) {
     return null
   }
 
   return (
     <div className={styles.playerHeader}>
       <div className={`${styles.column} ${styles.centerAlign}`}>
-        <div className={`${styles.imageContainer} ${!imageSrc ? styles.defaultImage : ''}`} style={{ backgroundImage: imageSrc ? `url(${imageSrc})` : '' }}></div>
+        <div className={`${styles.avatar}`}>
+          <Avatar scaleFactor={100} />
+        </div>
       </div>
       <div className={`${styles.column} ${styles.leftAlign} ${styles.doubleColumn}`}>
         <div className={styles.innerColumn}></div>

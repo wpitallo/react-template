@@ -9,6 +9,11 @@
   font-size: clamp(20px, 1vw, 30px);
 }
 
+.avatar {
+  transform: scale(0.5) !important;
+  margin-top: -50px;
+}
+
 .column {
   flex: 1;
   display: flex;

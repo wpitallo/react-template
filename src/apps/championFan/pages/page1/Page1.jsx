@@ -8,6 +8,11 @@ import ModalAlert from '@components/modals/alert/ModalAlert'
 import { DataContext } from '@providers/DataProvider'
 import Accordion from '@components/accordion/Accordion'
 
+import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
+import CheckButton from '@components/buttons/checkButton/CheckButton'
+
+import Input from '@components/input/Input'
+
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
 }
@@ -90,6 +95,7 @@ function Page({ pageId, isVisible }) {
     events.forEach((event) => {
       initialSelectedEvents[event.eventKey] = { isSelected: true }
     })
+
     setSelectedEvents(initialSelectedEvents)
   }
 
@@ -135,17 +141,13 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={templateStyles.container}>
         <div className={templateStyles.inputFieldWrapper}>
-          <input type="text" value={poolName} onChange={handleInputChange} placeholder={translator('poolName')} className={templateStyles.inputField} ref={inputRef} />
+          <Input value={poolName} onChange={handleInputChange} placeholder={translator('poolName')} ref={inputRef} />
         </div>
       </div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.button} ${selectedButton === 'public' ? templateStyles.selected : templateStyles.notSelected}`} onClick={() => handleButtonClick('public')}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('public')}</div>
-        </div>
-        <div className={`${templateStyles.button} ${selectedButton === 'inviteOnly' ? templateStyles.selected : templateStyles.notSelected}`} onClick={() => handleButtonClick('inviteOnly')}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('inviteOnly')}</div>
-        </div>
+        <CheckButton label="public" isSelected={selectedButton === 'public'} onClick={() => handleButtonClick('public')} />
+        <CheckButton label="inviteOnly" isSelected={selectedButton === 'inviteOnly'} onClick={() => handleButtonClick('inviteOnly')} />
       </div>
 
       {showModal && <ModalAlert message={translator('copiedToClipboard')} />}
@@ -185,11 +187,7 @@ function Page({ pageId, isVisible }) {
             </div>
           </div>
           <div className={templateStyles.container}>
-            <div className={`${templateStyles.button} ${templateStyles.style2} ${templateStyles.halfWidth}`} onClick={handleSendInvitationClick}>
-              <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>
-                {translator('sendInvitation')}&nbsp;&nbsp;<span className="icon-send"> </span>
-              </div>
-            </div>
+            <DefaultButton onClick={handleSendInvitationClick} label="sendInvitation" iconClass="icon-send" />
           </div>
         </div>
       )}
@@ -235,9 +233,7 @@ function Page({ pageId, isVisible }) {
 
       {!showShareLink && (
         <div className={templateStyles.container}>
-          <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={handleCreatePoolClick}>
-            <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('createPool')}</div>
-          </div>
+          <DefaultButton onClick={handleCreatePoolClick} label="createPool" iconClass="" style="actionButton" />
         </div>
       )}
     </PageTemplate>

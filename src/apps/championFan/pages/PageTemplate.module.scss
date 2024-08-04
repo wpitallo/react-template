@@ -1,6 +1,3 @@
-$controlsFontSize: 20px;
-$placeholderColor: var(--themeColor4);
-$placeholderOpacity: 0.6;
 $selectedBorder: 3px;
 $headerGap: 255px;
 $placeholderColorValidationFailed: red;
@@ -38,93 +35,11 @@ $placeholderColorValidationFailed: red;
   margin-block-end: 0.67em;
 }
 
-.largeButton {
-  font-size: $controlsFontSize;
-  height: 100%;
-}
-
-// Include vendor prefixes for better browser support
-.inputField::-webkit-input-placeholder {
-  color: $placeholderColor;
-  opacity: $placeholderOpacity;
-  font-family: "bebas_neuebold";
-}
-
-.inputField:focus::-webkit-input-placeholder {
-  color: transparent;
-  opacity: 0;
-}
-
-.inputField:-moz-placeholder {
-  color: $placeholderColor;
-  opacity: $placeholderOpacity;
-  font-family: "bebas_neuebold";
-}
-
-.inputField:focus:-moz-placeholder {
-  color: transparent;
-  opacity: 0;
-}
-
-.inputField::-moz-placeholder {
-  color: $placeholderColor;
-  opacity: $placeholderOpacity;
-  font-family: "bebas_neuebold";
-}
-
-.inputField:focus::-moz-placeholder {
-  color: transparent;
-  opacity: 0;
-}
-
-.inputField:-ms-input-placeholder {
-  color: $placeholderColor;
-  opacity: $placeholderOpacity;
-  font-family: "bebas_neuebold";
-}
-
-.inputField:focus:-ms-input-placeholder {
-  color: transparent;
-  opacity: 0;
-}
-
-.inputField::placeholder {
-  color: var(--themeColor4);
-  opacity: 0.6;
-  font-family: "bebas_neuebold";
-}
+// TO-DO move to page
 
 .inputFieldWrapper {
-  display: flex;
   align-items: center;
   width: 100%;
-}
-
-.inputField {
-  flex: 1;
-  font-family: "bebas_neuebold";
-  max-height: 40px;
-  flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
-  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
-  background-color: var(--mainButtonColor);
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  color: var(--themeColor2);
-  background-color: var(--themeColor3);
-  width: 100%;
-  text-align: center;
-  font-size: $controlsFontSize;
-  text-transform: uppercase;
-  border: none !important; // Set the border color to transparent
-  outline: none; // Remove the default outline
-  background-image: linear-gradient(to bottom, var(--themeColor4) 50%, transparent 50%);
-  background-size: 90% 2px;
-  background-repeat: no-repeat;
-  background-repeat: no-repeat;
-  background-position: center calc(100% - 8px);
-  cursor: text;
 }
 
 .validationFailed {
@@ -164,53 +79,6 @@ $placeholderColorValidationFailed: red;
   color: var(--themeColor3); // Change to the color when link is clicked
 }
 
-.selected {
-  color: var(--themeColor2);
-  background-color: var(--mainButtonColor);
-  border: solid $selectedBorder var(--themeColor2) !important;
-  cursor: pointer;
-}
-
-.notSelected {
-  color: var(--themeTextColor1);
-  background-color: var(--mainButtonColor);
-  cursor: pointer;
-}
-
-.default {
-  color: var(--themeColor4);
-  background-color: var(--themeColor3);
-}
-
-.default:hover {
-  color: var(--themeColor2);
-  background-color: var(--themeColor1);
-  cursor: pointer;
-}
-
-.halfWidth {
-  flex: 0 1 calc(50% - 10px) !important;
-}
-
-@media (max-width: 600px) {
-  .halfWidth {
-    flex: 0 1 calc(80% - 10px) !important;
-  }
-}
-
-.actionButton {
-  color: var(--themeColor3) !important;
-  background-color: var(--themeColor2) !important;
-  border-color: var(--themeColor2) !important;
-}
-
-.actionButton:hover {
-  color: var(--themeColor1) !important;
-  background-color: var(--themeColor4) !important;
-  cursor: pointer;
-  border-color: var(--themeColor4) !important;
-}
-
 .closeButton {
   color: var(--themeTextColor1) !important;
   background-color: var(--themeColor1) !important;
@@ -237,41 +105,11 @@ $placeholderColorValidationFailed: red;
   scale: 0.6;
 }
 
-.centeredText {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 .pageTemplate {
   position: absolute;
   width: 100%;
   overflow: hidden;
   pointer-events: none;
-}
-
-.button {
-  height: 36px;
-  flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
-  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
-  background-color: var(--mainButtonColor);
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  border: solid $selectedBorder var(--themeColor1);
-}
-
-.button:hover {
-  background-color: var(--themeColor3);
-  border: solid $selectedBorder var(--themeColor3);
-}
-
-@media (min-aspect-ratio: 1/1) {
-  .button {
-    aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
-  }
 }
 
 .scrollContainer {

@@ -51,6 +51,7 @@
     activePools: 'Active Pools',
 
     // page 5 - Menu
+    profile: 'Profile',
 
     //page0
     topType: 'Style',

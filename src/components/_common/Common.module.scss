@@ -1,0 +1,11 @@
+//TO-DO change name and use variables
+
+.halfWidth {
+    flex: 0 1 calc(50% - 10px) !important;
+}
+
+@media (max-width: 600px) {
+    .halfWidth {
+        flex: 0 1 calc(80% - 10px) !important;
+    }
+}

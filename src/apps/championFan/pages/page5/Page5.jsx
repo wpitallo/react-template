@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
 import Avatar from '@components/avatar/Avatar'
-import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
+import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 
 function Page({ pageId, isVisible, setVisiblePage }) {
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
+    <PageTemplate pageId={pageId} isVisible={isVisible}>
       <div className={templateStyles.container}>
         <div className={`${templateStyles.verticalContainer} ${templateStyles.avatarMarginTop}`}>
           <div className={templateStyles.avatarRow}>
@@ -17,9 +17,7 @@ function Page({ pageId, isVisible, setVisiblePage }) {
             </div>
           </div>
           <div className={templateStyles.verticalContainerRow}>
-            <div className={`${templateStyles.halfWidth}`}>
-              <button onClick={() => setVisiblePage(0)}>Profile</button>
-            </div>
+            <DefaultButton onClick={() => setVisiblePage(0)} label="profile" iconClass="icon-check" style="actionButton" />
           </div>
           <div className={templateStyles.verticalContainerRow}>
             <div className={`${templateStyles.halfWidth}`}>

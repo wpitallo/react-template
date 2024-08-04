@@ -5,11 +5,12 @@ import templateStyles from '../PageTemplate.module.scss'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import { updateUserDocument } from '@services/userService'
 import { DataContext } from '@providers/DataProvider'
-import SaveButton from '@components/buttons/SaveButton'
+import SaveButton from '@components/buttons/saveButton/SaveButton'
 import Avatar from '@components/avatar/Avatar'
 import AvatarEditor from '@components/avatar/AvatarEditor'
 import { translator } from '@globalHelpers/translations'
 import styles from './Page0.module.scss'
+import Input from '@components/input/Input'
 
 function Page({ pageId, isVisible, exitMenuPage }) {
   const pageTemplateRef = useRef(null)
@@ -18,7 +19,6 @@ function Page({ pageId, isVisible, exitMenuPage }) {
   const [saveClicked, setSaveClicked] = useState(false)
   const [displayName, setDisplayName] = useState('')
   const inputRef = useRef(null)
-  const formRef = useRef(null)
   const avatarRef = useRef(null)
   const [isFormVisible, setFormVisible] = useState(false)
   const [updatedAvatarConfig, setUpdatedAvatarConfig] = useState({})
@@ -111,9 +111,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
             <div className={templateStyles.verticalContainerColumn}></div>
           </div>
           <div className={templateStyles.verticalContainerRow}>
-            <div className={`${templateStyles.halfWidth}`} ref={formRef}>
-              <input type="text" value={displayName} onChange={handleInputChange} placeholder={translator('displayName')} className={`${templateStyles.inputField}`} ref={inputRef} />
-            </div>
+            <Input value={displayName} onChange={handleInputChange} placeholder={translator('displayName')} ref={inputRef} />
           </div>
           <div className={templateStyles.verticalContainerRowSpacer}></div>
           {isFormVisible && (

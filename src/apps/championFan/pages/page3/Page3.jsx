@@ -3,17 +3,14 @@ import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
+import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 
 function Page({ pageId, isVisible }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={`${templateStyles.container}`}>
-        <div className={`${templateStyles.button} ${templateStyles.default}`}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('join')}</div>
-        </div>
-        <div className={`${templateStyles.button} ${templateStyles.default}`}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('create')}</div>
-        </div>
+        <DefaultButton onClick={() => {}} label="join" style="default" />
+        <DefaultButton onClick={() => {}} label="create" style="default" />
       </div>
 
       <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('featuredPools')}</div>

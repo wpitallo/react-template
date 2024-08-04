@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import templateStyles from '@pages/PageTemplate.module.scss'
+import templateStyles from '../Button.module.scss'
 import { useState } from 'react'
 
 const SaveButton = ({ handleSaveClick }) => {

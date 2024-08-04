@@ -1,0 +1,81 @@
+@import url("../_common/Common.module.scss");
+
+$placeholderColor: var(--themeColor4);
+$placeholderOpacity: 0.6;
+
+.inputField {
+    flex: 1;
+    font-family: "bebas_neuebold";
+    max-height: 40px;
+    flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
+    aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+    background-color: var(--mainButtonColor);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    color: var(--themeColor2);
+    background-color: var(--themeColor3);
+    width: 100%;
+    text-align: center;
+    font-size: var(--controlsFontSize);
+    text-transform: uppercase;
+    border: none !important; // Set the border color to transparent
+    outline: none; // Remove the default outline
+    background-image: linear-gradient(to bottom, var(--themeColor4) 50%, transparent 50%);
+    background-size: 90% 2px;
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    background-position: center calc(100% - 8px);
+    cursor: text;
+}
+
+.inputField::-webkit-input-placeholder {
+    color: $placeholderColor;
+    opacity: $placeholderOpacity;
+    font-family: "bebas_neuebold";
+}
+
+.inputField:focus::-webkit-input-placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.inputField:-moz-placeholder {
+    color: $placeholderColor;
+    opacity: $placeholderOpacity;
+    font-family: "bebas_neuebold";
+}
+
+.inputField:focus:-moz-placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.inputField::-moz-placeholder {
+    color: $placeholderColor;
+    opacity: $placeholderOpacity;
+    font-family: "bebas_neuebold";
+}
+
+.inputField:focus::-moz-placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.inputField:-ms-input-placeholder {
+    color: $placeholderColor;
+    opacity: $placeholderOpacity;
+    font-family: "bebas_neuebold";
+}
+
+.inputField:focus:-ms-input-placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.inputField::placeholder {
+    color: var(--themeColor4);
+    opacity: 0.6;
+    font-family: "bebas_neuebold";
+}

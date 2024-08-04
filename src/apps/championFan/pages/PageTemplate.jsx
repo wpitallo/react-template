@@ -7,7 +7,6 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
   const isVisibleRef = useRef(isVisible)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
 
-  // Expose scrollToTop function to parent component
   useImperativeHandle(ref, () => ({
     scrollToTop() {
       if (scrollContainerRef.current) {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, forwardRef, useImperativeHandle, useCallback } from 'react'
+import { useState, useEffect, useContext, forwardRef, useImperativeHandle, useCallback, useRef } from 'react'
 import { Avatar as Avataaar } from '@components/avatar/avataaars/src'
 import { getRandomAvatarOptions, defaultAvatarState } from '@components/avatar/avatarOptions'
 import { DataContext } from '@providers/DataProvider'
@@ -9,11 +9,10 @@ const clamp = (min, val, max) => {
   return Math.min(Math.max(val, min), max)
 }
 
-const Avatar = forwardRef((props, ref) => {
+const Avatar = forwardRef(({ setParentAvatarConfig, scaleFactor }, ref) => {
   const { userDoc } = useContext(DataContext)
   const [avatarConfig, setAvatarOptions] = useState(defaultAvatarState)
-
-  const { setParentAvatarConfig } = props
+  const avatarRef = useRef(null) // Create a ref for the avatar element
 
   const updateAvatarConfig = useCallback(
     (newConfig) => {
@@ -35,14 +34,16 @@ const Avatar = forwardRef((props, ref) => {
   useEffect(() => {
     const handleResize = () => {
       const viewportWidth = window.innerWidth
-      const scaleValue = clamp(1, viewportWidth / 170, 4)
-      document.documentElement.style.setProperty('--avatar-scale', scaleValue)
+      const scaleValue = clamp(1, viewportWidth / (scaleFactor || 170), 4)
+      if (avatarRef.current) {
+        avatarRef.current.style.setProperty('--avatar-scale', scaleValue)
+      }
     }
 
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [scaleFactor])
 
   const randomizeAvatarConfig = useCallback(() => {
     const randomConfig = getRandomAvatarOptions()
@@ -56,13 +57,20 @@ const Avatar = forwardRef((props, ref) => {
     avatarConfig,
   }))
 
-  return <Avataaar className={styles.avatar} avatarStyle="Circle" {...avatarConfig} />
+  return (
+    <div ref={avatarRef} className={styles.avatarWrapper}>
+      {' '}
+      {/* Add a wrapper element with the ref */}
+      <Avataaar className={styles.avatar} avatarStyle="Circle" {...avatarConfig} />
+    </div>
+  )
 })
 
 Avatar.displayName = 'Avatar'
 
 Avatar.propTypes = {
   setParentAvatarConfig: PropTypes.func,
+  scaleFactor: PropTypes.number,
 }
 
 export default Avatar

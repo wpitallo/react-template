@@ -1,0 +1,63 @@
+$selectedBorder: 3px;
+
+@import url("../_common/Common.module.scss");
+
+.largeButton {
+    font-size: var(--controlsFontSize);
+    height: 100%;
+}
+
+.centeredText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button {
+    height: 36px;
+    flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
+    aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+    background-color: var(--mainButtonColor);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border: solid $selectedBorder var(--themeColor1);
+}
+
+.button:hover {
+    background-color: var(--themeColor3);
+    border: solid $selectedBorder var(--themeColor3);
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .button {
+        aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
+    }
+}
+
+.default {
+    color: var(--themeColor4);
+    background-color: var(--themeColor3);
+    border-color: var(--themeColor3) !important;
+}
+
+.default:hover {
+    color: var(--themeColor2);
+    background-color: var(--themeColor1);
+    cursor: pointer;
+}
+
+.actionButton {
+    color: var(--themeColor3) !important;
+    background-color: var(--themeColor2) !important;
+    border-color: var(--themeColor2) !important;
+}
+
+.actionButton:hover {
+    color: var(--themeColor1) !important;
+    background-color: var(--themeColor4) !important;
+    cursor: pointer;
+    border-color: var(--themeColor4) !important;
+}
