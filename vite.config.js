@@ -4,7 +4,8 @@ import fs from 'fs'
 import path from 'path'
 import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin'
 import { visualizer } from 'rollup-plugin-visualizer'
-import json5 from 'vite-plugin-json5';
+import json5 from 'vite-plugin-json5'
+import base64FontsPlugin from './vitePlugins/vite-plugin-base64-fonts';
 
 const APP_KEY = process.env.APP_KEY
 const CONFIG_KEY = process.env.CONFIG_KEY
@@ -58,6 +59,7 @@ export default defineConfig({
   ...serverConfig,
   publicDir: path.resolve(__dirname, `src/apps/${APP_KEY}/public`),
   plugins: [
+    base64FontsPlugin(),
     replaceImportsPlugin(CONFIG),
     htmlAliasPlugin(),
     react(),

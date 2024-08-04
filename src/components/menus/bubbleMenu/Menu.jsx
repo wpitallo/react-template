@@ -1,11 +1,24 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styles from './Menu.module.scss' // Import the SCSS module
+import usePage from '@providers/hooks/usePage'
+
+const MENU_COLORS = ['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color']
+
+const calculateOffset = (selectedIndex, orientation) => {
+  let left
+  if (orientation.includes('portrait')) {
+    left = selectedIndex === 1 ? 0 : 20 * (selectedIndex - 1)
+  } else {
+    left = selectedIndex === 1 ? 0 : 12 * (selectedIndex - 1)
+  }
+  return left
+}
 
 const componentConfig = window.CONFIG.appConfig.componentConfig.menu
 
-const Menu = ({ onMenuClick }) => {
-  const [activePage, setActivePage] = useState(3)
+const Menu = () => {
+  const { activePage, handleMenuClick } = usePage()
   const [orientation, setOrientation] = useState(window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
   const menuMainRef = useRef(null)
@@ -14,14 +27,8 @@ const Menu = ({ onMenuClick }) => {
 
   const _offsetMenuBorder = useCallback(
     (selectedIndex) => {
-      let left
-      if (orientation.includes('portrait')) {
-        left = selectedIndex === 1 ? 0 : 20 * (selectedIndex - 1)
-        menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
-      } else {
-        left = selectedIndex === 1 ? 0 : 12 * (selectedIndex - 1)
-        menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
-      }
+      const left = calculateOffset(selectedIndex, orientation)
+      menuBorderWrapperRef.current.style.transform = `translate3d(${left}vw, 0, 0)`
     },
     [orientation],
   )
@@ -60,8 +67,7 @@ const Menu = ({ onMenuClick }) => {
     if (activeItem) activeItem.classList.remove(styles.active)
     if (selectedItem) selectedItem.classList.add(styles.active)
 
-    setActivePage(selectedIndex)
-    onMenuClick(selectedIndex)
+    handleMenuClick(selectedIndex)
   }
 
   return (
@@ -69,7 +75,7 @@ const Menu = ({ onMenuClick }) => {
       <div id="menu-backBar" className={styles.menuBackBar} />
       <div className={styles.menuContainer}>
         <menu id="menu-main" ref={menuMainRef} className={styles.menu}>
-          {['--menu1Color', '--menu2Color', '--menu3Color', '--menu4Color', '--menu5Color'].map((color, index) => {
+          {MENU_COLORS.map((color, index) => {
             const itemIndex = index + 1
             return (
               <button key={itemIndex} ref={(el) => (buttonRefs.current[index] = el)} className={`${styles.menuItem} ${itemIndex === activePage ? styles.active : ''}`} style={{ '--bgColorItem': `var(${color})` }} onClick={() => handleClick(itemIndex)}>
@@ -100,7 +106,7 @@ const Menu = ({ onMenuClick }) => {
 }
 
 Menu.propTypes = {
-  onMenuClick: PropTypes.func.isRequired,
+  onMenuClick: PropTypes.func,
 }
 
 export default Menu

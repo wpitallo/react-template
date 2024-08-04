@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
 import Avatar from '@components/avatar/Avatar'
+import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 
 function Page({ pageId, isVisible, setVisiblePage }) {
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible}>
+    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={templateStyles.container}>
         <div className={`${templateStyles.verticalContainer} ${templateStyles.avatarMarginTop}`}>
           <div className={templateStyles.avatarRow}>

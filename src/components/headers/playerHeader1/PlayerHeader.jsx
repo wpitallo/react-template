@@ -6,9 +6,10 @@ import { translator } from '@globalHelpers/translations'
 
 const PlayerHeader = ({ imageSrc }) => {
   const { user } = useContext(DataContext)
+  const { userDoc } = useContext(DataContext)
 
-  if (!user || !user.hasSignedUp) {
-    return null // or return a placeholder component if needed
+  if (!user || !userDoc.hasSignedUp) {
+    return null
   }
 
   return (
@@ -19,7 +20,7 @@ const PlayerHeader = ({ imageSrc }) => {
       <div className={`${styles.column} ${styles.leftAlign} ${styles.doubleColumn}`}>
         <div className={styles.innerColumn}></div>
         <div className={styles.innerColumn}>
-          <div className={`${styles.row} ${styles.userName}`}>{user.displayName}</div>
+          <div className={`${styles.row} ${styles.userName}`}>{userDoc.displayName}</div>
           <div className={styles.row}>
             {translator('caps')}: {'Loading...'}
           </div>

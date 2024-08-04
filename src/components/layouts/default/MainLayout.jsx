@@ -1,22 +1,17 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-
 import Page0 from '@pages/page0/Page0'
 import Page1 from '@pages/page1/Page1'
 import Page2 from '@pages/page2/Page2'
 import Page3 from '@pages/page3/Page3'
 import Page4 from '@pages/page4/Page4'
 import Page5 from '@pages/page5/Page5'
-
 import './MainLayout.scss'
-
 import { DataContext } from '@providers/DataProvider'
+import usePage from '@providers/hooks/usePage'
 
-MainLayout.propTypes = {
-  activePage: PropTypes.number,
-}
-
-function MainLayout({ activePage = 2 }) {
+const MainLayout = () => {
+  const { activePage } = usePage()
   const [visiblePage, setVisiblePage] = useState(activePage)
 
   const { userDoc } = useContext(DataContext)
@@ -39,6 +34,10 @@ function MainLayout({ activePage = 2 }) {
       <Page5 pageId="page5" isVisible={visiblePage === 5 && userDoc.hasSignedUp} setVisiblePage={setVisiblePage} />
     </div>
   )
+}
+
+MainLayout.propTypes = {
+  activePage: PropTypes.number,
 }
 
 export default MainLayout

@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext, useCallback } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainHeader'
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu'
 import SignInScreen from '@components/signInScreen/SignInScreen'
 import { DataProvider, DataContext } from '@providers/DataProvider'
 import Loader from '@components/loaders/loader1/Loader1'
+import { PageProvider } from '@providers/PageProvider'
 import './App.scss'
 import '@styles/Scrollbars.scss'
 import '@styles/Fonts.scss'
@@ -16,7 +17,6 @@ import MainLayout from '@components/layouts/default/MainLayout'
 const AppContent = () => {
   const { user, dataFetched, checkedAuthenticated } = useContext(DataContext)
   const [fadeOut, setFadeOut] = useState(false)
-  const [activePage, setActivePage] = useState(3)
 
   useEffect(() => {
     if (dataFetched) {
@@ -38,18 +38,14 @@ const AppContent = () => {
     }
   }, [])
 
-  const handleMenuClick = useCallback((selectedPage) => {
-    setActivePage(selectedPage)
-  }, [])
-
   return (
     <div style={{ height: '100%', position: 'relative' }}>
       {user && dataFetched ? (
         <>
           <Loader fadeOut={fadeOut} />
           <MainHeader />
-          <MainLayout activePage={activePage} />
-          <Menu onMenuClick={handleMenuClick} />
+          <MainLayout />
+          <Menu />
         </>
       ) : checkedAuthenticated ? (
         user ? (
@@ -66,7 +62,9 @@ const AppContent = () => {
 
 const App = () => (
   <DataProvider>
-    <AppContent />
+    <PageProvider>
+      <AppContent />
+    </PageProvider>
   </DataProvider>
 )
 
