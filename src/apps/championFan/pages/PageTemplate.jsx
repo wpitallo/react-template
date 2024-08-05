@@ -2,6 +2,8 @@ import { forwardRef, useImperativeHandle, useEffect, useRef, useState } from 're
 import PropTypes from 'prop-types'
 import styles from './PageTemplate.module.scss'
 
+import IconButton from '@components/buttons/iconButton/IconButton'
+
 const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle, exitMenuPage }, ref) {
   const scrollContainerRef = useRef(null)
   const isVisibleRef = useRef(isVisible)
@@ -43,8 +45,8 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
         <div className={`${styles.contentContainer} ${styles[pageTopMarginStyle]}`}>
           <div className={styles.contentBox}>{children}</div>
           {exitMenuPage && (
-            <div className={`${styles.closeButtonContainer}`} onClick={exitMenuPage}>
-              <div className={`${styles.iconButtonNoBackground} ${styles.closeButton} icon-close`}></div>
+            <div className={`${styles.closeButtonContainer} ${styles.closeButton}`}>
+              <IconButton iconClass="icon-close" onClick={exitMenuPage} />
             </div>
           )}
         </div>

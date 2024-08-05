@@ -1,0 +1,127 @@
+$selectedBorder: 3px;
+
+@import url("@styles/SquareAndTextButtonBackgrounds.scss");
+
+.square {
+    flex: 1 1 calc(33.33% - 14px);
+    aspect-ratio: 1 / 1;
+    background-color: var(--mainButtonColor);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid $selectedBorder var(--themeColor1);
+}
+
+.squareDisabled {
+    background-color: var(--themeColor1) !important;
+    opacity: 0.7;
+    cursor: default;
+}
+
+.square:hover {
+    background-color: var(--themeColor3);
+    border: solid $selectedBorder var(--themeColor3);
+    // border: 4px solid var(--themeColor3);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.selectedSquare > .squareContent {
+    color: var(--themeColor2) !important;
+}
+
+.squareInner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.squareInner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.4; /* Adjust this value to change the opacity */
+}
+
+.squareInner > * {
+    position: relative;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .square {
+        height: 110px;
+        aspect-ratio: auto;
+    }
+
+    .squareInner {
+        width: 155px;
+        height: 155px;
+    }
+}
+
+.square::before {
+    opacity: 0.3;
+    content: "";
+    position: absolute; /* Change to absolute positioning */
+    height: 100%;
+    padding-left: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.squareContent {
+    position: absolute; /* Position content absolutely */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--themeTextColor1); /* Adjust the text color as needed */
+    font-size: 1em; /* Set a base font size for scaling */
+}
+
+.squareContent .sportName {
+    transition: transform 0.1s linear;
+}
+
+.squareContent:hover .sportName {
+    // transform: scale(1.1); /* Increase image size on hover */
+}
+
+.squareContent:hover .sportName {
+    // transform: scale(1.1); /* Increase image size on hover */
+}
+
+.squareContent div {
+    margin: 5px 0;
+    max-height: 100%;
+}
+
+.disabled {
+    font-family: var(--themeFont2);
+    font-size: xx-small;
+    color: var(--themeColor4);
+    font-size: clamp(0em, 1.5vw, 1.1rem);
+}
+
+.mainText {
+    font-size: 4vw;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .mainText {
+        font-size: clamp(1em, 2vw, 1.5rem);
+    }
+}

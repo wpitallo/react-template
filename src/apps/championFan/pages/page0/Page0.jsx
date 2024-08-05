@@ -11,6 +11,7 @@ import AvatarEditor from '@components/avatar/AvatarEditor'
 import { translator } from '@globalHelpers/translations'
 import styles from './Page0.module.scss'
 import Input from '@components/input/Input'
+import IconButton from '@components/buttons/iconButton/IconButton'
 
 function Page({ pageId, isVisible, exitMenuPage }) {
   const pageTemplateRef = useRef(null)
@@ -101,12 +102,10 @@ function Page({ pageId, isVisible, exitMenuPage }) {
           <div className={`${templateStyles.verticalContainerRow} ${styles.iconButtonRow}`}>
             <div className={templateStyles.verticalContainerColumn}></div>
             <div className={templateStyles.verticalContainerColumn}>
-              <div className={`${templateStyles.iconButtonNoBackground} icon-swap`} onClick={avatarRef.current?.randomizeAvatarConfig}>
-                {' '}
-              </div>
+              <IconButton iconClass="icon-swap" onClick={avatarRef.current?.randomizeAvatarConfig} />
             </div>
             <div className={templateStyles.verticalContainerColumn}>
-              <div className={`${templateStyles.iconButtonNoBackground} ${isFormVisible ? 'icon-check' : 'icon-edit'}`} onClick={handleAvatarEditCompleteClick}></div>
+              <IconButton iconClass={isFormVisible ? 'icon-check' : 'icon-edit'} onClick={handleAvatarEditCompleteClick} />
             </div>
             <div className={templateStyles.verticalContainerColumn}></div>
           </div>

@@ -4,6 +4,7 @@ import templateStyles from '../PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
+import SquareTextAndImageButton from '@components/buttons/squareTextAndImageButton/SquareTextAndImageButton'
 
 function Page({ pageId, isVisible }) {
   return (
@@ -17,29 +18,10 @@ function Page({ pageId, isVisible }) {
       <div className={`${templateStyles.contentHeader2}`}>{translator('featuredPoolsSubHeading')}</div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.square} ${templateStyles}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('')}</div>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('')}</div>
-            <div className={templateStyles.comingSoon}>{translator('')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('')}</div>
-            <div className={templateStyles.comingSoon}>{translator('')}</div>
-          </div>
-        </div>
+        <SquareTextAndImageButton onClick={() => {}} />
+        <SquareTextAndImageButton onClick={() => {}} />
+        <SquareTextAndImageButton onClick={() => {}} />
+        <SquareTextAndImageButton onClick={() => {}} />
       </div>
 
       <div className={templateStyles.container}></div>
@@ -48,81 +30,21 @@ function Page({ pageId, isVisible }) {
       <div className={templateStyles.contentHeader2}>{translator('sportsSubHeading')}</div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.square} ${templateStyles.squareSoccer}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('soccer')}</div>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareRugby}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('rugby')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareCricket}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('cricket')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
+        <SquareTextAndImageButton mainText={'soccer'} backgroundSvgIcon={`squareSoccer`} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'rugby'} backgroundSvgIcon={`squareRugby`} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'cricket'} backgroundSvgIcon={`squareCricket`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
       </div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.square} ${templateStyles.squareTennis}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('tennis')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareBasketball}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('basketball')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareBaseball}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('baseball')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
+        <SquareTextAndImageButton mainText={'tennis'} backgroundSvgIcon={`squareTennis`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'basketball'} backgroundSvgIcon={`squareBasketball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'baseball'} backgroundSvgIcon={`squareBaseball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
       </div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.square} ${templateStyles.squareIceHockey}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('iceHockey')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareAfl}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('afl')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
-
-        <div className={`${templateStyles.square} ${templateStyles.squareAmericanFootball}`}>
-          <div className={templateStyles.squareContent}>
-            <div className={templateStyles.comingSoon}>&nbsp;</div>
-            <div className={templateStyles.sportName}>{translator('americanFootball')}</div>
-            <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-          </div>
-        </div>
+        <SquareTextAndImageButton mainText={'iceHockey'} backgroundSvgIcon={`squareIceHockey`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'afl'} backgroundSvgIcon={`squareAfl`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainText={'americanFootball'} backgroundSvgIcon={`squareAmericanFootball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
       </div>
     </PageTemplate>
   )

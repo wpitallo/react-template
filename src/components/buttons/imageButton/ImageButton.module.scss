@@ -1,0 +1,68 @@
+$selectedBorder: 3px;
+
+.square {
+    flex: 1 1 calc(33.33% - 14px);
+    aspect-ratio: 1 / 1;
+    background-color: var(--mainButtonColor);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid $selectedBorder var(--themeColor1);
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .square {
+        height: 110px;
+        aspect-ratio: auto;
+    }
+}
+
+.imageButton {
+    height: clamp(50px, 10vh, 100px); /* Default values */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: height 0.3s ease;
+    border: solid $selectedBorder var(--themeColor1);
+}
+
+@media (max-width: 600px) {
+    .imageButton {
+        height: clamp(30px, 8vh, 80px); /* Values for small screens */
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+    .imageButton {
+        height: clamp(40px, 12vh, 90px); /* Values for medium screens */
+    }
+}
+
+@media (min-width: 1201px) {
+    .imageButton {
+        height: clamp(50px, 15vh, 110px); /* Values for large screens */
+    }
+}
+
+.imageButton img {
+    max-height: 80%;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.imageButton:hover {
+    background-color: var(--themeColor3);
+    border: solid $selectedBorder var(--themeColor3);
+    cursor: pointer;
+}
+
+.imageButton:hover img {
+    transform: scale(1.1);
+}

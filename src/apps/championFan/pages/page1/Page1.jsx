@@ -7,11 +7,11 @@ import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import ModalAlert from '@components/modals/alert/ModalAlert'
 import { DataContext } from '@providers/DataProvider'
 import Accordion from '@components/accordion/Accordion'
-
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import CheckButton from '@components/buttons/checkButton/CheckButton'
-
+import ImageButton from '@components/buttons/imageButton/ImageButton'
 import Input from '@components/input/Input'
+import SquareTextAndImageButton from '@components/buttons/squareTextAndImageButton/SquareTextAndImageButton'
 
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
@@ -157,25 +157,9 @@ function Page({ pageId, isVisible }) {
 
       {sportsChunks.map((chunk, chunkIndex) => (
         <div key={chunkIndex} className={templateStyles.container}>
-          {chunk.map((sport, index) =>
-            sport.comingSoon ? (
-              <div key={index} className={`${templateStyles.square} ${templateStyles.squareDisabled} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]} ${selectedSport === sport.sportsKey ? templateStyles.selectedSquare : ''}`}>
-                <div className={templateStyles.squareContent}>
-                  <div className={templateStyles.comingSoon}> &nbsp;</div>
-                  <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
-                  <div className={templateStyles.comingSoon}>{translator('comingSoon')}</div>
-                </div>
-              </div>
-            ) : (
-              <div key={index} className={`${templateStyles.square} ${templateStyles[`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`]} ${selectedSport === sport.sportsKey ? `${templateStyles.selectedSquare} ${templateStyles.selected}` : ''}`} onClick={() => handleSportClick(sport.sportsKey)}>
-                <div className={templateStyles.squareContent}>
-                  <div className={templateStyles.comingSoon}> &nbsp;</div>
-                  <div className={templateStyles.sportName}>{translator(sport.sportsKey)}</div>
-                  <div className={templateStyles.comingSoon}>&nbsp;</div>
-                </div>
-              </div>
-            ),
-          )}
+          {chunk.map((sport, index) => (
+            <SquareTextAndImageButton key={index} mainText={sport.sportsKey} isSelected={selectedSport === sport.sportsKey} onClick={() => handleSportClick(sport.sportsKey)} backgroundSvgIcon={`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`} secondText={sport.comingSoon ? 'comingSoon' : undefined} disabled={sport.comingSoon ? true : undefined} />
+          ))}
         </div>
       ))}
 
@@ -198,9 +182,7 @@ function Page({ pageId, isVisible }) {
 
           <div className={templateStyles.container}>
             {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
-              <div key={leagueId} className={`${templateStyles.square} ${templateStyles.imageButton} ${selectedLeague === leagueId ? templateStyles.selected : ''}`} onClick={() => handleLeagueClick(leaguesData.sports[selectedSport][leagueId])}>
-                <img src={leaguesData.sports[selectedSport][leagueId].strLogo} alt={leaguesData.sports[selectedSport][leagueId].strLeague} className={templateStyles.leagueLogo} />
-              </div>
+              <ImageButton key={leagueId} leagueId={leagueId} leagueData={leaguesData.sports[selectedSport][leagueId]} selectedLeague={selectedLeague} onClick={handleLeagueClick} />
             ))}
           </div>
 
