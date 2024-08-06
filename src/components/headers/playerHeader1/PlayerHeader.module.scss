@@ -72,6 +72,10 @@
   border-bottom: none;
 }
 
+.innerColumn:first-child {
+  max-width: 40%;
+}
+
 @media (max-width: 800px) {
   .innerColumn:first-child {
     max-width: 20%;
@@ -80,7 +84,7 @@
 
 @media (max-width: 500px) {
   .innerColumn:first-child {
-    max-width: 0%;
+    max-width: 10%;
   }
 
   .userName {

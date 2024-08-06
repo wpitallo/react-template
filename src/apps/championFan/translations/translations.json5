@@ -36,6 +36,12 @@
     leaguesTournaments: 'Leagues / Tournaments',
     timeFrame: 'Time Frame',
 
+    allEvents: 'All Events',
+    thisWeek: 'This Week',
+    today: 'Today',
+    thisMonth: 'This Month',
+    selectDates: 'Select Dates',
+
     createPoolSportsSubHeading: 'Filter leagues / tournaments by sport',
 
     // page 2 - Join / Find a pool
@@ -52,6 +58,7 @@
 
     // page 5 - Menu
     profile: 'Profile',
+    signOut: 'Sign Out',
 
     //page0
     topType: 'Style',

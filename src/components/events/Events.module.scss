@@ -1,0 +1,74 @@
+.teamName {
+    font-size: clamp(0.8em, 2vw, 1.5rem);
+    color: var(--themeTextColor1);
+    font-family: var(--themeFont2);
+    margin-top: 7px;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .teamName {
+        font-size: clamp(1em, 1.2vw, 1.5rem);
+    }
+}
+
+.eventMiddleColumn {
+    font-size: clamp(0.8em, 1vw, 1.5rem);
+    text-align: center;
+    flex: 0.6 1;
+    color: var(--themeTextColor1);
+    font-family: var(--themeFont2);
+}
+
+.eventDateMiddle {
+    font-size: 1vw !important;
+}
+
+.eventItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px; // Adjust height as needed
+    width: 100%;
+    background-color: var(--mainButtonColor);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.eventColumn {
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.eventColumn img {
+    width: 35px; // Set an appropriate width
+    height: auto;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    .eventDate {
+        font-size: clamp(1em, 1.2vw, 1.5rem);
+    }
+}
+
+.checkbox {
+    color: var(--themeColor2);
+    font-size: clamp(1em, 4vw, 1.5rem);
+    cursor: pointer;
+    position: absolute; /* Add this line */
+    top: 10px; /* Adjust the position as needed */
+    left: 10px; /* Adjust the position as needed */
+}
+
+.unSelected {
+    opacity: 0.5;
+}
+
+.unSelected .eventColumn .checkbox {
+    opacity: 1 !important;
+}

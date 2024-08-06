@@ -10,21 +10,18 @@ function Page({ pageId, isVisible, setVisiblePage }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible}>
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.verticalContainer} ${templateStyles.avatarMarginTop}`}>
+        <div className={`${templateStyles.verticalContainer} ${templateStyles.avatarMarginTop} `}>
           <div className={templateStyles.avatarRow}>
             <div className={templateStyles.verticalContainerColumn}>
               <Avatar />
             </div>
           </div>
-          <div className={templateStyles.verticalContainerRow}>
+          <div className={`${templateStyles.verticalContainerRow} ${templateStyles.firstButton}`}>
             <DefaultButton onClick={() => setVisiblePage(0)} label="profile" iconClass="icon-check" style="actionButton" />
           </div>
           <div className={templateStyles.verticalContainerRow}>
-            <div className={`${templateStyles.halfWidth}`}>
-              <button onClick={() => getAuth(app).signOut()} style={{}}>
-                Sign out
-              </button>
-            </div>
+            <DefaultButton onClick={() => getAuth(app).signOut()} label="signOut" iconClass="icon-check" style="actionButton" />
+            <div className={`${templateStyles.halfWidth}`}></div>
           </div>
         </div>
       </div>

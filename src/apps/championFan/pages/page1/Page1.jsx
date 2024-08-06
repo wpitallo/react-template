@@ -6,7 +6,8 @@ import { translator } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import ModalAlert from '@components/modals/alert/ModalAlert'
 import { DataContext } from '@providers/DataProvider'
-import Accordion from '@components/accordion/Accordion'
+import Events from '@components/events/Events'
+import EventsFilter from '@components/eventsFilter/EventsFilter'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import CheckButton from '@components/buttons/checkButton/CheckButton'
 import ImageButton from '@components/buttons/imageButton/ImageButton'
@@ -114,13 +115,6 @@ function Page({ pageId, isVisible }) {
     }
   }
 
-  const toggleEventSelection = (eventKey) => {
-    setSelectedEvents((prevState) => ({
-      ...prevState,
-      [eventKey]: { isSelected: !prevState[eventKey].isSelected },
-    }))
-  }
-
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
@@ -131,11 +125,6 @@ function Page({ pageId, isVisible }) {
   const inviteUrl = `${window.CONFIG.appConfig.url}?invite=${guid}`
 
   const sportsChunks = chunkArray(sports, 5)
-
-  const getTeamBadge = (teamName) => {
-    const team = selectedLeagueTeams.find((team) => team.strTeam === teamName)
-    return team ? team.strBadge : ''
-  }
 
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
@@ -187,26 +176,9 @@ function Page({ pageId, isVisible }) {
           </div>
 
           {selectedLeague && (
-            <Accordion title={translator('events')}>
-              {eventsData.map((event, index) => (
-                <div key={index} className={`${templateStyles.eventItem} ${!selectedEvents[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`}>
-                  <div className={templateStyles.eventColumn} onClick={() => toggleEventSelection(event.eventKey)}>
-                    <div className={`${templateStyles.checkbox} ${selectedEvents[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                    <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
-                    <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
-                  </div>
-                  <div className={templateStyles.eventMiddleColumn}>
-                    <div>VS</div>
-                    <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
-                    <div>{event.dateEvent}</div>
-                  </div>
-                  <div className={templateStyles.eventColumn}>
-                    <img src={getTeamBadge(event.strAwayTeam)} alt={`${event.strAwayTeam} leagueLogo`} />
-                    <div className={templateStyles.teamName}>{event.strAwayTeam}</div>
-                  </div>
-                </div>
-              ))}
-            </Accordion>
+            <EventsFilter title={translator('events')}>
+              <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
+            </EventsFilter>
           )}
         </div>
       )}

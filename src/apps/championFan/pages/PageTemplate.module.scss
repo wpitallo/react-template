@@ -3,7 +3,6 @@ $headerGap: 255px;
 $placeholderColorValidationFailed: red;
 
 @import "./_templateStyles/verticalContainer.scss";
-@import "./_templateStyles/avatar.scss";
 
 .contentHeader1 {
   text-transform: uppercase;
@@ -215,87 +214,12 @@ $placeholderColorValidationFailed: red;
   padding-top: 20px;
 }
 
-.eventItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 70px; // Adjust height as needed
-  width: 100%;
-  background-color: var(--mainButtonColor);
-  border-radius: 15px;
-  transition: all 0.3s ease;
-  margin-bottom: 10px;
-  position: relative;
-  pointer-events: none;
-}
-
-.eventColumn {
-  flex: 1 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.eventColumn img {
-  width: 35px; // Set an appropriate width
-  height: auto;
-}
-
-.teamName {
-  font-size: clamp(0.8em, 2vw, 1.5rem);
-  color: var(--themeTextColor1);
-  font-family: var(--themeFont2);
-  margin-top: 7px;
-}
-
-@media (min-aspect-ratio: 1/1) {
-  .teamName {
-    font-size: clamp(1em, 1.2vw, 1.5rem);
-  }
-}
-
-.eventMiddleColumn {
-  font-size: clamp(0.8em, 1vw, 1.5rem);
-  text-align: center;
-  flex: 0.6 1;
-  color: var(--themeTextColor1);
-  font-family: var(--themeFont2);
-}
-
-.eventDateMiddle {
-  font-size: 1vw !important;
-}
-
-@media (min-aspect-ratio: 1/1) {
-  .eventDate {
-    font-size: clamp(1em, 1.2vw, 1.5rem);
-  }
-}
-
 .leagueLogo {
   width: 50px; // Adjust the size as needed
   height: auto;
 }
 
-.checkbox {
-  color: var(--themeColor2);
-  font-size: clamp(1em, 4vw, 1.5rem);
-  cursor: pointer;
-  position: absolute; /* Add this line */
-  top: 10px; /* Adjust the position as needed */
-  left: 10px; /* Adjust the position as needed */
-}
-
-.unSelected {
-  opacity: 0.5;
-}
-
-.unSelected .eventColumn .checkbox {
-  opacity: 1 !important;
-}
-
+// duplicated
 .closeButton > div {
   color: var(--themeTextColor1) !important;
   background-color: var(--themeColor1) !important;
@@ -307,4 +231,12 @@ $placeholderColorValidationFailed: red;
   background-color: var(--themeColor3) !important;
   cursor: pointer;
   border-color: var(--themeColor3) !important;
+}
+
+.firstButton {
+  padding-top: clamp(0px, 4vw, 50px);
+}
+
+.avatarMarginTop {
+  margin-top: -165px;
 }

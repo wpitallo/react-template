@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--themeColor6);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,22 +12,34 @@
 }
 
 .modalContent {
-    background-color: var(--themeColor6);
     padding: 20px;
     max-height: 100%;
     overflow-y: auto;
     width: 100%;
-    margin-top: 560px;
+    margin-top: 275px;
     touch-action: pan-y;
 }
 
+// duplicated
+
 .closeButton {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 65px;
+    right: 15px;
     cursor: pointer;
-    font-size: 1.5rem;
-    color: var(--themeColor1);
+}
+
+.closeButton > div {
+    color: var(--themeTextColor1) !important;
+    background-color: var(--themeColor1) !important;
+    border-color: var(--themeColor1) !important;
+}
+
+.closeButton > div:hover {
+    color: var(--themeTextColor1) !important;
+    background-color: var(--themeColor3) !important;
+    cursor: pointer;
+    border-color: var(--themeColor3) !important;
 }
 
 .filter {

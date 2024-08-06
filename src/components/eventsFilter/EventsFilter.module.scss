@@ -1,0 +1,87 @@
+.eventsFilter {
+    margin-bottom: 10px;
+    border: 1px solid var(--themeColor1);
+    border-radius: 15px;
+}
+
+.eventsFilterHeader {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.eventsFilterContent {
+    padding: 10px;
+    background-color: var(--themeColor6);
+}
+
+.filter {
+    padding: 10px;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.flexRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dateRangePickerContainer {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: clamp(130px, 12vw, 240px);
+}
+
+.radioButton {
+    font-size: clamp(1em, 2.2vw, 1.5rem);
+}
+
+.radioButtonWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Adjust gap as needed */
+}
+
+.radioButtonWrapper > .flexItem {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adjust gap between label and radio button */
+}
+
+.responsiveRadioButton {
+    font-size: clamp(1.3rem, 2vw, 1.5rem); /* Adjust min, preferred, and max font sizes as needed */
+}
+
+.responsiveRadioButton span {
+    min-width: 100px;
+    padding-left: 10px;
+}
+
+.responsiveRadioButton {
+    cursor: pointer;
+}
+
+.radioButtonIcon {
+    color: var(--themeColor1);
+    background-color: var(--themeColor2);
+    border-radius: 5px;
+    line-height: 2px;
+}
