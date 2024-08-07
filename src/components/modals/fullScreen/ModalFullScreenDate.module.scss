@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--themeColor6);
+    background-color: color-mix(in srgb, var(--themeColor6) 50%, transparent);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,12 +12,50 @@
 }
 
 .modalContent {
+    display: flex;
+    justify-content: center;
     padding: 20px;
-    max-height: 100%;
-    overflow-y: auto;
-    width: 100%;
-    margin-top: 275px;
-    touch-action: pan-y;
+    background-color: var(--themeColor2);
+    border-radius: 8px;
+    width: 500px;
+    z-index: 2000 !important;
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .modalContent {
+        scale: 0.9;
+    }
+    .closeButton {
+        scale: 0.9;
+        top: 0px;
+        right: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modalContent {
+        scale: 0.8;
+    }
+    .closeButton {
+        scale: 0.8;
+    }
+}
+
+@media (max-width: 320px) {
+    .modalContent {
+        scale: 0.6;
+    }
+    .closeButton {
+        scale: 0.6;
+    }
 }
 
 .modalContentCenter {
@@ -29,13 +67,6 @@
 }
 
 // duplicated
-
-.closeButton {
-    position: absolute;
-    top: 65px;
-    right: 15px;
-    cursor: pointer;
-}
 
 .closeButton > div {
     color: var(--themeTextColor1) !important;
@@ -58,4 +89,8 @@
     top: var(--headerBarHeight);
     display: flex;
     z-index: 2;
+}
+
+.children {
+    padding-top: 20px;
 }

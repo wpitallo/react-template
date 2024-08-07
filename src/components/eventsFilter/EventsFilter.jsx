@@ -8,8 +8,8 @@ import { translator, getLocalShortDateString } from '@globalHelpers/translations
 const EventsFilter = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
-
   const [customDates, setCustomDates] = useState(translator('customDates'))
+  const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
 
   const toggleModal = () => {
     setIsOpen(!isOpen)
@@ -17,6 +17,9 @@ const EventsFilter = ({ title, children }) => {
 
   const handleFilterChange = (filter) => {
     setSelectedFilter(filter)
+    if (filter === 'customDates') {
+      setIsDateRangePickerOpen(true)
+    }
   }
 
   const radioItems = {
@@ -30,6 +33,10 @@ const EventsFilter = ({ title, children }) => {
   const handleDateRangeUpdated = (range) => {
     const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
     setCustomDates(dateString)
+  }
+
+  const handleDateRangePickerClosed = () => {
+    setIsDateRangePickerOpen(false)
   }
 
   return (
@@ -72,14 +79,14 @@ const EventsFilter = ({ title, children }) => {
                   </div>
                 </div>
               </div>
-              <div className={styles.flexRow}>
-                <div className={styles.dateRangePickerContainer}>
-                  <DateRangePicker dateRangeUpdated={handleDateRangeUpdated} />
-                </div>
-              </div>
             </div>
           </div>
           <div className={styles.eventsFilterContent}>{children}</div>
+        </Modal>
+      )}
+      {isDateRangePickerOpen && (
+        <Modal onClose={handleDateRangePickerClosed} className={styles.dateRangePickerModal} modalType="date">
+          <DateRangePicker dateRangeUpdated={handleDateRangeUpdated} />
         </Modal>
       )}
     </>

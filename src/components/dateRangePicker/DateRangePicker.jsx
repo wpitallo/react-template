@@ -3,7 +3,7 @@ import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
 import { addDays } from 'date-fns'
 import PropTypes from 'prop-types'
-import styles from './DateRangePicker.module.scss'
+import './DateRangePicker.scss'
 
 const MyDatePicker = ({ dateRangeUpdated }) => {
   const defaultMonth = new Date(2020, 5, 15)
@@ -20,8 +20,8 @@ const MyDatePicker = ({ dateRangeUpdated }) => {
   }
 
   return (
-    <div className={styles.container}>
-      <DayPicker mode="range" defaultMonth={defaultMonth} selected={range} onSelect={updateRange} classNames={styles} />
+    <div>
+      <DayPicker mode="range" defaultMonth={defaultMonth} selected={range} onSelect={updateRange} />
     </div>
   )
 }
