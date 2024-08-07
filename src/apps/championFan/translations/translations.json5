@@ -41,6 +41,7 @@
     today: 'Today',
     thisMonth: 'This Month',
     selectDates: 'Select Dates',
+    customDates: 'Custom Dates',
 
     createPoolSportsSubHeading: 'Filter leagues / tournaments by sport',
 

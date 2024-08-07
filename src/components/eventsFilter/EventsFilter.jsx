@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import styles from './EventsFilter.module.scss'
 import Modal from '@components/modals/fullScreen/ModalFullScreen'
 import DateRangePicker from '@components/dateRangePicker/DateRangePicker'
-import { translator } from '@globalHelpers/translations'
+import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 
 const EventsFilter = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
+
+  const [customDates, setCustomDates] = useState(translator('customDates'))
 
   const toggleModal = () => {
     setIsOpen(!isOpen)
@@ -22,6 +24,13 @@ const EventsFilter = ({ title, children }) => {
     thisWeek: translator('thisWeek'),
     today: translator('today'),
     thisMonth: translator('thisMonth'),
+    customDates: translator('customDates'),
+  }
+
+  const handleDateRangeUpdated = (range) => {
+    const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
+
+    setCustomDates(dateString)
   }
 
   return (
@@ -57,10 +66,16 @@ const EventsFilter = ({ title, children }) => {
                     <span>{radioItems.thisMonth}</span>
                   </div>
                 </div>
+                <div className={styles.flexRow}>
+                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('customDates')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'customDates' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span>{customDates}</span>
+                  </div>
+                </div>
               </div>
               <div className={styles.flexRow}>
                 <div className={styles.dateRangePickerContainer}>
-                  <DateRangePicker />
+                  <DateRangePicker dateRangeUpdated={handleDateRangeUpdated} />
                 </div>
               </div>
             </div>
