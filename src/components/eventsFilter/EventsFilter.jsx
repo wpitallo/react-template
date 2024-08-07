@@ -29,7 +29,6 @@ const EventsFilter = ({ title, children }) => {
 
   const handleDateRangeUpdated = (range) => {
     const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
-
     setCustomDates(dateString)
   }
 
