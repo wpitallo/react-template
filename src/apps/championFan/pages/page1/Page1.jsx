@@ -41,6 +41,7 @@ function Page({ pageId, isVisible }) {
   const inputRef = useRef(null)
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
   const [selectedEvents, setSelectedEvents] = useState({})
+  const [isEventsFilterOpen, setIsEventsFilterOpen] = useState(false)
 
   const sports = [
     { sportsKey: 'soccer', comingSoon: false },
@@ -84,6 +85,11 @@ function Page({ pageId, isVisible }) {
       return
     }
 
+    const openEventFilter = league.id !== selectedLeague ? true : false
+
+    setSelectedLeague(null)
+    setCurrentLeague(null)
+
     setCurrentLeague(league)
     setSelectedLeague(league.id)
 
@@ -98,6 +104,10 @@ function Page({ pageId, isVisible }) {
     })
 
     setSelectedEvents(initialSelectedEvents)
+
+    if (openEventFilter) {
+      toggleEventsFilter()
+    }
   }
 
   const handleSportClick = (sportKey) => {
@@ -113,6 +123,10 @@ function Page({ pageId, isVisible }) {
       setSelectedLeague(null)
       setLoading(false)
     }
+  }
+
+  const toggleEventsFilter = () => {
+    setIsEventsFilterOpen(!isEventsFilterOpen)
   }
 
   useEffect(() => {
@@ -176,14 +190,25 @@ function Page({ pageId, isVisible }) {
           </div>
 
           {selectedLeague && (
-            <EventsFilter title={translator('events')}>
-              <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
-            </EventsFilter>
+            <>
+              <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('selectedEvents')}</div>
+
+              <div className={templateStyles.contentHeader2}>{translator('firstEventDate')}</div>
+              <div className={templateStyles.contentHeader2}>{translator('lastEventDate')}</div>
+              <div className={templateStyles.contentHeader2}>{translator('numberOfEvents')}</div>
+              <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}`}</div>
+
+              <div onClick={toggleEventsFilter}>
+                <div className={` ${'icon-edit'}`}></div>
+              </div>
+
+              <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter}>
+                <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
+              </EventsFilter>
+            </>
           )}
         </div>
       )}
-
-      <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('timeFrame')}</div>
 
       {!showShareLink && (
         <div className={templateStyles.container}>

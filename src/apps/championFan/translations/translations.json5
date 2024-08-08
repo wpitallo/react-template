@@ -34,7 +34,13 @@
     sendInvitation: 'Send Invitation',
     copiedToClipboard: 'Copied to clipboard',
     leaguesTournaments: 'Leagues / Tournaments',
-    timeFrame: 'Time Frame',
+    selectedEvents: 'Selected Events',
+
+    firstEventDate: 'First event date:',
+    lastEventDate: 'Last event date:',
+    numberOfEvents: 'Number of events:',
+    duration: 'Duration:',
+    days: 'days',
 
     allEvents: 'All Events',
     thisWeek: 'This Week',

@@ -1,27 +1,35 @@
 import { useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/style.css'
-import { addDays } from 'date-fns'
+import { isBefore } from 'date-fns'
 import PropTypes from 'prop-types'
 import './DateRangePicker.scss'
 
 const MyDatePicker = ({ dateRangeUpdated }) => {
-  const defaultMonth = new Date(2020, 5, 15)
-
-  const defaultSelected = {
-    from: defaultMonth,
-    to: addDays(defaultMonth, 4),
-  }
-  const [range, setRange] = useState(defaultSelected)
+  const today = new Date()
+  const [range, setRange] = useState(undefined) // No dates selected by default
 
   const updateRange = (newRange) => {
+    if (newRange?.from && isBefore(newRange.from, today)) {
+      // Ensure the 'from' date is not before today
+      newRange = { from: today, to: newRange.to }
+    }
+    if (newRange?.to && isBefore(newRange.to, today)) {
+      // Ensure the 'to' date is not before today
+      newRange = { from: today, to: today }
+    }
     setRange(newRange)
-    dateRangeUpdated(range)
+    dateRangeUpdated(newRange)
   }
 
   return (
     <div>
-      <DayPicker mode="range" defaultMonth={defaultMonth} selected={range} onSelect={updateRange} />
+      <DayPicker
+        mode="range"
+        defaultMonth={today} // Focus on the current month
+        selected={range}
+        onSelect={updateRange}
+      />
     </div>
   )
 }

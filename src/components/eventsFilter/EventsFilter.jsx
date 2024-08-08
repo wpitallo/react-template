@@ -5,15 +5,10 @@ import Modal from '@components/modals/fullScreen/ModalFullScreen'
 import DateRangePicker from '@components/dateRangePicker/DateRangePicker'
 import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 
-const EventsFilter = ({ title, children }) => {
-  const [isOpen, setIsOpen] = useState(false)
+const EventsFilter = ({ title, children, isOpen, onClose }) => {
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
   const [customDates, setCustomDates] = useState(translator('customDates'))
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen)
-  }
 
   const handleFilterChange = (filter) => {
     setSelectedFilter(filter)
@@ -42,13 +37,10 @@ const EventsFilter = ({ title, children }) => {
   return (
     <>
       <div className={styles.eventsFilter}>
-        <div className={styles.eventsFilterHeader} onClick={toggleModal}>
-          <div className={`${styles.checkbox} ${isOpen ? 'icon-checked' : 'icon-unchecked'}`}></div>
-          <span>{title}</span>
-        </div>
+        <span>{title}</span>
       </div>
       {isOpen && (
-        <Modal onClose={() => setIsOpen(false)}>
+        <Modal onClose={onClose}>
           <div className={styles.filter}>
             <div className={styles.flexContainer}>
               <div className={styles.radioButtonWrapper}>
@@ -96,6 +88,8 @@ const EventsFilter = ({ title, children }) => {
 EventsFilter.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node,
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default EventsFilter
