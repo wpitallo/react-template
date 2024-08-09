@@ -102,7 +102,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
           <div className={`${templateStyles.verticalContainerRow} ${styles.iconButtonRow}`}>
             <div className={templateStyles.verticalContainerColumn}></div>
             <div className={templateStyles.verticalContainerColumn}>
-              <IconButton iconClass="icon-swap" onClick={avatarRef.current?.randomizeAvatarConfig} />
+              <IconButton iconClass="icon-swap" onClick={avatarRef.current?.randomizeAvatarConfig || (() => {})} />
             </div>
             <div className={templateStyles.verticalContainerColumn}>
               <IconButton iconClass={isFormVisible ? 'icon-check' : 'icon-edit'} onClick={handleAvatarEditCompleteClick} />

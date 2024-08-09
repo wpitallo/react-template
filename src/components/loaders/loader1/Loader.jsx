@@ -1,4 +1,4 @@
-import styles from './Loader1.module.scss'
+import styles from './Loader.module.scss'
 import logo from '@assets/login-logo.png' // Adjust the path to your image
 import PropTypes from 'prop-types'
 

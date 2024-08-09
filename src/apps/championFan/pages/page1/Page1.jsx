@@ -84,30 +84,30 @@ function Page({ pageId, isVisible }) {
     if (currentLeague && league.id === currentLeague.id) {
       return
     }
-
     const openEventFilter = league.id !== selectedLeague ? true : false
-
-    setSelectedLeague(null)
-    setCurrentLeague(null)
-
-    setCurrentLeague(league)
-    setSelectedLeague(league.id)
-
-    setEventsData([])
-    const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
-    setEventsData(events)
-    setSelectedLeagueTeams(teams)
-
-    const initialSelectedEvents = {}
-    events.forEach((event) => {
-      initialSelectedEvents[event.eventKey] = { isSelected: true }
-    })
-
-    setSelectedEvents(initialSelectedEvents)
-
     if (openEventFilter) {
       toggleEventsFilter()
     }
+
+    setTimeout(async () => {
+      setSelectedLeague(null)
+      setCurrentLeague(null)
+
+      setCurrentLeague(league)
+      setSelectedLeague(league.id)
+
+      setEventsData([])
+      const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
+      setEventsData(events)
+      setSelectedLeagueTeams(teams)
+
+      const initialSelectedEvents = {}
+      events.forEach((event) => {
+        initialSelectedEvents[event.eventKey] = { isSelected: true }
+      })
+
+      setSelectedEvents(initialSelectedEvents)
+    }, 200)
   }
 
   const handleSportClick = (sportKey) => {
@@ -201,12 +201,11 @@ function Page({ pageId, isVisible }) {
               <div onClick={toggleEventsFilter}>
                 <div className={` ${'icon-edit'}`}></div>
               </div>
-
-              <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter}>
-                <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
-              </EventsFilter>
             </>
           )}
+          <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter}>
+            <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
+          </EventsFilter>
         </div>
       )}
 

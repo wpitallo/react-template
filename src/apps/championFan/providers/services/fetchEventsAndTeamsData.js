@@ -1,5 +1,6 @@
-
 import { getDocs, collection } from 'firebase/firestore';
+
+const imageRequestCache = new Map();
 
 export const fetchEventsAndTeamsData = async (db, leaguesData, setLeaguesData, league, strCurrentSeason, sport) => {
     try {
@@ -18,6 +19,29 @@ export const fetchEventsAndTeamsData = async (db, leaguesData, setLeaguesData, l
         // Fetch teams
         const teamsQuerySnapshot = await getDocs(collection(db, 'sports', sport, 'leagues', league, 'seasons', strCurrentSeason, 'teams'));
         const teams = teamsQuerySnapshot.docs.map((doc) => doc.data());
+
+        // Fetch images for teams
+        const fetchImage = async (url) => {
+            if (imageRequestCache.has(url)) {
+                // Image already fetched, no need to refetch
+                return;
+            }
+
+            try {
+                await fetch(url, { mode: 'cors' });
+                imageRequestCache.set(url, true); // Cache the image URL after successful fetch
+            } catch (error) {
+                console.error('Error fetching image:', error);
+            }
+        };
+
+        // Fetch images for team badges and logos
+        await Promise.all(
+            teams.flatMap((team) => [
+                fetchImage(team.strBadge),
+                fetchImage(team.strLogo),
+            ])
+        );
 
         // Update leaguesData
         setLeaguesData((prevLeaguesData) => {

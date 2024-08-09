@@ -1,28 +1,28 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import fs from 'fs'
-import path from 'path'
-import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin'
-import { visualizer } from 'rollup-plugin-visualizer'
-import json5 from 'vite-plugin-json5'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import fs from 'fs';
+import path from 'path';
+import replaceImportsPlugin from './globalConfiguration/replaceImportsPlugin';
+import { visualizer } from 'rollup-plugin-visualizer';
+import json5 from 'vite-plugin-json5';
 import base64FontsPlugin from './vitePlugins/vite-plugin-base64-fonts';
 
-const APP_KEY = process.env.APP_KEY
-const CONFIG_KEY = process.env.CONFIG_KEY
+const APP_KEY = process.env.APP_KEY;
+const CONFIG_KEY = process.env.CONFIG_KEY;
 
 // Read the JSON file
-const globalConfigPath = path.resolve(__dirname, `globalConfiguration/${CONFIG_KEY}.json`)
-const globalConfig = JSON.parse(fs.readFileSync(globalConfigPath, 'utf-8'))
+const globalConfigPath = path.resolve(__dirname, `globalConfiguration/${CONFIG_KEY}.json`);
+const globalConfig = JSON.parse(fs.readFileSync(globalConfigPath, 'utf-8'));
 
-const appConfigPath = path.resolve(__dirname, `src/apps/${APP_KEY}/configuration/${CONFIG_KEY}.json`)
-const appConfig = JSON.parse(fs.readFileSync(appConfigPath, 'utf-8'))
+const appConfigPath = path.resolve(__dirname, `src/apps/${APP_KEY}/configuration/${CONFIG_KEY}.json`);
+const appConfig = JSON.parse(fs.readFileSync(appConfigPath, 'utf-8'));
 
 const CONFIG = {
   APP_KEY,
   CONFIG_KEY,
   globalConfig,
-  appConfig
-}
+  appConfig,
+};
 
 // Custom plugin to handle alias replacements in HTML files
 function htmlAliasPlugin() {
@@ -37,26 +37,20 @@ function htmlAliasPlugin() {
 // Determine if HTTPS should be used
 const useHttps = process.env.HTTPS === 'true';
 
-const serverConfig = useHttps ? {
-  server: {
-    https: {
-      key: './cert/key.pem',
-      cert: './cert/cert.pem'
-    }
-  }
-} : {
-  server: {
-    // Non-HTTPS server configuration
-    port: 3000, // Default port
-    open: true, // Automatically open the browser on server start
-  }
+const serverConfig = {
+  port: 3000, // Default port
+  open: true, // Automatically open the browser on server start
+  https: useHttps ? {
+    key: './cert/key.pem',
+    cert: './cert/cert.pem',
+  } : undefined,
 };
 
 export default defineConfig({
   build: {
-    assetsInlineLimit: 12288 // Set the threshold to 8KB
+    assetsInlineLimit: 12288, // Set the threshold to 8KB
   },
-  ...serverConfig,
+  server: serverConfig,
   publicDir: path.resolve(__dirname, `src/apps/${APP_KEY}/public`),
   plugins: [
     base64FontsPlugin(),
@@ -67,14 +61,13 @@ export default defineConfig({
       filename: './bundle-stats.html',
       open: true,
     }),
-    json5()
+    json5(),
   ],
   define: {
     CONFIG: JSON.stringify(CONFIG),
   },
   optimizeDeps: {
-    include: [
-    ]
+    include: [],
   },
   resolve: {
     alias: {
@@ -102,5 +95,5 @@ export default defineConfig({
         //additionalData: `@import "src/apps/${APP_KEY}/styles/Variables.scss";`, // Optional: Include global SCSS variables
       },
     },
-  }
-})
+  },
+});

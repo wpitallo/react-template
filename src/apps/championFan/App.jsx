@@ -3,7 +3,7 @@ import MainHeader from '@components/headers/<<componentConfig.header.key>>/MainH
 import Menu from '@components/menus/<<componentConfig.menu.key>>/Menu'
 import SignInScreen from '@components/signInScreen/SignInScreen'
 import { DataProvider, DataContext } from '@providers/DataProvider'
-import Loader from '@components/loaders/loader1/Loader1'
+import Loader from '@components/loaders/<<componentConfig.appLoader.key>>/Loader'
 import { PageProvider } from '@providers/PageProvider'
 import './App.scss'
 import '@styles/Scrollbars.scss'

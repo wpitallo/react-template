@@ -15,6 +15,12 @@
         "header": {
             "key": "default",
             "overrideStyle": true
+        },
+        "appLoader": {
+            "key": "loader1"
+        },
+        "saveButtonLoader": {
+            "key": "loader2"
         }
     }
 }

@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "cspell": "npx cspell \"**\"",
     "clear": "clear || cls",
-    "push": "npm run lint && npm run cspell && npm run clear && git add -A && npx opencommit --yes && git push"
+    "push": "npm run lint && npm run cspell && npm run clear && git add -A && npx opencommit --yes && git push",
+    "update-cors": "npm run lint && npm run cspell && npm run clear && git add -A && npx opencommit --yes && git push"
   },
   "dependencies": {
     "date-fns": "^3.6.0",

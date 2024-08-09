@@ -18,11 +18,11 @@ const SquareTextAndImageButton = ({ mainText, isSelected, onClick, backgroundSvg
 }
 
 SquareTextAndImageButton.propTypes = {
-  mainText: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
+  mainText: PropTypes.string,
+  isSelected: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  backgroundSvgIcon: PropTypes.string.isRequired,
-  secondText: PropTypes.string.isRequired,
+  backgroundSvgIcon: PropTypes.string,
+  secondText: PropTypes.string,
   disabled: PropTypes.bool,
 }
 
