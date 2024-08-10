@@ -9,40 +9,14 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    min-height: 100vh;
 }
 
 .modalContent {
-    padding: 20px;
     max-height: 100%;
     overflow-y: auto;
-    width: 50%;
-    margin-top: 275px;
+    // width: 50%;
+    // margin-top: 275px;
     touch-action: pan-y;
-}
-
-@media (max-width: 1200px) {
-    .modalContent {
-        width: 60%;
-    }
-}
-
-@media (max-width: 768px) {
-    .modalContent {
-        width: 70%;
-    }
-}
-
-@media (max-width: 480px) {
-    .modalContent {
-        width: 100%;
-    }
-}
-
-@media (max-width: 320px) {
-    .modalContent {
-        width: 100%;
-    }
 }
 
 .modalContentCenter {
@@ -60,6 +34,7 @@
     top: 65px;
     right: 15px;
     cursor: pointer;
+    z-index: 5000;
 }
 
 .closeButton > div {
@@ -94,8 +69,4 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.children {
-    animation: fadeIn 0.3s ease-in-out;
 }

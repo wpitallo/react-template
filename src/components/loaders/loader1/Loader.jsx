@@ -7,7 +7,7 @@ const Loader = ({ fadeOut }) => (
     <div className={styles.background}></div>
     <div className={styles.content}>
       <img src={logo} alt="Logo" className={styles.logo} />
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style={{ maxWidth: `60px` }}>
         <circle fill="#F9C900" stroke="#F9C900" strokeWidth="20" r="15" cx="40" cy="100">
           <animate attributeName="opacity" calcMode="spline" dur="2" values="1;0;1;" keySplines=".5 0 .5 1;.5 0 .5 1" repeatCount="indefinite" begin="-.4"></animate>
         </circle>

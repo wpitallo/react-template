@@ -40,7 +40,7 @@ function Page({ pageId, isVisible }) {
   const [loading, setLoading] = useState(false)
   const inputRef = useRef(null)
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
-  const [selectedEvents, setSelectedEvents] = useState({})
+  const [selectedEvents, setSelectedEvents] = useState(undefined)
   const [isEventsFilterOpen, setIsEventsFilterOpen] = useState(false)
 
   const sports = [
@@ -84,6 +84,8 @@ function Page({ pageId, isVisible }) {
     if (currentLeague && league.id === currentLeague.id) {
       return
     }
+
+    setSelectedEvents(undefined)
     const openEventFilter = league.id !== selectedLeague ? true : false
     if (openEventFilter) {
       toggleEventsFilter()
@@ -203,7 +205,7 @@ function Page({ pageId, isVisible }) {
               </div>
             </>
           )}
-          <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter}>
+          <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
             <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
           </EventsFilter>
         </div>

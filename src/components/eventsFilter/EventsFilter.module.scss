@@ -1,22 +1,30 @@
 .eventsFilter {
     margin-bottom: 10px;
-    border: 1px solid var(--themeColor1);
     border-radius: 15px;
 }
 
 .eventsFilterHeader {
     display: flex;
     align-items: center;
-    padding: 10px;
     cursor: pointer;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
 
 .eventsFilterContent {
-    padding: 10px;
     background-color: var(--themeColor6);
     min-height: 100vh;
+    min-width: 100vw;
+}
+
+.eventsFilterContentWrapper {
+    margin-top: 115px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.eventsFilterContentWrapper.fadeIn {
+    opacity: 1;
 }
 
 .filter {
@@ -85,4 +93,26 @@
     background-color: var(--themeColor2);
     border-radius: 5px;
     line-height: 2px;
+}
+
+/* CSS for Loader */
+.loaderWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+    background: rgba(255, 255, 255, 0);
+    z-index: 4000;
+}
+
+/* Ensure hidden class actually hides the loader */
+.hidden {
+    opacity: 0;
+    pointer-events: none;
 }

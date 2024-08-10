@@ -17,20 +17,22 @@ const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueT
   return (
     <>
       {eventsData.map((event, index) => (
-        <div key={index} className={`${templateStyles.eventItem} ${!selectedEvents[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`} onClick={() => toggleEventSelection(event.eventKey)}>
-          <div className={templateStyles.eventColumn}>
-            <div className={`${templateStyles.checkbox} ${selectedEvents[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
-            <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
-            <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
-          </div>
-          <div className={templateStyles.eventMiddleColumn}>
-            <div>VS</div>
-            <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
-            <div>{event.dateEvent}</div>
-          </div>
-          <div className={templateStyles.eventColumn}>
-            <img src={getTeamBadge(event.strAwayTeam)} alt={`${event.strAwayTeam} leagueLogo`} />
-            <div className={templateStyles.teamName}>{event.strAwayTeam}</div>
+        <div key={index} className={templateStyles.eventItemWrapper}>
+          <div className={`${templateStyles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`} onClick={() => toggleEventSelection(event.eventKey)}>
+            <div className={templateStyles.eventColumn}>
+              <div className={`${templateStyles.checkbox} ${selectedEvents?.[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
+              <img src={getTeamBadge(event.strHomeTeam)} alt={`${event.strHomeTeam} leagueLogo`} />
+              <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
+            </div>
+            <div className={templateStyles.eventMiddleColumn}>
+              <div>VS</div>
+              <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
+              <div>{event.dateEvent}</div>
+            </div>
+            <div className={templateStyles.eventColumn}>
+              <img src={getTeamBadge(event.strAwayTeam)} alt={`${event.strAwayTeam} leagueLogo`} />
+              <div className={templateStyles.teamName}>{event.strAwayTeam}</div>
+            </div>
           </div>
         </div>
       ))}

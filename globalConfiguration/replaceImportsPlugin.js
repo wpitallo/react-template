@@ -12,6 +12,7 @@ export default function replaceImportsPlugin(config) {
 
                 code = code.replace(/<<componentConfig.appLoader.key>>/g, componentConfig.appLoader.key)
                 code = code.replace(/<<componentConfig.saveButtonLoader.key>>/g, componentConfig.saveButtonLoader.key)
+                code = code.replace(/<<componentConfig.eventsLoader.key>>/g, componentConfig.eventsLoader.key)
 
                 code = code.replace(/<<componentConfig.header.key>>/g, componentConfig.header.key)
                 code = code.replace(/<<componentConfig.menu.key>>/g, componentConfig.menu.key)

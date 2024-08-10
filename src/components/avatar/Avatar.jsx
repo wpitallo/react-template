@@ -34,7 +34,7 @@ const Avatar = forwardRef(({ setParentAvatarConfig, scaleFactor }, ref) => {
   useEffect(() => {
     const handleResize = () => {
       const viewportWidth = window.innerWidth
-      const scaleValue = clamp(1, viewportWidth / (scaleFactor || 170), 4)
+      const scaleValue = clamp(0.9, viewportWidth / (scaleFactor || 800), 1.2)
       if (avatarRef.current) {
         avatarRef.current.style.setProperty('--avatar-scale', scaleValue)
       }

@@ -27,7 +27,7 @@ const PlayerHeader = () => {
     <div className={styles.playerHeader}>
       <div className={`${styles.column} ${styles.centerAlign}`}>
         <div className={`${styles.avatar}`}>
-          <Avatar scaleFactor={100} />
+          <Avatar scaleFactor={200} />
         </div>
       </div>
       <div className={`${styles.column} ${styles.leftAlign} ${styles.doubleColumn}`}>

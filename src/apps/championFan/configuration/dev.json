@@ -21,6 +21,9 @@
         },
         "saveButtonLoader": {
             "key": "loader2"
+        },
+        "eventsLoader": {
+            "key": "loader2"
         }
     }
 }
