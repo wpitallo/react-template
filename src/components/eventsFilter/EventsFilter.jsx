@@ -75,7 +75,8 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
       {isOpen && (
         <Modal onClose={handleOnClose}>
           <div className={`${styles.loaderWrapper} ${showLoader === false ? styles.hidden : ''}`}>
-            <Loader height="100" width="100" />
+            <Loader height={100} width={100} />
+            <span>{translator('loading')}...</span>
           </div>
 
           <div className={`${styles.eventsFilterContentWrapper} ${showLoader === false ? styles.fadeIn : ''}`}>

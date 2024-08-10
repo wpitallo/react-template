@@ -95,7 +95,6 @@
     line-height: 2px;
 }
 
-/* CSS for Loader */
 .loaderWrapper {
     position: absolute;
     top: 0;
@@ -103,12 +102,18 @@
     right: 0;
     bottom: 0;
     display: flex;
+    flex-direction: column; /* Align items in a column */
     justify-content: center;
     align-items: center;
     opacity: 1;
     transition: opacity 0.2s ease-in-out;
     background: rgba(255, 255, 255, 0);
     z-index: 4000;
+}
+
+.loaderWrapper span {
+    margin-top: 10px; /* Add some space between the loader and the text */
+    text-align: center; /* Center text */
 }
 
 /* Ensure hidden class actually hides the loader */

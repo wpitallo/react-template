@@ -8,6 +8,7 @@
     create: 'Create',
     sports: 'Sports',
     comingSoon: 'Coming Soon',
+    loading: 'Loading',
 
     // sports
     afl: 'Afl',
@@ -35,6 +36,7 @@
     copiedToClipboard: 'Copied to clipboard',
     leaguesTournaments: 'Leagues / Tournaments',
     selectedEvents: 'Selected Events',
+    selectEvents: 'Select Events',
 
     firstEventDate: 'First event date:',
     lastEventDate: 'Last event date:',

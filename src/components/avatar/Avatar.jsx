@@ -23,12 +23,8 @@ const Avatar = forwardRef(({ setParentAvatarConfig, scaleFactor }, ref) => {
   )
 
   useEffect(() => {
-    console.log('userDoc updated:', userDoc)
-
     const initialConfig = userDoc?.avatar ? JSON.parse(userDoc.avatar) : getRandomAvatarOptions()
-
     updateAvatarConfig(initialConfig)
-    console.log('Avatar config initialized:', initialConfig)
   }, [userDoc, updateAvatarConfig])
 
   useEffect(() => {

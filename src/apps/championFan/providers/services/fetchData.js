@@ -1,6 +1,5 @@
 import { getDocs, collection } from 'firebase/firestore';
-
-const imageRequestCache = new Map();
+import { fetchAndCacheImage } from '@globalHelpers/imageHelper';
 
 export const fetchData = async (db, leaguesData, setLeaguesData, setDataFetched) => {
     const sports = ['soccer', 'rugby']; // Add more sports as needed
@@ -23,26 +22,12 @@ export const fetchData = async (db, leaguesData, setLeaguesData, setDataFetched)
 
         await Promise.all(sports.map((sport) => fetchSportData(sport)));
 
-        const fetchImage = async (url) => {
-            if (imageRequestCache.has(url)) {
-                // Image already fetched, no need to refetch
-                return;
-            }
-
-            try {
-                await fetch(url, { mode: 'cors' });
-                imageRequestCache.set(url, true); // Cache the image URL after successful fetch
-            } catch (error) {
-                console.error('Error fetching image:', error);
-            }
-        };
-
         // Fetch images for league badges and logos
         for (const leagues of Object.values(newLeaguesData.sports)) {
             for (const league of Object.values(leagues)) {
                 await Promise.all([
-                    fetchImage(league.strBadge),
-                    fetchImage(league.strLogo),
+                    fetchAndCacheImage(league.strBadge),
+                    fetchAndCacheImage(league.strLogo),
                 ]);
             }
         }

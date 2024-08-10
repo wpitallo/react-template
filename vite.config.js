@@ -64,7 +64,10 @@ export default defineConfig({
     json5(),
   ],
   define: {
-    CONFIG: JSON.stringify(CONFIG),
+    app: {
+      config: CONFIG,
+      utils: {}
+    },
   },
   optimizeDeps: {
     include: [],

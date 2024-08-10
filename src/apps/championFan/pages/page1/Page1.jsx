@@ -75,7 +75,7 @@ function Page({ pageId, isVisible }) {
 
   const handleSendInvitationClick = (event) => {
     event.preventDefault()
-    navigator.clipboard.writeText(`${window.CONFIG.appConfig.url}?invite=${guid}`)
+    navigator.clipboard.writeText(`${window.app.config.appConfig.url}?invite=${guid}`)
     setShowModal(true)
     setTimeout(() => setShowModal(false), 2000)
   }
@@ -138,7 +138,7 @@ function Page({ pageId, isVisible }) {
     }
   }, [])
 
-  const inviteUrl = `${window.CONFIG.appConfig.url}?invite=${guid}`
+  const inviteUrl = `${window.app.config.appConfig.url}?invite=${guid}`
 
   const sportsChunks = chunkArray(sports, 5)
 
@@ -205,7 +205,7 @@ function Page({ pageId, isVisible }) {
               </div>
             </>
           )}
-          <EventsFilter title={translator('eventsFilter')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
+          <EventsFilter title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
             <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
           </EventsFilter>
         </div>

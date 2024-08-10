@@ -15,7 +15,7 @@ const calculateOffset = (selectedIndex, orientation) => {
   return left
 }
 
-const componentConfig = window.CONFIG.appConfig.componentConfig.menu
+const componentConfig = window.app.config.appConfig.componentConfig.menu
 
 const Menu = () => {
   const { activePage, handleMenuClick } = usePage()
