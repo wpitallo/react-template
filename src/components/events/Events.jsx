@@ -1,19 +1,26 @@
+import { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import templateStyles from './Events.module.scss'
 import { getImage } from '@globalHelpers/imageHelper'
 
 const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueTeams }) => {
-  const getTeamBadge = (teamName) => {
-    const team = selectedLeagueTeams.find((team) => team.strTeam === teamName)
-    return team ? team.strBadge : ''
-  }
+  const getTeamBadge = useCallback(
+    (teamName) => {
+      const team = selectedLeagueTeams.find((team) => team.strTeam === teamName)
+      return team ? team.strBadge : ''
+    },
+    [selectedLeagueTeams],
+  )
 
-  const toggleEventSelection = (eventKey) => {
-    setSelectedEvents((prevState) => ({
-      ...prevState,
-      [eventKey]: { isSelected: !prevState[eventKey].isSelected },
-    }))
-  }
+  const toggleEventSelection = useCallback(
+    (eventKey) => {
+      setSelectedEvents((prevState) => ({
+        ...prevState,
+        [eventKey]: { isSelected: !prevState[eventKey].isSelected },
+      }))
+    },
+    [setSelectedEvents],
+  )
 
   return (
     <>
@@ -45,7 +52,7 @@ Events.propTypes = {
   eventsData: PropTypes.array.isRequired,
   selectedEvents: PropTypes.object,
   setSelectedEvents: PropTypes.func.isRequired,
-  selectedLeagueTeams: PropTypes.object.isRequired,
+  selectedLeagueTeams: PropTypes.array.isRequired,
   translator: PropTypes.func.isRequired,
 }
 

@@ -26,24 +26,61 @@
     flex-direction: column;
     width: 0px !important;
 }
-
-// duplicated
-
-.closeButton {
+.modalTopBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
-    top: 65px;
-    right: 15px;
-    cursor: pointer;
+    top: 64px;
+    left: 0px;
     z-index: 5000;
+    width: 100%;
+    background-color: var(--themeColor2);
 }
 
-.closeButton > div {
+.modalTopBar > * {
+    flex: 1; /* Ensures all children have equal width */
+    text-align: center; /* Center text within each column */
+}
+
+.modalTopImageContainer {
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+.modalTopImage {
+    height: 40px;
+    width: auto; /* Maintain the aspect ratio */
+    max-width: 100%; /* Ensure it doesn't overflow */
+}
+
+.modalTitle {
+    flex: 1; /* Allows the title to take up available space */
+    text-align: center;
+    font-size: clamp(1.3rem, 2vw, 1.5rem);
+}
+
+.closeButton {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    z-index: 5000;
+    cursor: pointer;
+}
+
+.closeButtonIconWrapper {
+    padding-right: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.closeButtonIconWrapper > div {
     color: var(--themeTextColor1) !important;
     background-color: var(--themeColor1) !important;
     border-color: var(--themeColor1) !important;
 }
 
-.closeButton > div:hover {
+.closeButtonIconWrapper > div:hover {
     color: var(--themeTextColor1) !important;
     background-color: var(--themeColor3) !important;
     cursor: pointer;

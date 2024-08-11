@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styles from './EventsFilter.module.scss'
 import Modal from '@components/modals/fullScreen/ModalFullScreen'
@@ -6,7 +6,7 @@ import DateRangePicker from '@components/dateRangePicker/DateRangePicker'
 import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 import Loader from '../loaders/loader2/Loader'
 
-const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
+const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents }) => {
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
   const [customDates, setCustomDates] = useState(translator('customDates'))
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
@@ -14,8 +14,6 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
   const [minimumLoaderTimePassed, setMinimumLoaderTimePassed] = useState(false)
 
   useEffect(() => {
-    let loaderTimeout
-
     if (isOpen) {
       setShowLoader(true)
       setTimeout(() => {
@@ -28,8 +26,6 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
       setShowLoader(false) // Reset the loader visibility when the modal closes
       setMinimumLoaderTimePassed(false)
     }
-
-    return () => clearTimeout(loaderTimeout) // Clean up the timeout on unmount or dependencies change
   }, [isOpen, selectedEvents])
 
   useEffect(() => {
@@ -38,12 +34,27 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
     }
   }, [selectedEvents, minimumLoaderTimePassed])
 
-  const handleFilterChange = (filter) => {
+  const handleFilterChange = useCallback((filter) => {
     setSelectedFilter(filter)
     if (filter === 'customDates') {
       setIsDateRangePickerOpen(true)
     }
-  }
+  }, [])
+
+  const handleDateRangeUpdated = useCallback((range) => {
+    const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
+    setCustomDates(dateString)
+  }, [])
+
+  const handleDateRangePickerClosed = useCallback(() => {
+    setIsDateRangePickerOpen(false)
+  }, [])
+
+  const handleOnClose = useCallback(() => {
+    setShowLoader(true)
+    setMinimumLoaderTimePassed(false)
+    onClose()
+  }, [onClose])
 
   const radioItems = {
     allEvents: translator('allEvents'),
@@ -53,27 +64,10 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
     customDates: translator('customDates'),
   }
 
-  const handleDateRangeUpdated = (range) => {
-    const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
-    setCustomDates(dateString)
-  }
-
-  const handleDateRangePickerClosed = () => {
-    setIsDateRangePickerOpen(false)
-  }
-
-  const handleOnClose = () => {
-    setShowLoader(true)
-    setMinimumLoaderTimePassed(false)
-    onClose()
-  }
   return (
     <>
-      <div className={styles.eventsFilter}>
-        <span>{title}</span>
-      </div>
       {isOpen && (
-        <Modal onClose={handleOnClose}>
+        <Modal image={image} title={title} onClose={handleOnClose}>
           <div className={`${styles.loaderWrapper} ${showLoader === false ? styles.hidden : ''}`}>
             <Loader height={100} width={100} />
             <span>{translator('loading')}...</span>
@@ -128,6 +122,7 @@ const EventsFilter = ({ title, children, isOpen, onClose, selectedEvents }) => {
 
 EventsFilter.propTypes = {
   title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   children: PropTypes.node,
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,

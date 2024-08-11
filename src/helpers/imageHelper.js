@@ -102,6 +102,9 @@ export const fetchAndCacheImage = async (url) => {
 
 // Function to retrieve the image from cache or fetch if necessary
 export const getImage = (url) => {
+
+    if (!url) return ""
+
     if (imageRequestCache.has(url)) {
         return imageRequestCache.get(url); // Return the cached image
     }

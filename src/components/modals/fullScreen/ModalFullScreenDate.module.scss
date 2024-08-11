@@ -23,20 +23,37 @@
 }
 
 .closeButton {
-    position: absolute;
-    top: 5px;
-    right: 15px;
     cursor: pointer;
+}
+
+.closeButtonIconWrapper {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    border-radius: 25px;
+}
+
+.closeButtonIconWrapper > div {
+    color: var(--themeTextColor1) !important;
+    background-color: var(--themeColor1) !important;
+    border-color: var(--themeColor1) !important;
+}
+
+.closeButtonIconWrapper > div:hover {
+    color: var(--themeTextColor1) !important;
+    background-color: var(--themeColor3) !important;
+    cursor: pointer;
+    border-color: var(--themeColor3) !important;
 }
 
 @media (max-width: 768px) {
     .modalContent {
         scale: 0.9;
     }
-    .closeButton {
+    .closeButtonIconWrapper {
         scale: 0.9;
-        top: 0px;
-        right: 5px;
+        top: 10px;
+        right: 10px;
     }
 }
 
@@ -44,7 +61,7 @@
     .modalContent {
         scale: 0.8;
     }
-    .closeButton {
+    .closeButtonIconWrapper {
         scale: 0.8;
     }
 }
@@ -53,7 +70,7 @@
     .modalContent {
         scale: 0.6;
     }
-    .closeButton {
+    .closeButtonIconWrapper {
         scale: 0.6;
     }
 }

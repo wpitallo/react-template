@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext } from 'react'
+import { useState, useRef, useEffect, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
@@ -13,6 +13,7 @@ import CheckButton from '@components/buttons/checkButton/CheckButton'
 import ImageButton from '@components/buttons/imageButton/ImageButton'
 import Input from '@components/input/Input'
 import SquareTextAndImageButton from '@components/buttons/squareTextAndImageButton/SquareTextAndImageButton'
+import { getImage } from '@globalHelpers/imageHelper'
 
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
@@ -34,14 +35,17 @@ function Page({ pageId, isVisible }) {
   const [showShareLink, setShowShareLink] = useState(false)
   const [selectedSport, setSelectedSport] = useState('soccer')
   const [selectedLeague, setSelectedLeague] = useState(null)
-  const [selectedLeagueTeams, setSelectedLeagueTeams] = useState({})
+  const [selectedLeagueTeams, setSelectedLeagueTeams] = useState([])
   const [eventsData, setEventsData] = useState([])
   const [currentLeague, setCurrentLeague] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [isEventsFilterOpen, setIsEventsFilterOpen] = useState(false)
+  const [showSelectedEvents, setShowSelectedEvents] = useState(false)
+  const [delayedEvents, setDelayedEvents] = useState(false) // New state for delayed rendering
+
   const inputRef = useRef(null)
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
   const [selectedEvents, setSelectedEvents] = useState(undefined)
-  const [isEventsFilterOpen, setIsEventsFilterOpen] = useState(false)
 
   const sports = [
     { sportsKey: 'soccer', comingSoon: false },
@@ -86,6 +90,7 @@ function Page({ pageId, isVisible }) {
     }
 
     setSelectedEvents(undefined)
+    setShowSelectedEvents(false)
     const openEventFilter = league.id !== selectedLeague ? true : false
     if (openEventFilter) {
       toggleEventsFilter()
@@ -97,6 +102,10 @@ function Page({ pageId, isVisible }) {
 
       setCurrentLeague(league)
       setSelectedLeague(league.id)
+
+      setTimeout(() => {
+        setShowSelectedEvents(true)
+      }, 500)
 
       setEventsData([])
       const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
@@ -120,16 +129,24 @@ function Page({ pageId, isVisible }) {
       setLoading(true)
       setSelectedSport(sportKey)
       setEventsData([])
-      setSelectedLeagueTeams({})
+      setSelectedLeagueTeams([])
+      setSelectedEvents(undefined)
+      setShowSelectedEvents(false)
       setCurrentLeague(null)
       setSelectedLeague(null)
       setLoading(false)
     }
   }
 
-  const toggleEventsFilter = () => {
-    setIsEventsFilterOpen(!isEventsFilterOpen)
-  }
+  const toggleEventsFilter = useCallback(() => {
+    setIsEventsFilterOpen((prevState) => {
+      // Delay the rendering of the Events component
+      setTimeout(() => {
+        setDelayedEvents((prev) => !prev)
+      }, 100)
+      return !prevState
+    })
+  }, [])
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
@@ -193,21 +210,26 @@ function Page({ pageId, isVisible }) {
 
           {selectedLeague && (
             <>
-              <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('selectedEvents')}</div>
+              {showSelectedEvents && (
+                <>
+                  <div className={templateStyles.flexContainer}>
+                    <div className={`${templateStyles.contentHeader1} ${templateStyles.underline} ${templateStyles.headerMarginTop}`}>{translator('selectedEvents')}</div>
+                    <span className={`${templateStyles.editButton} icon-edit`} onClick={toggleEventsFilter}></span>
+                  </div>
 
-              <div className={templateStyles.contentHeader2}>{translator('firstEventDate')}</div>
-              <div className={templateStyles.contentHeader2}>{translator('lastEventDate')}</div>
-              <div className={templateStyles.contentHeader2}>{translator('numberOfEvents')}</div>
-              <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}`}</div>
+                  <div className={templateStyles.contentHeader2}></div>
+                  <div className={templateStyles.contentHeader2}>{translator('firstEventDate')}</div>
+                  <div className={templateStyles.contentHeader2}>{translator('lastEventDate')}</div>
+                  <div className={templateStyles.contentHeader2}>{translator('numberOfEvents')}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}`}</div>
+                </>
+              )}
 
-              <div onClick={toggleEventsFilter}>
-                <div className={` ${'icon-edit'}`}></div>
-              </div>
+              <EventsFilter image={getImage(leaguesData.sports[selectedSport][selectedLeague].strLogo)} title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
+                {delayedEvents && <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />}
+              </EventsFilter>
             </>
           )}
-          <EventsFilter title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
-            <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />
-          </EventsFilter>
         </div>
       )}
 
