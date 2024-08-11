@@ -15,19 +15,6 @@ $placeholderColorValidationFailed: red;
   unicode-bidi: isolate;
 }
 
-.editButton {
-  font-size: 1.5em;
-  margin-top: 10px;
-  font-size: 1.5em;
-  background-color: var(--themeColor2);
-  padding-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  border-radius: 25px;
-  cursor: pointer;
-}
-
 .flexContainer {
   display: flex;
   justify-content: space-between;
@@ -118,8 +105,10 @@ $placeholderColorValidationFailed: red;
 }
 
 .scrollContainer {
-  height: 100vh;
+  height: calc(100vh - (var(--headerBarHeight) * 2));
+  margin-top: var(--headerBarHeight);
   overflow-y: scroll;
+  overflow-x: hidden;
   opacity: 0;
   transition: opacity 0.3s ease;
   position: relative;
@@ -130,27 +119,6 @@ $placeholderColorValidationFailed: red;
   opacity: 1 !important;
   visibility: visible;
   pointer-events: all;
-}
-
-.scrollTopButton {
-  position: fixed;
-  bottom: 94px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 35px;
-  height: 35px;
-  background-color: var(--themeColor2);
-  color: var(--themeColor1);
-  font-family: var(--themeFont2);
-  font-size: clamp(20px, 1vh, 70px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20%;
-  cursor: pointer;
-  z-index: 2000;
-  pointer-events: all;
-  transition: opacity 0.6s ease;
 }
 
 .backgroundImage {

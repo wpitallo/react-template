@@ -8,12 +8,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 5000;
 }
 
 .modalContent {
     max-height: 100%;
-    overflow-y: auto;
+    overflow-y: hidden;
     // width: 50%;
     // margin-top: 275px;
     touch-action: pan-y;
@@ -31,9 +31,9 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    top: 64px;
+    top: var(--headerBarHeight);
     left: 0px;
-    z-index: 5000;
+    z-index: 6000;
     width: 100%;
     background-color: var(--themeColor2);
 }
@@ -85,16 +85,6 @@
     background-color: var(--themeColor3) !important;
     cursor: pointer;
     border-color: var(--themeColor3) !important;
-}
-
-.filter {
-    height: 200px;
-    width: 100%;
-    background-color: var(--themeColor6);
-    position: absolute;
-    top: var(--headerBarHeight);
-    display: flex;
-    z-index: 2;
 }
 
 @keyframes fadeIn {

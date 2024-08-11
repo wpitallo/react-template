@@ -214,7 +214,7 @@ function Page({ pageId, isVisible }) {
                 <>
                   <div className={templateStyles.flexContainer}>
                     <div className={`${templateStyles.contentHeader1} ${templateStyles.underline} ${templateStyles.headerMarginTop}`}>{translator('selectedEvents')}</div>
-                    <span className={`${templateStyles.editButton} icon-edit`} onClick={toggleEventsFilter}></span>
+                    <DefaultButton onClick={toggleEventsFilter} iconClass="icon-edit" buttonClass="roundButton" />
                   </div>
 
                   <div className={templateStyles.contentHeader2}></div>
@@ -235,7 +235,7 @@ function Page({ pageId, isVisible }) {
 
       {!showShareLink && (
         <div className={templateStyles.container}>
-          <DefaultButton onClick={handleCreatePoolClick} label="createPool" iconClass="" style="actionButton" />
+          <DefaultButton onClick={handleCreatePoolClick} label="createPool" iconClass="" buttonClass="actionButton" />
         </div>
       )}
     </PageTemplate>

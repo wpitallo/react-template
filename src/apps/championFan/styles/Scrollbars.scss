@@ -1,3 +1,32 @@
+$themeColor3: rgba(19, 81, 33, 0.8);
+$themeColor1: rgba(14, 58, 14, 0.8);
+
+@media (min-aspect-ratio: 1/1) {
+  /* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin !important;
+    scrollbar-color: $themeColor3 $themeColor1 !important;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 25px !important;
+    opacity: 0.5 !important;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: $themeColor3 !important;
+    opacity: 0.5 !important;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: $themeColor1 !important;
+    border: 2px solid $themeColor3 !important;
+    opacity: 0.5 !important;
+  }
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {

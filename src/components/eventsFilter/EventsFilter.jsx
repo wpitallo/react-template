@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styles from './EventsFilter.module.scss'
 import Modal from '@components/modals/fullScreen/ModalFullScreen'
 import DateRangePicker from '@components/dateRangePicker/DateRangePicker'
 import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 import Loader from '../loaders/loader2/Loader'
+import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 
 const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents }) => {
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
@@ -12,6 +13,16 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
   const [showLoader, setShowLoader] = useState(true)
   const [minimumLoaderTimePassed, setMinimumLoaderTimePassed] = useState(false)
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false)
+
+  const contentRef = useRef(null)
+
+  // Memoize handleScroll using useCallback
+  const handleScroll = useCallback(() => {
+    if (contentRef.current) {
+      setShowScrollTopButton(contentRef.current.scrollTop > 500)
+    }
+  }, [])
 
   useEffect(() => {
     if (isOpen) {
@@ -20,13 +31,19 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
         setMinimumLoaderTimePassed(true)
         if (selectedEvents) {
           setShowLoader(false)
+          const refCurrent = contentRef.current
+          if (refCurrent) {
+            refCurrent.addEventListener('scroll', handleScroll)
+          }
         }
       }, 1000)
     } else {
       setShowLoader(false) // Reset the loader visibility when the modal closes
       setMinimumLoaderTimePassed(false)
     }
-  }, [isOpen, selectedEvents])
+  }, [isOpen, selectedEvents, handleScroll])
+
+  useEffect(() => {}, [handleScroll, isOpen]) // Add `isOpen` to dependencies to properly handle mounting/unmounting
 
   useEffect(() => {
     if (selectedEvents && minimumLoaderTimePassed) {
@@ -54,7 +71,15 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
     setShowLoader(true)
     setMinimumLoaderTimePassed(false)
     onClose()
+    scrollToTop()
   }, [onClose])
+
+  const scrollToTop = () => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    setShowScrollTopButton(false)
+  }
 
   const radioItems = {
     allEvents: translator('allEvents'),
@@ -68,12 +93,12 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
     <>
       {isOpen && (
         <Modal image={image} title={title} onClose={handleOnClose}>
-          <div className={`${styles.loaderWrapper} ${showLoader === false ? styles.hidden : ''}`}>
+          <div className={`${styles.loaderWrapper} ${!showLoader ? styles.hidden : ''}`}>
             <Loader height={100} width={100} />
             <span>{translator('loading')}...</span>
           </div>
 
-          <div className={`${styles.eventsFilterContentWrapper} ${showLoader === false ? styles.fadeIn : ''}`}>
+          <div className={`${styles.eventsFilterContentWrapper} ${!showLoader ? styles.fadeIn : ''}`}>
             <div className={styles.filter}>
               <div className={styles.flexContainer}>
                 <div className={styles.radioButtonWrapper}>
@@ -106,8 +131,12 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
                 </div>
               </div>
             </div>
-            <div className={styles.eventsFilterContent}>{children}</div>
+            <div id="eventsFilterContent" className={styles.eventsFilterContent} ref={contentRef}>
+              {children}
+              <div id="gradientBlock" className={styles.gradientBlock}></div>
+            </div>
           </div>
+          {showScrollTopButton && <DefaultButton onClick={scrollToTop} iconClass="icon-scroll-top" buttonClass="scrollTopButtonModal" />}
         </Modal>
       )}
 

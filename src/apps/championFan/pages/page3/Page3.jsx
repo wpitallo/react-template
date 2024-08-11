@@ -10,8 +10,8 @@ function Page({ pageId, isVisible }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={`${templateStyles.container}`}>
-        <DefaultButton onClick={() => {}} label="join" style="default" />
-        <DefaultButton onClick={() => {}} label="create" style="default" />
+        <DefaultButton onClick={() => {}} label="join" buttonClass="default" />
+        <DefaultButton onClick={() => {}} label="create" buttonClass="default" />
       </div>
 
       <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('featuredPools')}</div>

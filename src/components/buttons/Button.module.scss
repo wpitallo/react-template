@@ -74,3 +74,42 @@ $selectedBorder: 3px;
     background-color: var(--mainButtonColor);
     cursor: pointer;
 }
+
+.roundButton {
+    @extend .actionButton;
+    font-size: 1.5em;
+    margin-top: 10px;
+    font-size: 1.5em;
+    padding-top: 12px;
+    padding-left: 11px;
+    padding-right: 10px;
+    padding-bottom: 8px;
+    border-radius: 25px;
+    cursor: pointer;
+    max-width: 20px !important;
+    max-height: 20px !important;
+}
+
+.scrollTopButton {
+    @extend .actionButton;
+    position: fixed;
+    bottom: 94px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 35px;
+    font-size: clamp(20px, 1vh, 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20%;
+    cursor: pointer;
+    z-index: 5000;
+    pointer-events: all;
+    transition: opacity 0.6s ease;
+}
+
+.scrollTopButtonModal {
+    @extend .scrollTopButton;
+    bottom: 25px !important;
+}
