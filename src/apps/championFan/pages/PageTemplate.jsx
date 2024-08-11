@@ -17,12 +17,6 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
     },
   }))
 
-  const scrollToTop = () => {
-    if (showScrollTopButton) {
-      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }
-
   useEffect(() => {
     isVisibleRef.current = isVisible
     if (!isVisible) {
@@ -35,6 +29,34 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
       setShowScrollTopButton(false)
     }
   }, [isVisible])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const { scrollTop } = scrollContainerRef.current
+        setShowScrollTopButton(scrollTop > 500) // Show button when scrolled more than 500px
+      }
+    }
+
+    const scrollContainer = scrollContainerRef.current
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll)
+      // Trigger scroll event initially to set button visibility correctly
+      handleScroll()
+    }
+
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [])
+
+  const scrollToTop = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   return (
     <div className={styles.pageTemplate}>
