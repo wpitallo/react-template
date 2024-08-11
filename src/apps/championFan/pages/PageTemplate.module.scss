@@ -138,8 +138,8 @@ $placeholderColorValidationFailed: red;
 
 .contentContainer {
   position: relative;
-  margin-top: -40px;
-  min-height: calc(100vh - 255px);
+  margin-top: -100px;
+  min-height: calc(100vh - (var(--headerBarHeight) * 4));
   background-color: var(--themeColor6);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
