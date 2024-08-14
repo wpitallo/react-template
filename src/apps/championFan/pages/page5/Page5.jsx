@@ -17,10 +17,10 @@ function Page({ pageId, isVisible, setVisiblePage }) {
             </div>
           </div>
           <div className={`${templateStyles.verticalContainerRow} ${templateStyles.firstButton}`}>
-            <DefaultButton onClick={() => setVisiblePage(0)} label="profile" iconClass="icon-check" style="actionButton" />
+            <DefaultButton onClick={() => setVisiblePage(0)} label="profile" iconClass="icon-check" buttonClass="actionButton" />
           </div>
           <div className={templateStyles.verticalContainerRow}>
-            <DefaultButton onClick={() => getAuth(app).signOut()} label="signOut" iconClass="icon-check" style="actionButton" />
+            <DefaultButton onClick={() => getAuth(app).signOut()} label="signOut" iconClass="icon-check" buttonClass="actionButton" />
             <div className={`${templateStyles.halfWidth}`}></div>
           </div>
         </div>

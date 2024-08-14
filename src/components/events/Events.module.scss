@@ -77,39 +77,3 @@
     display: flex;
     justify-content: center;
 }
-
-.eventItemWrapper {
-    padding-left: 25%;
-    padding-right: 25%;
-    box-sizing: border-box;
-    width: 100vw;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 1200px) {
-    .eventItemWrapper {
-        padding-left: 20%;
-        padding-right: 20%;
-    }
-}
-
-@media (max-width: 768px) {
-    .eventItemWrapper {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-}
-
-@media (max-width: 480px) {
-    .eventItemWrapper {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-}
-
-@media (max-width: 320px) {
-    .eventItemWrapper {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-}

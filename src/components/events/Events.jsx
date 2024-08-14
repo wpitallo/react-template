@@ -1,6 +1,7 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import templateStyles from './Events.module.scss'
+import eventStyles from '../event/Event.module.scss'
 import { getImage } from '@globalHelpers/imageHelper'
 
 const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueTeams }) => {
@@ -16,16 +17,19 @@ const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueT
     (eventKey) => {
       setSelectedEvents((prevState) => ({
         ...prevState,
-        [eventKey]: { isSelected: !prevState[eventKey].isSelected },
+        [eventKey]: { ...prevState[eventKey], isSelected: !prevState[eventKey]?.isSelected },
       }))
     },
     [setSelectedEvents],
   )
 
+  // Use useMemo to optimize filtering of events
+  const visibleEvents = useMemo(() => eventsData.filter((event) => selectedEvents?.[event.eventKey]?.isVisible), [eventsData, selectedEvents])
+
   return (
     <>
-      {eventsData.map((event, index) => (
-        <div key={index} className={templateStyles.eventItemWrapper}>
+      {visibleEvents.map((event, index) => (
+        <div key={index} className={eventStyles.eventItemWrapper}>
           <div className={`${templateStyles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`} onClick={() => toggleEventSelection(event.eventKey)}>
             <div className={templateStyles.eventColumn}>
               <div className={`${templateStyles.checkbox} ${selectedEvents?.[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>

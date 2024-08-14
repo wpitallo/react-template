@@ -114,7 +114,7 @@ function Page({ pageId, isVisible }) {
 
       const initialSelectedEvents = {}
       events.forEach((event) => {
-        initialSelectedEvents[event.eventKey] = { ...event, isSelected: true }
+        initialSelectedEvents[event.eventKey] = { ...event, isSelected: true, isVisible: true }
       })
 
       setSelectedEvents(initialSelectedEvents)
@@ -225,7 +225,7 @@ function Page({ pageId, isVisible }) {
                 </>
               )}
 
-              <EventsFilter image={getImage(leaguesData.sports[selectedSport][selectedLeague].strLogo)} title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents}>
+              <EventsFilter image={getImage(leaguesData.sports[selectedSport][selectedLeague].strLogo)} title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents}>
                 {delayedEvents && <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />}
               </EventsFilter>
             </>

@@ -6,8 +6,9 @@ import DateRangePicker from '@components/dateRangePicker/DateRangePicker'
 import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 import Loader from '../loaders/loader2/Loader'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
+import eventStyles from '../event/Event.module.scss'
 
-const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents }) => {
+const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents, setSelectedEvents }) => {
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
   const [customDates, setCustomDates] = useState(translator('customDates'))
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
@@ -61,10 +62,34 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
     }
   }, [])
 
-  const handleDateRangeUpdated = useCallback((range) => {
-    const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
-    setCustomDates(dateString) // This will include the underline when the custom dates are selected
-  }, [])
+  const handleDateRangeUpdated = useCallback(
+    (range) => {
+      if (range.from && range.to) {
+        // Convert range.from and range.to to Date objects for comparison
+        const fromDate = new Date(range.from)
+        const toDate = new Date(range.to)
+
+        // Update isVisible property based on the date range
+        const updatedEvents = Object.entries(selectedEvents).reduce((acc, [eventKey, eventData]) => {
+          const eventDate = new Date(eventData.dateEvent)
+          if (eventDate >= fromDate && eventDate <= toDate) {
+            acc[eventKey] = { ...eventData, isVisible: true }
+          } else {
+            acc[eventKey] = { ...eventData, isVisible: false }
+          }
+          return acc
+        }, {})
+
+        // Update state with the modified events
+        setSelectedEvents(updatedEvents)
+
+        // Update custom dates display
+        const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
+        setCustomDates(dateString)
+      }
+    },
+    [selectedEvents, setSelectedEvents],
+  )
 
   const handleDateRangePickerClosed = useCallback(() => {
     setIsDateRangePickerOpen(false)
@@ -136,6 +161,13 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
             </div>
             <div id="eventsFilterContent" className={styles.eventsFilterContent} ref={contentRef}>
               {children}
+
+              <div className={eventStyles.eventItemWrapper}>
+                <div className={styles.buttonContainer}>
+                  <DefaultButton onClick={handleOnClose} label="" iconClass="icon-check" buttonClass="actionButton" />
+                </div>
+              </div>
+              <div className={styles.eventContentLastRow}></div>
               <div id="gradientBlock" className={styles.gradientBlock}></div>
             </div>
           </div>
@@ -159,6 +191,7 @@ EventsFilter.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   selectedEvents: PropTypes.object,
+  setSelectedEvents: PropTypes.func.isRequired,
 }
 
 export default EventsFilter
