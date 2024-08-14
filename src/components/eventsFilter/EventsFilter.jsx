@@ -53,14 +53,17 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
 
   const handleFilterChange = useCallback((filter) => {
     setSelectedFilter(filter)
+
     if (filter === 'customDates') {
       setIsDateRangePickerOpen(true)
+    } else {
+      setCustomDates(translator('customDates'))
     }
   }, [])
 
   const handleDateRangeUpdated = useCallback((range) => {
     const dateString = `${getLocalShortDateString(range.from)} - ${getLocalShortDateString(range.to)}`
-    setCustomDates(dateString)
+    setCustomDates(dateString) // This will include the underline when the custom dates are selected
   }, [])
 
   const handleDateRangePickerClosed = useCallback(() => {
@@ -125,7 +128,7 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents 
                   <div className={styles.flexRow}>
                     <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('customDates')}>
                       <div className={`${styles.radioButtonIcon} ${selectedFilter === 'customDates' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span>{customDates}</span>
+                      <span className={selectedFilter === 'customDates' ? styles.underline : ''}>{customDates}</span>
                     </div>
                   </div>
                 </div>

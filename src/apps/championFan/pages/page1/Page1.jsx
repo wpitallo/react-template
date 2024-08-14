@@ -114,7 +114,7 @@ function Page({ pageId, isVisible }) {
 
       const initialSelectedEvents = {}
       events.forEach((event) => {
-        initialSelectedEvents[event.eventKey] = { isSelected: true }
+        initialSelectedEvents[event.eventKey] = { ...event, isSelected: true }
       })
 
       setSelectedEvents(initialSelectedEvents)
