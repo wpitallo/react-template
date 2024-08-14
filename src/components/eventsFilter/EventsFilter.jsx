@@ -8,15 +8,13 @@ import Loader from '../loaders/loader2/Loader'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import eventStyles from '../event/Event.module.scss'
 
-const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents, setSelectedEvents }) => {
+const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents, setSelectedEvents, totalEvents, isVisibleSelectedCount, setIsVisibleSelectedCount }) => {
   const [selectedFilter, setSelectedFilter] = useState('allEvents')
   const [customDates, setCustomDates] = useState(translator('customDates'))
   const [isDateRangePickerOpen, setIsDateRangePickerOpen] = useState(false)
   const [showLoader, setShowLoader] = useState(true)
   const [minimumLoaderTimePassed, setMinimumLoaderTimePassed] = useState(false)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
-  const [totalEvents, setTotalEvents] = useState(0)
-  const [isVisibleSelected, setIsVisibleSelected] = useState(0)
 
   const contentRef = useRef(null)
 
@@ -177,14 +175,11 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
 
   useEffect(() => {
     if (selectedEvents) {
-      const total = Object.keys(selectedEvents).length
       const visibleSelected = Object.values(selectedEvents).filter((event) => event.isVisible).length
-
-      setTotalEvents(total)
-      setIsVisibleSelected(visibleSelected)
+      setIsVisibleSelectedCount(visibleSelected)
     }
     // Calculate visible and total events when selectedEvents changes
-  }, [selectedEvents])
+  }, [selectedEvents, setIsVisibleSelectedCount])
 
   return (
     <>
@@ -199,7 +194,7 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
             <div className={styles.filter}>
               <div className={styles.flexContainer}>
                 <div className={styles.flexRow}>
-                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`}>{`${isVisibleSelected} / ${totalEvents}`}</div>
+                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`}>{`${isVisibleSelectedCount} / ${totalEvents}`}</div>
                 </div>
                 <div className={styles.radioButtonWrapper}>
                   <div className={styles.flexRow}>
@@ -264,6 +259,10 @@ EventsFilter.propTypes = {
   onClose: PropTypes.func.isRequired,
   selectedEvents: PropTypes.object,
   setSelectedEvents: PropTypes.func.isRequired,
+
+  totalEvents: PropTypes.number,
+  isVisibleSelectedCount: PropTypes.number,
+  setIsVisibleSelectedCount: PropTypes.func.isRequired,
 }
 
 export default EventsFilter

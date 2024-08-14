@@ -47,6 +47,9 @@ function Page({ pageId, isVisible }) {
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
   const [selectedEvents, setSelectedEvents] = useState(undefined)
 
+  const [totalEvents, setTotalEvents] = useState(0)
+  const [isVisibleSelectedCount, setIsVisibleSelectedCount] = useState(0)
+
   const sports = [
     { sportsKey: 'soccer', comingSoon: false },
     { sportsKey: 'rugby', comingSoon: false },
@@ -111,6 +114,7 @@ function Page({ pageId, isVisible }) {
       const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
       setEventsData(events)
       setSelectedLeagueTeams(teams)
+      setTotalEvents(Object.keys(events).length)
 
       const initialSelectedEvents = {}
       events.forEach((event) => {
@@ -180,7 +184,15 @@ function Page({ pageId, isVisible }) {
       {sportsChunks.map((chunk, chunkIndex) => (
         <div key={chunkIndex} className={templateStyles.container}>
           {chunk.map((sport, index) => (
-            <SquareTextAndImageButton key={index} mainText={sport.sportsKey} isSelected={selectedSport === sport.sportsKey} onClick={() => handleSportClick(sport.sportsKey)} backgroundSvgIcon={`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`} secondText={sport.comingSoon ? 'comingSoon' : undefined} disabled={sport.comingSoon ? true : undefined} />
+            <SquareTextAndImageButton
+              key={index}
+              mainText={sport.sportsKey}
+              isSelected={selectedSport === sport.sportsKey}
+              onClick={() => handleSportClick(sport.sportsKey)}
+              backgroundSvgIcon={`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`}
+              secondText={sport.comingSoon ? 'comingSoon' : undefined}
+              disabled={sport.comingSoon ? true : undefined}
+            />
           ))}
         </div>
       ))}
@@ -204,7 +216,13 @@ function Page({ pageId, isVisible }) {
 
           <div className={templateStyles.container}>
             {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
-              <ImageButton key={leagueId} leagueId={leagueId} leagueData={leaguesData.sports[selectedSport][leagueId]} selectedLeague={selectedLeague} onClick={handleLeagueClick} />
+              <ImageButton
+                key={leagueId}
+                leagueId={leagueId}
+                leagueData={leaguesData.sports[selectedSport][leagueId]}
+                selectedLeague={selectedLeague}
+                onClick={handleLeagueClick}
+              />
             ))}
           </div>
 
@@ -218,15 +236,33 @@ function Page({ pageId, isVisible }) {
                   </div>
 
                   <div className={templateStyles.contentHeader2}></div>
-                  <div className={templateStyles.contentHeader2}>{translator('firstEventDate')}</div>
-                  <div className={templateStyles.contentHeader2}>{translator('lastEventDate')}</div>
-                  <div className={templateStyles.contentHeader2}>{translator('numberOfEvents')}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('firstEventDate')}:`}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('lastEventDate')}:`}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('numberOfEvents')}: ${isVisibleSelectedCount} / ${totalEvents}`}</div>
                   <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}`}</div>
                 </>
               )}
 
-              <EventsFilter image={getImage(leaguesData.sports[selectedSport][selectedLeague].strLogo)} title={translator('selectEvents')} isOpen={isEventsFilterOpen} onClose={toggleEventsFilter} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents}>
-                {delayedEvents && <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} />}
+              <EventsFilter
+                image={getImage(leaguesData.sports[selectedSport][selectedLeague].strLogo)}
+                title={translator('selectEvents')}
+                isOpen={isEventsFilterOpen}
+                onClose={toggleEventsFilter}
+                selectedEvents={selectedEvents}
+                setSelectedEvents={setSelectedEvents}
+                isVisibleSelectedCount={isVisibleSelectedCount}
+                totalEvents={totalEvents}
+                setIsVisibleSelectedCount={setIsVisibleSelectedCount}
+              >
+                {delayedEvents && (
+                  <Events
+                    eventsData={eventsData}
+                    selectedEvents={selectedEvents}
+                    setSelectedEvents={setSelectedEvents}
+                    selectedLeagueTeams={selectedLeagueTeams}
+                    translator={translator}
+                  />
+                )}
               </EventsFilter>
             </>
           )}

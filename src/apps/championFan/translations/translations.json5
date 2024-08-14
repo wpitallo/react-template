@@ -38,10 +38,10 @@
     selectedEvents: 'Selected Events',
     selectEvents: 'Select Events',
 
-    firstEventDate: 'First event date:',
-    lastEventDate: 'Last event date:',
-    numberOfEvents: 'Number of events:',
-    duration: 'Duration:',
+    firstEventDate: 'First event date',
+    lastEventDate: 'Last event date',
+    numberOfEvents: 'Number of events',
+    duration: 'Duration',
     days: 'days',
 
     allEvents: 'All Events',
