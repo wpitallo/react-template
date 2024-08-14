@@ -52,15 +52,71 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
     }
   }, [selectedEvents, minimumLoaderTimePassed])
 
-  const handleFilterChange = useCallback((filter) => {
-    setSelectedFilter(filter)
+  const handleFilterChange = useCallback(
+    (filter) => {
+      setSelectedFilter(filter)
 
-    if (filter === 'customDates') {
-      setIsDateRangePickerOpen(true)
-    } else {
-      setCustomDates(translator('customDates'))
-    }
-  }, [])
+      const today = new Date()
+      let updatedEvents = {}
+
+      if (filter === 'allEvents') {
+        // Set all events to visible
+        updatedEvents = Object.entries(selectedEvents).reduce((acc, [eventKey, eventData]) => {
+          acc[eventKey] = { ...eventData, isVisible: true }
+          return acc
+        }, {})
+      } else if (filter === 'thisWeek') {
+        const dayOfWeek = today.getDay()
+        const startOfWeek = new Date(today)
+        startOfWeek.setDate(today.getDate() - dayOfWeek)
+        const endOfWeek = new Date(startOfWeek)
+        endOfWeek.setDate(startOfWeek.getDate() + 6)
+
+        updatedEvents = Object.entries(selectedEvents).reduce((acc, [eventKey, eventData]) => {
+          const eventDate = new Date(eventData.dateEvent)
+          if (eventDate >= startOfWeek && eventDate <= endOfWeek) {
+            acc[eventKey] = { ...eventData, isVisible: true }
+          } else {
+            acc[eventKey] = { ...eventData, isVisible: false }
+          }
+          return acc
+        }, {})
+      } else if (filter === 'today') {
+        updatedEvents = Object.entries(selectedEvents).reduce((acc, [eventKey, eventData]) => {
+          const eventDate = new Date(eventData.dateEvent)
+          if (eventDate.toDateString() === today.toDateString()) {
+            acc[eventKey] = { ...eventData, isVisible: true }
+          } else {
+            acc[eventKey] = { ...eventData, isVisible: false }
+          }
+          return acc
+        }, {})
+      } else if (filter === 'thisMonth') {
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+
+        updatedEvents = Object.entries(selectedEvents).reduce((acc, [eventKey, eventData]) => {
+          const eventDate = new Date(eventData.dateEvent)
+          if (eventDate >= startOfMonth && eventDate <= endOfMonth) {
+            acc[eventKey] = { ...eventData, isVisible: true }
+          } else {
+            acc[eventKey] = { ...eventData, isVisible: false }
+          }
+          return acc
+        }, {})
+      } else if (filter === 'customDates') {
+        setIsDateRangePickerOpen(true)
+        return
+      }
+
+      setSelectedEvents(updatedEvents)
+
+      if (filter !== 'customDates') {
+        setCustomDates(translator('customDates'))
+      }
+    },
+    [selectedEvents, setSelectedEvents],
+  )
 
   const handleDateRangeUpdated = useCallback(
     (range) => {
