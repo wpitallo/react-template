@@ -15,6 +15,8 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
   const [showLoader, setShowLoader] = useState(true)
   const [minimumLoaderTimePassed, setMinimumLoaderTimePassed] = useState(false)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
+  const [totalEvents, setTotalEvents] = useState(0)
+  const [isVisibleSelected, setIsVisibleSelected] = useState(0)
 
   const contentRef = useRef(null)
 
@@ -173,6 +175,17 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
     customDates: translator('customDates'),
   }
 
+  useEffect(() => {
+    if (selectedEvents) {
+      const total = Object.keys(selectedEvents).length
+      const visibleSelected = Object.values(selectedEvents).filter((event) => event.isVisible).length
+
+      setTotalEvents(total)
+      setIsVisibleSelected(visibleSelected)
+    }
+    // Calculate visible and total events when selectedEvents changes
+  }, [selectedEvents])
+
   return (
     <>
       {isOpen && (
@@ -185,6 +198,9 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
           <div className={`${styles.eventsFilterContentWrapper} ${!showLoader ? styles.fadeIn : ''}`}>
             <div className={styles.filter}>
               <div className={styles.flexContainer}>
+                <div className={styles.flexRow}>
+                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`}>{`${isVisibleSelected} / ${totalEvents}`}</div>
+                </div>
                 <div className={styles.radioButtonWrapper}>
                   <div className={styles.flexRow}>
                     <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('allEvents')}>
