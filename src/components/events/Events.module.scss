@@ -77,3 +77,12 @@
     display: flex;
     justify-content: center;
 }
+
+.continueButton {
+    position: absolute;
+    z-index: 7000;
+    bottom: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}

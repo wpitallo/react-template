@@ -30,7 +30,10 @@ const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueT
     <>
       {visibleEvents.map((event, index) => (
         <div key={index} className={eventStyles.eventItemWrapper}>
-          <div className={`${templateStyles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`} onClick={() => toggleEventSelection(event.eventKey)}>
+          <div
+            className={`${templateStyles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`}
+            onClick={() => toggleEventSelection(event.eventKey)}
+          >
             <div className={templateStyles.eventColumn}>
               <div className={`${templateStyles.checkbox} ${selectedEvents?.[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
               <img src={getImage(getTeamBadge(event.strHomeTeam))} alt={`${event.strHomeTeam} leagueLogo`} />

@@ -191,52 +191,50 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
           </div>
 
           <div className={`${styles.eventsFilterContentWrapper} ${!showLoader ? styles.fadeIn : ''}`}>
-            <div className={styles.filter}>
-              <div className={styles.flexContainer}>
+            <div className={styles.flexContainer}>
+              <div className={styles.flexRow}>
+                <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`}>{`${isVisibleSelectedCount} / ${totalEvents}`}</div>
+              </div>
+              <div className={styles.radioButtonWrapper}>
                 <div className={styles.flexRow}>
-                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`}>{`${isVisibleSelectedCount} / ${totalEvents}`}</div>
+                  <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('allEvents')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'allEvents' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span>{radioItems.allEvents}</span>
+                  </div>
+                  <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('thisWeek')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'thisWeek' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span>{radioItems.thisWeek}</span>
+                  </div>
                 </div>
-                <div className={styles.radioButtonWrapper}>
-                  <div className={styles.flexRow}>
-                    <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('allEvents')}>
-                      <div className={`${styles.radioButtonIcon} ${selectedFilter === 'allEvents' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span>{radioItems.allEvents}</span>
-                    </div>
-                    <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('thisWeek')}>
-                      <div className={`${styles.radioButtonIcon} ${selectedFilter === 'thisWeek' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span>{radioItems.thisWeek}</span>
-                    </div>
+                <div className={styles.flexRow}>
+                  <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('today')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'today' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span>{radioItems.today}</span>
                   </div>
-                  <div className={styles.flexRow}>
-                    <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('today')}>
-                      <div className={`${styles.radioButtonIcon} ${selectedFilter === 'today' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span>{radioItems.today}</span>
-                    </div>
-                    <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('thisMonth')}>
-                      <div className={`${styles.radioButtonIcon} ${selectedFilter === 'thisMonth' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span>{radioItems.thisMonth}</span>
-                    </div>
+                  <div className={`${styles.flexItem} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('thisMonth')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'thisMonth' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span>{radioItems.thisMonth}</span>
                   </div>
-                  <div className={styles.flexRow}>
-                    <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('customDates')}>
-                      <div className={`${styles.radioButtonIcon} ${selectedFilter === 'customDates' ? 'icon-checked' : 'icon-unchecked'}`}></div>
-                      <span className={selectedFilter === 'customDates' ? styles.underline : ''}>{customDates}</span>
-                    </div>
+                </div>
+                <div className={styles.flexRow}>
+                  <div className={`${styles.dateRangePickerContainer} ${styles.responsiveRadioButton}`} onClick={() => handleFilterChange('customDates')}>
+                    <div className={`${styles.radioButtonIcon} ${selectedFilter === 'customDates' ? 'icon-checked' : 'icon-unchecked'}`}></div>
+                    <span className={selectedFilter === 'customDates' ? styles.underline : ''}>{customDates}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div id="eventsFilterContent" className={styles.eventsFilterContent} ref={contentRef}>
+            <div id="eventsFilterContent" className={`${styles.eventsFilterContent}`} ref={contentRef}>
               {children}
 
-              <div className={eventStyles.eventItemWrapper}>
-                <div className={styles.buttonContainer}>
+              <div className={`${styles.continueButton} `}>
+                <div className={`${eventStyles.eventItemWrapper}`}>
                   <DefaultButton onClick={handleOnClose} label="" iconClass="icon-check" buttonClass="actionButton" />
                 </div>
               </div>
-              <div className={styles.eventContentLastRow}></div>
-              <div id="gradientBlock" className={styles.gradientBlock}></div>
             </div>
+            <div className={styles.eventContentLastRow}></div>
+            <div id="gradientBlock" className={styles.gradientBlock}></div>
           </div>
           {showScrollTopButton && <DefaultButton onClick={scrollToTop} iconClass="icon-scroll-top" buttonClass="scrollTopButtonModal" />}
         </Modal>

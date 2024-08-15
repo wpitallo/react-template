@@ -1,3 +1,5 @@
+@import url("../_common/Common.module.scss");
+
 .eventsFilter {
     margin-bottom: 10px;
     border-radius: 15px;
@@ -22,17 +24,13 @@
 
 .eventsFilterContentWrapper {
     margin-top: 135px;
-    opacity: 0;
     transition: opacity 0.5s ease-in;
     overflow-y: auto;
+    opacity: 0;
 }
 
-.eventsFilterContentWrapper.fadeIn {
-    opacity: 1;
-}
-
-.filter {
-    padding-top: 20px;
+.fadeIn {
+    opacity: 1 !important;
 }
 
 .flexContainer {
@@ -61,17 +59,6 @@
     justify-content: center;
     align-items: center;
     width: clamp(130px, 12vw, 240px);
-}
-
-.buttonContainer {
-    display: flex;
-    justify-content: space-around;
-    box-sizing: border-box;
-    gap: 5px;
-    padding-bottom: 10px;
-    padding-top: 20px;
-    // position: relative;
-    // z-index: 6001;
 }
 
 .radioButton {
@@ -140,8 +127,8 @@
 
 .gradientBlock {
     // background: linear-gradient(to top, rgba(37, 37, 37, 0.8), rgba(4, 58, 14, 0));linear-gradient(to bottom, rgba(112, 112, 112, 1), rgba(255, 255, 255, 0))
-    background: linear-gradient(to top, rgba(112, 112, 112, 0.8), rgba(255, 255, 255, 0));
-    height: 60px;
+    background: linear-gradient(to top, rgb(0, 0, 0), rgba(255, 255, 255, 0));
+    height: 200px;
     width: 100vw !important;
     position: fixed;
     left: 0;
@@ -159,4 +146,11 @@
 .eventContentLastRow {
     height: 100px;
     width: 100%;
+}
+
+.continueButton {
+    position: absolute;
+    z-index: 7000;
+    bottom: 10px;
+    transition: opacity 0.5s ease-in;
 }

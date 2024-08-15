@@ -15,7 +15,7 @@ $selectedBorder: 3px;
 }
 
 .button {
-    height: 36px;
+    height: 38px;
     flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
     aspect-ratio: 1 / 1; /* Ensures the height equals the width */
     background-color: var(--mainButtonColor);
@@ -24,6 +24,7 @@ $selectedBorder: 3px;
     margin-bottom: 5px;
     margin-top: 10px;
     border: solid $selectedBorder var(--themeColor1);
+    box-sizing: border-box;
 }
 
 .button:hover {
@@ -31,10 +32,8 @@ $selectedBorder: 3px;
     border: solid $selectedBorder var(--themeColor3);
 }
 
-@media (min-aspect-ratio: 1/1) {
-    .button {
-        aspect-ratio: auto; /* Remove aspect-ratio for rectangles */
-    }
+.button {
+    width: 100%;
 }
 
 .default {
@@ -86,8 +85,10 @@ $selectedBorder: 3px;
     padding-bottom: 8px;
     border-radius: 25px;
     cursor: pointer;
-    max-width: 20px !important;
-    max-height: 20px !important;
+    min-width: 50px !important;
+    max-width: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
 }
 
 .scrollTopButton {
@@ -111,5 +112,5 @@ $selectedBorder: 3px;
 
 .scrollTopButtonModal {
     @extend .scrollTopButton;
-    bottom: 25px !important;
+    bottom: 65px !important;
 }
