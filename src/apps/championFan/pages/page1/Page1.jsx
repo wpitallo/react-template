@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
-import { translator } from '@globalHelpers/translations'
+import { translator, getLocalShortDateString } from '@globalHelpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import ModalAlert from '@components/modals/alert/ModalAlert'
 import { DataContext } from '@providers/DataProvider'
@@ -44,6 +44,8 @@ function Page({ pageId, isVisible }) {
   const [delayedEvents, setDelayedEvents] = useState(false) // New state for delayed rendering
 
   const inputRef = useRef(null)
+  const pageTemplateRef = useRef(null)
+
   const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
   const [selectedEvents, setSelectedEvents] = useState(undefined)
 
@@ -78,6 +80,11 @@ function Page({ pageId, isVisible }) {
       setGuid(generateShortGuid())
       setShowShareLink(true)
     }
+    if (pageTemplateRef.current && typeof pageTemplateRef.current.scrollToTop === 'function') {
+      pageTemplateRef.current.scrollToTop()
+    }
+
+    inputRef.current.classList.add(templateStyles.validationFailed)
   }
 
   const handleSendInvitationClick = (event) => {
@@ -163,8 +170,45 @@ function Page({ pageId, isVisible }) {
 
   const sportsChunks = chunkArray(sports, 5)
 
+  // Function to get the first visible event date
+  const getFirstVisibleEventDate = () => {
+    const visibleEvents = Object.values(selectedEvents || {}).filter((event) => event.isVisible)
+    if (visibleEvents.length === 0) return null
+
+    const firstEvent = visibleEvents.reduce((earliest, current) => {
+      return new Date(current.dateEvent) < new Date(earliest.dateEvent) ? current : earliest
+    })
+
+    return getLocalShortDateString(new Date(firstEvent.dateEvent).toLocaleDateString())
+  }
+
+  // Function to get the last visible event date
+  const getLastVisibleEventDate = () => {
+    const visibleEvents = Object.values(selectedEvents || {}).filter((event) => event.isVisible)
+    if (visibleEvents.length === 0) return null
+
+    const lastEvent = visibleEvents.reduce((latest, current) => {
+      return new Date(current.dateEvent) > new Date(latest.dateEvent) ? current : latest
+    })
+
+    return getLocalShortDateString(new Date(lastEvent.dateEvent).toLocaleDateString())
+  }
+
+  // Function to calculate the duration between the first and last visible event
+  const getDuration = () => {
+    const visibleEvents = Object.values(selectedEvents || {}).filter((event) => event.isVisible)
+    if (visibleEvents.length === 0) return 0
+
+    const firstEventDate = new Date(getFirstVisibleEventDate())
+    const lastEventDate = new Date(getLastVisibleEventDate())
+
+    const duration = Math.ceil((lastEventDate - firstEventDate) / (1000 * 60 * 60 * 24)) + 1
+
+    return duration
+  }
+
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
+    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader} ref={pageTemplateRef}>
       <div className={templateStyles.container}>
         <div className={templateStyles.inputFieldWrapper}>
           <Input value={poolName} onChange={handleInputChange} placeholder={translator('poolName')} ref={inputRef} />
@@ -234,12 +278,10 @@ function Page({ pageId, isVisible }) {
                     <div className={`${templateStyles.contentHeader1} ${templateStyles.underline} ${templateStyles.headerMarginTop}`}>{translator('selectedEvents')}</div>
                     <DefaultButton onClick={toggleEventsFilter} iconClass="icon-edit" buttonClass="roundButton" />
                   </div>
-
-                  <div className={templateStyles.contentHeader2}></div>
-                  <div className={templateStyles.contentHeader2}>{`${translator('firstEventDate')}:`}</div>
-                  <div className={templateStyles.contentHeader2}>{`${translator('lastEventDate')}:`}</div>
                   <div className={templateStyles.contentHeader2}>{`${translator('numberOfEvents')}: ${isVisibleSelectedCount} / ${totalEvents}`}</div>
-                  <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}`}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('firstEventDate')}: ${getFirstVisibleEventDate() || 'N/A'}`}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('lastEventDate')}: ${getLastVisibleEventDate() || 'N/A'}`}</div>
+                  <div className={templateStyles.contentHeader2}>{`${translator('duration')} ${translator('days')}: ${getDuration()}`}</div>
                 </>
               )}
 

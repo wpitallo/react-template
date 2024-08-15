@@ -1,6 +1,6 @@
 $selectedBorder: 3px;
 $headerGap: 255px;
-$placeholderColorValidationFailed: red;
+$placeholderColorValidationFailed: rgb(255, 190, 190);
 
 @import "./_templateStyles/verticalContainer.scss";
 
@@ -48,7 +48,8 @@ $placeholderColorValidationFailed: red;
 }
 
 .validationFailed {
-  color: red !important;
+  color: $placeholderColorValidationFailed !important;
+  background-image: linear-gradient(to bottom, red 50%, transparent 0%) !important;
 }
 
 // Include vendor prefixes for better browser support

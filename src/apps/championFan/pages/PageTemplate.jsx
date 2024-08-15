@@ -4,7 +4,7 @@ import styles from './PageTemplate.module.scss'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import IconButton from '@components/buttons/iconButton/IconButton'
 
-const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle, exitMenuPage }, ref) {
+const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, children, header: Header, pageTopMarginStyle, exitMenuPage, scrollToTopFn }, ref) {
   const scrollContainerRef = useRef(null)
   const isVisibleRef = useRef(isVisible)
   const [showScrollTopButton, setShowScrollTopButton] = useState(false)
@@ -52,6 +52,12 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
     }
   }, [])
 
+  useEffect(() => {
+    if (scrollToTopFn) {
+      scrollToTopFn(scrollToTop)
+    }
+  }, [scrollToTopFn])
+
   const scrollToTop = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
@@ -62,7 +68,6 @@ const PageTemplate = forwardRef(function PageTemplate({ pageId, isVisible, child
   return (
     <div className={styles.pageTemplate}>
       <div className={`${styles.scrollContainer} ${isVisible ? styles.visible : ''}`} id={`scrollContainer-${pageId}`} ref={scrollContainerRef}>
-        {/* <div className={`${styles.scrollTopButton} icon-scroll-top`}  onClick={scrollToTop}></div> */}
         <div style={{ opacity: showScrollTopButton ? 1 : 0 }}>
           <DefaultButton onClick={scrollToTop} iconClass="icon-scroll-top" buttonClass="scrollTopButton" />
         </div>
@@ -89,6 +94,7 @@ PageTemplate.propTypes = {
   header: PropTypes.elementType,
   pageTopMarginStyle: PropTypes.string,
   exitMenuPage: PropTypes.func,
+  scrollToTopFn: PropTypes.func, // Add this line
 }
 
 export default PageTemplate

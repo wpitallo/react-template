@@ -46,6 +46,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
     if (displayName.length <= 3) {
       inputRef.current.classList.add(templateStyles.validationFailed)
       cancelSave()
+      return
     }
 
     inputRef.current.classList.remove(templateStyles.validationFailed)
