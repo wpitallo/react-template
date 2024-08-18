@@ -16,16 +16,22 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={templateStyles.container}>
         <div className={`${templateStyles.button} ${selectedButton === 'public' ? templateStyles.selected : templateStyles.notSelected}`}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('poolName')}</div>
+          <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator('poolName')}</div>
         </div>
       </div>
 
       <div className={templateStyles.container}>
-        <div className={`${templateStyles.button} ${selectedButton === 'public' ? templateStyles.selected : templateStyles.notSelected}`} onClick={() => handleButtonClick('public')}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('public')}</div>
+        <div
+          className={`${templateStyles.button} ${selectedButton === 'public' ? templateStyles.selected : templateStyles.notSelected}`}
+          onClick={() => handleButtonClick('public')}
+        >
+          <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator('public')}</div>
         </div>
-        <div className={`${templateStyles.button} ${selectedButton === 'inviteOnly' ? templateStyles.selected : templateStyles.notSelected}`} onClick={() => handleButtonClick('inviteOnly')}>
-          <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator('inviteOnly')}</div>
+        <div
+          className={`${templateStyles.button} ${selectedButton === 'inviteOnly' ? templateStyles.selected : templateStyles.notSelected}`}
+          onClick={() => handleButtonClick('inviteOnly')}
+        >
+          <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator('inviteOnly')}</div>
         </div>
       </div>
 

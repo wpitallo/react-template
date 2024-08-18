@@ -51,6 +51,7 @@ function Page({ pageId, isVisible }) {
 
   const [totalEvents, setTotalEvents] = useState(0)
   const [isVisibleSelectedCount, setIsVisibleSelectedCount] = useState(0)
+  const [isPoolNameValid, setIsPoolNameValid] = useState(true)
 
   const sports = [
     { sportsKey: 'soccer', comingSoon: false },
@@ -66,13 +67,20 @@ function Page({ pageId, isVisible }) {
   }
 
   const handleInputChange = (event) => {
-    setPoolName(event.target.value)
+    const newValue = event.target.value
+    setPoolName(newValue)
+    setIsPoolNameValid(validatePoolName(newValue))
   }
 
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
       inputRef.current.blur()
     }
+  }
+
+  const validatePoolName = (name) => {
+    const regex = /^[a-zA-Z0-9 ]{4,}$/
+    return regex.test(name.trim())
   }
 
   const handleCreatePoolClick = () => {
@@ -84,7 +92,7 @@ function Page({ pageId, isVisible }) {
       pageTemplateRef.current.scrollToTop()
     }
 
-    inputRef.current.classList.add(templateStyles.validationFailed)
+    setIsPoolNameValid(validatePoolName(poolName))
   }
 
   const handleSendInvitationClick = (event) => {
@@ -211,10 +219,16 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader} ref={pageTemplateRef}>
       <div className={templateStyles.container}>
         <div className={templateStyles.inputFieldWrapper}>
-          <Input value={poolName} onChange={handleInputChange} placeholder={translator('poolName')} ref={inputRef} />
+          <Input
+            value={poolName}
+            onChange={handleInputChange}
+            placeholder={translator('poolName')}
+            ref={inputRef}
+            isValid={isPoolNameValid}
+            errorText={!isPoolNameValid ? translator('invalidPoolName') : ''}
+          />
         </div>
       </div>
-
       <div className={templateStyles.container}>
         <CheckButton label="public" isSelected={selectedButton === 'public'} onClick={() => handleButtonClick('public')} />
         <CheckButton label="inviteOnly" isSelected={selectedButton === 'inviteOnly'} onClick={() => handleButtonClick('inviteOnly')} />

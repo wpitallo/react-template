@@ -1,7 +1,14 @@
-@import url("../_common/Common.module.scss");
-
 $placeholderColor: var(--themeColor4);
 $placeholderOpacity: 0.6;
+
+$placeholderColorValidationFailed: rgb(255, 0, 0);
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Center items horizontally
+    width: 100%;
+}
 
 .inputField {
     flex: 1;
@@ -25,57 +32,39 @@ $placeholderOpacity: 0.6;
     background-image: linear-gradient(to bottom, var(--themeColor4) 50%, transparent 50%);
     background-size: 90% 2px;
     background-repeat: no-repeat;
-    background-repeat: no-repeat;
     background-position: center calc(100% - 8px);
     cursor: text;
+
+    &::placeholder {
+        color: $placeholderColor;
+        opacity: $placeholderOpacity;
+        font-family: "bebas_neuebold";
+    }
+
+    &:focus::placeholder {
+        color: transparent;
+        opacity: 0;
+    }
+
+    &.validationFailed {
+        background-image: linear-gradient(to bottom, red 50%, transparent 0%) !important;
+
+        &::placeholder {
+            color: $placeholderColorValidationFailed;
+            opacity: 1;
+            text-shadow:
+                -1px -1px 0 #ffaaaa,
+                1px -1px 0 #ffaaaa,
+                -1px 1px 0 #ffaaaa,
+                1px 1px 0 #ffaaaa !important;
+        }
+    }
 }
 
-.inputField::-webkit-input-placeholder {
-    color: $placeholderColor;
-    opacity: $placeholderOpacity;
-    font-family: "bebas_neuebold";
-}
-
-.inputField:focus::-webkit-input-placeholder {
-    color: transparent;
-    opacity: 0;
-}
-
-.inputField:-moz-placeholder {
-    color: $placeholderColor;
-    opacity: $placeholderOpacity;
-    font-family: "bebas_neuebold";
-}
-
-.inputField:focus:-moz-placeholder {
-    color: transparent;
-    opacity: 0;
-}
-
-.inputField::-moz-placeholder {
-    color: $placeholderColor;
-    opacity: $placeholderOpacity;
-    font-family: "bebas_neuebold";
-}
-
-.inputField:focus::-moz-placeholder {
-    color: transparent;
-    opacity: 0;
-}
-
-.inputField:-ms-input-placeholder {
-    color: $placeholderColor;
-    opacity: $placeholderOpacity;
-    font-family: "bebas_neuebold";
-}
-
-.inputField:focus:-ms-input-placeholder {
-    color: transparent;
-    opacity: 0;
-}
-
-.inputField::placeholder {
-    color: var(--themeColor4);
-    opacity: 0.6;
-    font-family: "bebas_neuebold";
+.errorText {
+    color: $placeholderColorValidationFailed;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    text-align: center;
+    width: 100%; // Ensure full width to align text properly
 }

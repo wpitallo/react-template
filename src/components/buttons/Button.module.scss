@@ -1,8 +1,6 @@
 $selectedBorder: 3px;
 
-@import url("../_common/Common.module.scss");
-
-.largeButton {
+.largeText {
     font-size: var(--controlsFontSize);
     height: 100%;
 }
@@ -113,4 +111,14 @@ $selectedBorder: 3px;
 .scrollTopButtonModal {
     @extend .scrollTopButton;
     bottom: 65px !important;
+}
+
+.halfWidth {
+    flex: 0 1 calc(50% - 10px) !important;
+}
+
+@media (max-width: 600px) {
+    .halfWidth {
+        flex: 0 1 calc(80% - 10px) !important;
+    }
 }

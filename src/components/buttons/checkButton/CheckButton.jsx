@@ -5,7 +5,7 @@ import templateStyles from '../Button.module.scss'
 
 const CheckButton = ({ label, isSelected, onClick }) => (
   <div className={`${templateStyles.button} ${isSelected ? templateStyles.selected : templateStyles.notSelected}`} onClick={onClick}>
-    <div className={`${templateStyles.centeredText} ${templateStyles.largeButton}`}>{translator(label)}</div>
+    <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator(label)}</div>
   </div>
 )
 

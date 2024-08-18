@@ -1,6 +1,5 @@
 $selectedBorder: 3px;
 $headerGap: 255px;
-$placeholderColorValidationFailed: rgb(255, 190, 190);
 
 @import "./_templateStyles/verticalContainer.scss";
 
@@ -45,28 +44,6 @@ $placeholderColorValidationFailed: rgb(255, 190, 190);
 .inputFieldWrapper {
   align-items: center;
   width: 100%;
-}
-
-.validationFailed {
-  color: $placeholderColorValidationFailed !important;
-  background-image: linear-gradient(to bottom, red 50%, transparent 0%) !important;
-}
-
-// Include vendor prefixes for better browser support
-.validationFailed::-webkit-input-placeholder {
-  color: $placeholderColorValidationFailed !important;
-}
-
-.validationFailed:-moz-placeholder {
-  color: $placeholderColorValidationFailed !important;
-}
-
-.validationFailed::-moz-placeholder {
-  color: $placeholderColorValidationFailed !important;
-}
-
-.validationFailed:-ms-input-placeholder {
-  color: $placeholderColorValidationFailed !important;
 }
 
 .icon-send {

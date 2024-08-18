@@ -27,7 +27,7 @@ const SaveButton = ({ handleSaveClick }) => {
 
   return (
     <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={handleClick}>
-      {!isSavingAnimationVisible && <div className={`${templateStyles.centeredText} ${templateStyles.largeButton} icon-check`}></div>}
+      {!isSavingAnimationVisible && <div className={`${templateStyles.centeredText} ${templateStyles.largeText} ${style.noText} icon-check`}></div>}
       {isSavingAnimationVisible && (
         <div className={`${style.saveAnimationWrapper}`}>
           <Loader />

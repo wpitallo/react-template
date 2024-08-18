@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import templateStyles from './Events.module.scss'
+import styles from './Events.module.scss'
 import eventStyles from '../event/Event.module.scss'
 import { getImage } from '@globalHelpers/imageHelper'
 
@@ -23,34 +23,45 @@ const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueT
     [setSelectedEvents],
   )
 
-  // Use useMemo to optimize filtering of events
-  const visibleEvents = useMemo(() => eventsData.filter((event) => selectedEvents?.[event.eventKey]?.isVisible), [eventsData, selectedEvents])
+  // Use useMemo to optimize filtering and sorting of events
+  const visibleEvents = useMemo(() => {
+    return eventsData
+      .filter((event) => selectedEvents?.[event.eventKey]?.isVisible)
+      .sort((a, b) => {
+        const dateA = new Date(`${a.dateEvent}T${a.strTime}`)
+        const dateB = new Date(`${b.dateEvent}T${b.strTime}`)
+        return dateA - dateB // Sort by most recent first
+      })
+  }, [eventsData, selectedEvents])
 
   return (
     <>
       {visibleEvents.map((event, index) => (
         <div key={index} className={eventStyles.eventItemWrapper}>
-          <div
-            className={`${templateStyles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? templateStyles.unSelected : ''}`}
-            onClick={() => toggleEventSelection(event.eventKey)}
-          >
-            <div className={templateStyles.eventColumn}>
-              <div className={`${templateStyles.checkbox} ${selectedEvents?.[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
+          <div className={`${styles.eventItem} ${!selectedEvents?.[event.eventKey]?.isSelected ? styles.unSelected : ''}`} onClick={() => toggleEventSelection(event.eventKey)}>
+            <div className={styles.eventColumn}>
+              <div className={`${styles.checkbox} ${selectedEvents?.[event.eventKey]?.isSelected ? 'icon-checked' : 'icon-unchecked'}`}></div>
               <img src={getImage(getTeamBadge(event.strHomeTeam))} alt={`${event.strHomeTeam} leagueLogo`} />
-              <div className={templateStyles.teamName}>{event.strHomeTeam}</div>
+              <div className={styles.teamName}>{event.strHomeTeam}</div>
             </div>
-            <div className={templateStyles.eventMiddleColumn}>
+            <div className={styles.eventMiddleColumn}>
               <div>VS</div>
-              <div className={templateStyles.eventDateMiddle}>&nbsp;</div>
-              <div>{event.dateEvent}</div>
+              <div className={styles.eventDateMiddle}>&nbsp;</div>
+              <div>
+                {event.eventDateLocal} : {event.eventTimeLocal}
+              </div>
             </div>
-            <div className={templateStyles.eventColumn}>
+            <div className={styles.eventColumn}>
               <img src={getImage(getTeamBadge(event.strAwayTeam))} alt={`${event.strAwayTeam} leagueLogo`} />
-              <div className={templateStyles.teamName}>{event.strAwayTeam}</div>
+              <div className={styles.teamName}>{event.strAwayTeam}</div>
             </div>
           </div>
         </div>
       ))}
+
+      <div className={eventStyles.eventItemWrapper}>
+        <div className={styles.eventContentLastRow}></div>
+      </div>
     </>
   )
 }

@@ -233,7 +233,7 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
                 </div>
               </div>
             </div>
-            <div className={styles.eventContentLastRow}></div>
+
             <div id="gradientBlock" className={styles.gradientBlock}></div>
           </div>
           {showScrollTopButton && <DefaultButton onClick={scrollToTop} iconClass="icon-scroll-top" buttonClass="scrollTopButtonModal" />}

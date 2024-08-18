@@ -1,5 +1,3 @@
-@import url("../_common/Common.module.scss");
-
 .eventsFilter {
     margin-bottom: 10px;
     border-radius: 15px;
@@ -141,11 +139,6 @@
 
 .underline {
     text-decoration: underline;
-}
-
-.eventContentLastRow {
-    height: 100px;
-    width: 100%;
 }
 
 .continueButton {

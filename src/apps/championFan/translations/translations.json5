@@ -29,6 +29,7 @@
     // page 1 - Create Pool
     createPool: 'Create Pool',
     poolName: 'Pool Name',
+    invalidPoolName: '* Please enter a pool name that is at least 4 characters long and contains only letters, numbers, and spaces. Special characters are not allowed.',
     public: 'Public',
     inviteOnly: 'Invite Only',
     createPool: 'Create Pool',
