@@ -33,7 +33,7 @@ const convertToLocalTime = (utcDate, utcTime) => {
     return { eventDateLocal: formattedDate, eventTimeLocal: formattedTime };
 };
 
-export const fetchEventsAndTeamsData = async (db, leaguesData, setLeaguesData, league, strCurrentSeason, sport) => {
+export const getEventsAndTeamsData = async (db, leaguesData, setLeaguesData, league, strCurrentSeason, sport) => {
     try {
         // Check if events and teams already exist in leaguesData
         if (leaguesData.sports[sport] && leaguesData.sports[sport][league] && leaguesData.sports[sport][league].events && leaguesData.sports[sport][league].teams) {

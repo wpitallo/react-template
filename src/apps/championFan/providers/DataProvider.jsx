@@ -3,8 +3,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { app } from '@configuration/firebaseConfig'
 import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore'
 import PropTypes from 'prop-types'
-import { fetchData } from './services/fetchData'
-import { fetchEventsAndTeamsData } from './services/fetchEventsAndTeamsData'
+import { getSportsLeaguesData } from './services/getSportsLeaguesData'
+import { getEventsAndTeamsData } from './services/getEventsAndTeamsData'
+import { createTournamentPool } from './services/createTournamentPool'
+import { getJoinedTournamentPools } from './services/getJoinedTournamentPools'
 
 const DataContext = createContext()
 
@@ -16,16 +18,37 @@ export const DataProvider = ({ children }) => {
   const [dataFetched, setDataFetched] = useState(false)
   const db = getFirestore(app)
 
-  const fetchDataCallback = useCallback(() => {
-    fetchData(db, leaguesData, setLeaguesData, setDataFetched)
+  const getSportsLeaguesDataCallback = useCallback(() => {
+    getSportsLeaguesData(db, leaguesData, setLeaguesData, setDataFetched)
   }, [db, leaguesData])
 
-  const fetchEventsAndTeamsDataCallback = useCallback(
+  const getEventsAndTeamsDataCallback = useCallback(
     (league, strCurrentSeason, sport) => {
-      return fetchEventsAndTeamsData(db, leaguesData, setLeaguesData, league, strCurrentSeason, sport)
+      return getEventsAndTeamsData(db, leaguesData, setLeaguesData, league, strCurrentSeason, sport)
     },
     [db, leaguesData],
   )
+
+  const createTournamentPoolCallback = useCallback(
+    async (tournamentData) => {
+      if (user) {
+        await createTournamentPool(tournamentData)
+      } else {
+        console.error('No user is authenticated.')
+      }
+    },
+    [user],
+  )
+
+  const getJoinedTournamentPoolsCallback = useCallback(async () => {
+    if (user) {
+      const pools = await getJoinedTournamentPools(db, user.uid)
+      return pools
+    } else {
+      console.error('No user is authenticated.')
+      return []
+    }
+  }, [db, user])
 
   useEffect(() => {
     const auth = getAuth(app)
@@ -62,7 +85,7 @@ export const DataProvider = ({ children }) => {
           if (document.getElementById('firebaseui-auth-container')) {
             document.getElementById('firebaseui-auth-container').style.opacity = 0
           }
-          fetchDataCallback()
+          getSportsLeaguesDataCallback()
         }
       } else {
         setUser(null)
@@ -75,16 +98,18 @@ export const DataProvider = ({ children }) => {
     })
 
     return () => unsubscribe()
-  }, [db, dataFetched, fetchDataCallback])
+  }, [db, dataFetched, getSportsLeaguesDataCallback])
 
   return (
     <DataContext.Provider
       value={{
         user,
         userDoc,
-        setUserDoc, // Add the setter function to the context value
+        setUserDoc,
         leaguesData,
-        fetchEventsAndTeamsData: fetchEventsAndTeamsDataCallback,
+        getEventsAndTeamsData: getEventsAndTeamsDataCallback,
+        createTournamentPool: createTournamentPoolCallback,
+        getJoinedTournamentPools: getJoinedTournamentPoolsCallback,
         dataFetched,
         checkedAuthenticated,
       }}

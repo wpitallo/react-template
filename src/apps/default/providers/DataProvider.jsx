@@ -12,7 +12,7 @@ export const DataProvider = ({ children }) => {
   const auth = getAuth(app)
   const db = getFirestore(app)
 
-  const fetchData = useCallback(
+  const getSportsLeaguesData = useCallback(
     async (uid) => {
       try {
         const docRef = doc(db, 'users', uid)
@@ -26,21 +26,21 @@ export const DataProvider = ({ children }) => {
         console.error('Error fetching data: ', error)
       }
     },
-    [db]
+    [db],
   )
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user)
       if (user) {
-        fetchData(user.uid)
+        getSportsLeaguesData(user.uid)
       } else {
         setData(null)
       }
     })
 
     return () => unsubscribe()
-  }, [auth, fetchData])
+  }, [auth, getSportsLeaguesData])
 
   return <DataContext.Provider value={{ user, data }}>{children}</DataContext.Provider>
 }

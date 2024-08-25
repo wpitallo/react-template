@@ -32,13 +32,13 @@
     invalidPoolName: '* Please enter a pool name that is at least 4 characters long and contains only letters, numbers, and spaces. Special characters are not allowed.',
     public: 'Public',
     inviteOnly: 'Invite Only',
-    createPool: 'Create Pool',
+    createPool: 'Create Tournament Pool',
     sendInvitation: 'Send Invitation',
     copiedToClipboard: 'Copied to clipboard',
     leaguesTournaments: 'Leagues / Tournaments',
     selectedEvents: 'Selected Events',
     selectEvents: 'Select Events',
-    pleaseSelectALeagueOrTournament: 'Please select a league or tournament!',
+    pleaseSelectALeagueOrTournament: '* Please select a league or tournament!',
 
     firstEventDate: 'First event date',
     lastEventDate: 'Last event date',
@@ -65,7 +65,7 @@
     sportsSubHeading: 'Search for a pool by sport',
 
     // page 4 - Active Pools
-    activePools: 'Active Pools',
+    activeTournamentPools: 'Active Tournament Pools',
 
     // page 5 - Menu
     profile: 'Profile',

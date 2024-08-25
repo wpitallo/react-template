@@ -36,6 +36,7 @@ function Page({ pageId, isVisible }) {
   const [showShareLink, setShowShareLink] = useState(false)
   const [selectedSport, setSelectedSport] = useState('soccer')
   const [selectedLeague, setSelectedLeague] = useState(null)
+  const [selectedSeason, setSelectedSeason] = useState(null)
   const [selectedLeagueTeams, setSelectedLeagueTeams] = useState([])
   const [eventsData, setEventsData] = useState([])
   const [currentLeague, setCurrentLeague] = useState(null)
@@ -48,7 +49,8 @@ function Page({ pageId, isVisible }) {
   const inputRef = useRef(null)
   const pageTemplateRef = useRef(null)
 
-  const { leaguesData, fetchEventsAndTeamsData } = useContext(DataContext)
+  const { leaguesData, getEventsAndTeamsData, createTournamentPool } = useContext(DataContext)
+
   const [selectedEvents, setSelectedEvents] = useState(undefined)
 
   const [totalEvents, setTotalEvents] = useState(0)
@@ -71,7 +73,8 @@ function Page({ pageId, isVisible }) {
   const handleInputChange = (event) => {
     const newValue = event.target.value
     setPoolName(newValue)
-    setIsPoolNameValid(validatePoolName(newValue))
+    const isValid = validatePoolName(newValue)
+    if (createPoolClicked) setIsPoolNameValid(isValid)
   }
 
   const handleClickOutside = (event) => {
@@ -113,9 +116,30 @@ function Page({ pageId, isVisible }) {
     if (validationFailed === true) return
 
     try {
-      // await updateUserDocument(user.uid, displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
-      setTimeout(() => saved(), 500)
-      saved()
+      const isPublic = selectedButton === 'public' ? true : false
+      const eventKeys = []
+      Object.keys(selectedEvents || {}).reduce((events, key) => {
+        eventKeys.push(key)
+        return events
+      }, {})
+
+      const tournamentData = {
+        poolName: poolName,
+        isPublic,
+        selectedSport,
+        selectedLeague,
+        selectedSeason,
+        eventKeys,
+      }
+
+      try {
+        await createTournamentPool(tournamentData)
+        console.log('Tournament pool saved')
+        saved()
+      } catch (error) {
+        console.error('Error creating tournament pool:', error)
+        cancelSave()
+      }
     } catch (error) {
       console.error('Error creating pool:', error)
       cancelSave()
@@ -147,13 +171,14 @@ function Page({ pageId, isVisible }) {
 
       setCurrentLeague(league)
       setSelectedLeague(league.id)
+      setSelectedSeason(league.strCurrentSeason)
 
       setTimeout(() => {
         setShowSelectedEvents(true)
       }, 500)
 
       setEventsData([])
-      const { events, teams } = await fetchEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
+      const { events, teams } = await getEventsAndTeamsData(league.id, league.strCurrentSeason, selectedSport)
       setEventsData(events)
       setSelectedLeagueTeams(teams)
       setTotalEvents(Object.keys(events).length)
@@ -299,7 +324,7 @@ function Page({ pageId, isVisible }) {
         <div id="leaguesTournaments">
           <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('leaguesTournaments')}</div>
           {!selectedLeague && createPoolClicked && (
-            <div className={`${templateStyles.contentHeader2} ${templateStyles.headerMarginTop} ${templateStyles.red}`}>{translator('pleaseSelectALeagueOrTournament ')}</div>
+            <div className={`${templateStyles.contentHeader2} ${templateStyles.headerMarginTop} ${templateStyles.red}`}>{translator('pleaseSelectALeagueOrTournament')}</div>
           )}
           <div className={templateStyles.container}>
             {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
