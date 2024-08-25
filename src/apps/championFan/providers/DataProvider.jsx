@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { app } from '@configuration/firebaseConfig'
-import { getFirestore, doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
 import PropTypes from 'prop-types'
 import { getSportsLeaguesData } from './services/getSportsLeaguesData'
 import { getEventsAndTeamsData } from './services/getEventsAndTeamsData'
@@ -62,23 +62,10 @@ export const DataProvider = ({ children }) => {
         if (userDocSnap.exists()) {
           const userData = userDocSnap.data()
           setUserDoc(userData)
-
-          // Ensure tournaments collection exists within the user document
-          const tournamentsCollectionRef = collection(userDocRef, 'tournaments')
-          const tournamentsQuery = await getDocs(tournamentsCollectionRef)
-
-          if (tournamentsQuery.empty) {
-            // Create a default document or leave it empty
-            await setDoc(doc(tournamentsCollectionRef, 'defaultTournament'), { name: 'Default Tournament' })
-          }
         } else {
           // Handle case where user document does not exist
           await setDoc(userDocRef, {})
           setUserDoc({})
-
-          // Ensure tournaments collection exists within the user document
-          const tournamentsCollectionRef = collection(userDocRef, 'tournaments')
-          await setDoc(doc(tournamentsCollectionRef, 'defaultTournament'), { name: 'Default Tournament' })
         }
 
         if (!dataFetched) {

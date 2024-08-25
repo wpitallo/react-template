@@ -72,6 +72,7 @@
     signOut: 'Sign Out',
 
     //page0
+    invalidDisplayName: '* Please enter a display name that is at least 2 characters long and contains only letters, numbers, and spaces. Special characters are not allowed.',
     topType: 'Style',
     accessoriesType: 'Accessories Type',
     hatColor: 'Hat Color',

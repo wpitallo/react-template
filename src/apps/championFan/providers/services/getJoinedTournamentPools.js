@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, getFirestore } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, where, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 /**
@@ -17,28 +17,38 @@ export const getJoinedTournamentPools = async () => {
         const userKey = currentUser.uid; // Assuming userKey is the UID of the authenticated user
         const db = getFirestore();
 
-        // Query to find pools where the current user's key exists in the `entrants` subcollection
-        const poolsQuery = query(
-            collection(db, 'tournamentPools')
-        );
+        // Fetch active tournaments for the current user
+        const activeTournamentsSnapshot = await getDocs(collection(db, `users/${userKey}/activeTournaments`));
+        const activeTournamentKeys = activeTournamentsSnapshot.docs.map(doc => doc.id);
 
-        const poolsSnapshot = await getDocs(poolsQuery);
+        if (activeTournamentKeys.length === 0) {
+            return []; // No active tournaments
+        }
+
+        // Array to store joined tournament pools
         const joinedPools = [];
 
-        for (const poolDoc of poolsSnapshot.docs) {
-            const entrantsCollectionRef = collection(db, `tournamentPools/${poolDoc.id}/entrants`);
-            const entrantsQuery = query(
-                entrantsCollectionRef,
-                where('__name__', '==', userKey)
-            );
-            const entrantsSnapshot = await getDocs(entrantsQuery);
+        for (const tournamentKey of activeTournamentKeys) {
+            // Reference to the specific tournament pool document
+            const tournamentPoolDocRef = doc(db, 'tournamentPools', tournamentKey);
+            const tournamentPoolDocSnap = await getDoc(tournamentPoolDocRef); // Use getDoc for single document
 
-            if (!entrantsSnapshot.empty) {
-                // If there are any entries in the `entrants` subcollection for this pool matching the current user
-                joinedPools.push({
-                    id: poolDoc.id,
-                    ...poolDoc.data()
-                });
+            if (tournamentPoolDocSnap.exists()) {
+                // Reference to the entrants subcollection
+                const entrantsCollectionRef = collection(db, `tournamentPools/${tournamentKey}/entrants`);
+                const entrantsQuery = query(
+                    entrantsCollectionRef,
+                    where('__name__', '==', userKey)
+                );
+                const entrantsSnapshot = await getDocs(entrantsQuery);
+
+                if (!entrantsSnapshot.empty) {
+                    // If there are entries in the `entrants` subcollection for this pool matching the current user
+                    joinedPools.push({
+                        id: tournamentKey,
+                        ...tournamentPoolDocSnap.data()
+                    });
+                }
             }
         }
 

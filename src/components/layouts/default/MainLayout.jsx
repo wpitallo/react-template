@@ -20,18 +20,22 @@ const MainLayout = () => {
     setVisiblePage(5)
   }
 
+  const signedUp = () => {
+    setVisiblePage(3)
+  }
+
   useEffect(() => {
     setVisiblePage(activePage)
   }, [activePage])
 
   return (
     <div className="main-layout-container">
-      <Page0 pageId="page0" isVisible={visiblePage === 0 || !userDoc.hasSignedUp} exitMenuPage={exitMenuPage} />
-      <Page1 pageId="page1" isVisible={visiblePage === 1 && userDoc.hasSignedUp} />
-      <Page2 pageId="page2" isVisible={visiblePage === 2 && userDoc.hasSignedUp} />
-      <Page3 pageId="page3" isVisible={visiblePage === 3 && userDoc.hasSignedUp} />
-      <Page4 pageId="page4" isVisible={visiblePage === 4 && userDoc.hasSignedUp} />
-      <Page5 pageId="page5" isVisible={visiblePage === 5 && userDoc.hasSignedUp} setVisiblePage={setVisiblePage} />
+      <Page0 pageId="page0" isVisible={visiblePage === 0 || !userDoc.hasSignedUp ? true : false} exitMenuPage={userDoc.hasSignedUp ? exitMenuPage : signedUp} />
+      <Page1 pageId="page1" isVisible={visiblePage === 1 && userDoc.hasSignedUp ? true : false} />
+      <Page2 pageId="page2" isVisible={visiblePage === 2 && userDoc.hasSignedUp ? true : false} />
+      <Page3 pageId="page3" isVisible={visiblePage === 3 && userDoc.hasSignedUp ? true : false} />
+      <Page4 pageId="page4" isVisible={visiblePage === 4 && userDoc.hasSignedUp ? true : false} />
+      <Page5 pageId="page5" isVisible={visiblePage === 5 && userDoc.hasSignedUp ? true : false} setVisiblePage={setVisiblePage} />
     </div>
   )
 }

@@ -23,6 +23,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
   const avatarRef = useRef(null)
   const [isFormVisible, setFormVisible] = useState(false)
   const [updatedAvatarConfig, setUpdatedAvatarConfig] = useState({})
+  const [isDisplayNameValid, setIsDisplayNameValid] = useState(true)
 
   useEffect(() => {
     if (isVisible && !userDoc.hasSignedUp) {
@@ -43,8 +44,8 @@ function Page({ pageId, isVisible, exitMenuPage }) {
   const handleSaveClick = async (saved, cancelSave) => {
     setSaveClicked(true)
 
-    if (displayName.length <= 3) {
-      inputRef.current.classList.add(templateStyles.validationFailed)
+    if (displayName.length <= 1) {
+      setIsDisplayNameValid(false)
       cancelSave()
       return
     }
@@ -75,10 +76,10 @@ function Page({ pageId, isVisible, exitMenuPage }) {
     setDisplayName(newValue)
 
     if (saveClicked) {
-      if (newValue.length > 2) {
-        inputRef.current.classList.remove(templateStyles.validationFailed)
+      if (newValue.length >= 2) {
+        setIsDisplayNameValid(true)
       } else {
-        inputRef.current.classList.add(templateStyles.validationFailed)
+        setIsDisplayNameValid(false)
       }
     }
   }
@@ -111,7 +112,14 @@ function Page({ pageId, isVisible, exitMenuPage }) {
             <div className={templateStyles.verticalContainerColumn}></div>
           </div>
           <div className={templateStyles.verticalContainerRow}>
-            <Input value={displayName} onChange={handleInputChange} placeholder={translator('displayName')} ref={inputRef} />
+            <Input
+              value={displayName}
+              onChange={handleInputChange}
+              placeholder={translator('displayName')}
+              ref={inputRef}
+              isValid={isDisplayNameValid}
+              errorText={translator('invalidDisplayName')}
+            />
           </div>
           <div className={templateStyles.verticalContainerRowSpacer}></div>
           {isFormVisible && (

@@ -277,7 +277,7 @@ function Page({ pageId, isVisible }) {
             placeholder={translator('poolName')}
             ref={inputRef}
             isValid={isPoolNameValid}
-            errorText={!isPoolNameValid ? translator('invalidPoolName') : ''}
+            errorText={translator('invalidPoolName')}
           />
         </div>
       </div>
