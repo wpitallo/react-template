@@ -23,15 +23,13 @@ $selectedBorder: 3px;
     margin-top: 10px;
     border: solid $selectedBorder var(--themeColor1);
     box-sizing: border-box;
+    width: 100%;
 }
 
 .button:hover {
     background-color: var(--themeColor3);
     border: solid $selectedBorder var(--themeColor3);
-}
-
-.button {
-    width: 100%;
+    cursor: pointer;
 }
 
 .default {

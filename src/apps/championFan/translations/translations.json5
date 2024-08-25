@@ -38,6 +38,7 @@
     leaguesTournaments: 'Leagues / Tournaments',
     selectedEvents: 'Selected Events',
     selectEvents: 'Select Events',
+    pleaseSelectALeagueOrTournament: 'Please select a league or tournament!',
 
     firstEventDate: 'First event date',
     lastEventDate: 'Last event date',

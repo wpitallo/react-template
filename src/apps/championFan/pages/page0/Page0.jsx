@@ -120,7 +120,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
             </div>
           )}
           <div className={templateStyles.verticalContainerRow}>
-            <SaveButton handleSaveClick={handleSaveClick} />
+            <SaveButton handleSaveClick={handleSaveClick} icon="icon-check" />
           </div>
         </div>
       </div>

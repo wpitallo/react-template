@@ -1,8 +1,6 @@
 $placeholderColor: var(--themeColor4);
 $placeholderOpacity: 0.6;
 
-$placeholderColorValidationFailed: rgb(255, 0, 0);
-
 .inputContainer {
     display: flex;
     flex-direction: column;
@@ -42,27 +40,27 @@ $placeholderColorValidationFailed: rgb(255, 0, 0);
     }
 
     &:focus::placeholder {
-        color: transparent;
-        opacity: 0;
+        color: transparent !important;
+        opacity: 0 !important;
     }
 
     &.validationFailed {
-        background-image: linear-gradient(to bottom, red 50%, transparent 0%) !important;
+        background-image: linear-gradient(to bottom, var(--themeColorRed) 50%, transparent 0%) !important;
 
         &::placeholder {
-            color: $placeholderColorValidationFailed;
+            color: var(--themeColorRed);
             opacity: 1;
             text-shadow:
-                -1px -1px 0 #ffaaaa,
-                1px -1px 0 #ffaaaa,
-                -1px 1px 0 #ffaaaa,
-                1px 1px 0 #ffaaaa !important;
+                -1px -1px 0 #ff9b9b,
+                1px -1px 0 #ff9b9b,
+                -1px 1px 0 #ff9b9b,
+                1px 1px 0 #ff9b9b !important;
         }
     }
 }
 
 .errorText {
-    color: $placeholderColorValidationFailed;
+    color: var(--themeColorRed);
     font-size: 0.875rem;
     margin-top: 0.25rem;
     text-align: center;

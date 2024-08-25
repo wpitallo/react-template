@@ -5,7 +5,7 @@ import templateStyles from '../Button.module.scss'
 import style from './SaveButton.module.scss'
 import Loader from '@components/loaders/<<componentConfig.saveButtonLoader.key>>/Loader'
 
-const SaveButton = ({ handleSaveClick }) => {
+const SaveButton = ({ handleSaveClick, label, icon }) => {
   const [isSavingAnimationVisible, setSavingAnimationVisible] = useState(false)
 
   const saving = () => {
@@ -27,7 +27,7 @@ const SaveButton = ({ handleSaveClick }) => {
 
   return (
     <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={handleClick}>
-      {!isSavingAnimationVisible && <div className={`${templateStyles.centeredText} ${templateStyles.largeText} ${style.noText} icon-check`}></div>}
+      {!isSavingAnimationVisible && <div className={`${templateStyles.centeredText} ${templateStyles.largeText} ${!label ? style.noText : ''} ${icon}`}>{label}</div>}
       {isSavingAnimationVisible && (
         <div className={`${style.saveAnimationWrapper}`}>
           <Loader />
@@ -39,6 +39,8 @@ const SaveButton = ({ handleSaveClick }) => {
 
 SaveButton.propTypes = {
   handleSaveClick: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  icon: PropTypes.string,
 }
 
 export default SaveButton

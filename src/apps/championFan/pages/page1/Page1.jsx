@@ -14,6 +14,7 @@ import ImageButton from '@components/buttons/imageButton/ImageButton'
 import Input from '@components/input/Input'
 import SquareTextAndImageButton from '@components/buttons/squareTextAndImageButton/SquareTextAndImageButton'
 import { getImage } from '@globalHelpers/imageHelper'
+import SaveButton from '@components/buttons/saveButton/SaveButton'
 
 const generateShortGuid = () => {
   return Math.random().toString(36).substr(2, 8)
@@ -42,6 +43,7 @@ function Page({ pageId, isVisible }) {
   const [isEventsFilterOpen, setIsEventsFilterOpen] = useState(false)
   const [showSelectedEvents, setShowSelectedEvents] = useState(false)
   const [delayedEvents, setDelayedEvents] = useState(false) // New state for delayed rendering
+  const [createPoolClicked, setCreatePoolClicked] = useState(false)
 
   const inputRef = useRef(null)
   const pageTemplateRef = useRef(null)
@@ -83,16 +85,41 @@ function Page({ pageId, isVisible }) {
     return regex.test(name.trim())
   }
 
-  const handleCreatePoolClick = () => {
+  const handleCreatePoolClick = async (saved, cancelSave) => {
+    setCreatePoolClicked(true)
+
     if (selectedButton === 'inviteOnly') {
       setGuid(generateShortGuid())
       setShowShareLink(true)
     }
-    if (pageTemplateRef.current && typeof pageTemplateRef.current.scrollToTop === 'function') {
-      pageTemplateRef.current.scrollToTop()
+
+    let validationFailed = false
+    const poolNameValid = validatePoolName(poolName)
+    setIsPoolNameValid(poolNameValid)
+
+    if (!poolNameValid) {
+      if (pageTemplateRef.current && typeof pageTemplateRef.current.scrollToTop === 'function') {
+        validationFailed = true
+        cancelSave()
+        pageTemplateRef.current.scrollToTop()
+      }
     }
 
-    setIsPoolNameValid(validatePoolName(poolName))
+    if (!selectedLeague) {
+      validationFailed = true
+      cancelSave()
+    }
+
+    if (validationFailed === true) return
+
+    try {
+      // await updateUserDocument(user.uid, displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
+      setTimeout(() => saved(), 500)
+      saved()
+    } catch (error) {
+      console.error('Error creating pool:', error)
+      cancelSave()
+    }
   }
 
   const handleSendInvitationClick = (event) => {
@@ -271,7 +298,9 @@ function Page({ pageId, isVisible }) {
       {leaguesData.sports[selectedSport] && Object.keys(leaguesData.sports[selectedSport]).length > 0 && (
         <div id="leaguesTournaments">
           <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('leaguesTournaments')}</div>
-
+          {!selectedLeague && createPoolClicked && (
+            <div className={`${templateStyles.contentHeader2} ${templateStyles.headerMarginTop} ${templateStyles.red}`}>{translator('pleaseSelectALeagueOrTournament ')}</div>
+          )}
           <div className={templateStyles.container}>
             {Object.keys(leaguesData.sports[selectedSport]).map((leagueId) => (
               <ImageButton
@@ -327,7 +356,8 @@ function Page({ pageId, isVisible }) {
 
       {!showShareLink && (
         <div className={templateStyles.container}>
-          <DefaultButton onClick={handleCreatePoolClick} label="createPool" iconClass="" buttonClass="actionButton" />
+          <SaveButton handleSaveClick={handleCreatePoolClick} label={translator('createPool')} />
+          {/* <DefaultButton onClick={handleCreatePoolClick} label={translator('createPool')} iconClass="" buttonClass="actionButton" /> */}
         </div>
       )}
     </PageTemplate>

@@ -175,7 +175,7 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
 
   useEffect(() => {
     if (selectedEvents) {
-      const visibleSelected = Object.values(selectedEvents).filter((event) => event.isVisible).length
+      const visibleSelected = Object.values(selectedEvents).filter((event) => event.isVisible && event.isSelected).length
       setIsVisibleSelectedCount(visibleSelected)
     }
     // Calculate visible and total events when selectedEvents changes
@@ -226,7 +226,6 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
             </div>
             <div id="eventsFilterContent" className={`${styles.eventsFilterContent}`} ref={contentRef}>
               {children}
-
               <div className={`${styles.continueButton} `}>
                 <div className={`${eventStyles.eventItemWrapper}`}>
                   <DefaultButton onClick={handleOnClose} label="" iconClass="icon-check" buttonClass="actionButton" />
