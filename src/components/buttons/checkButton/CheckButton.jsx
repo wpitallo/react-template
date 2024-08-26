@@ -3,14 +3,14 @@ import { translator } from '@globalHelpers/translations'
 
 import templateStyles from '../Button.module.scss'
 
-const CheckButton = ({ label, isSelected, onClick }) => (
+const CheckButton = ({ buttonTextTranslationKey, isSelected, onClick }) => (
   <div className={`${templateStyles.button} ${isSelected ? templateStyles.selected : templateStyles.notSelected}`} onClick={onClick}>
-    <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator(label)}</div>
+    <div className={`${templateStyles.centeredText} ${templateStyles.largeText}`}>{translator(buttonTextTranslationKey)}</div>
   </div>
 )
 
 CheckButton.propTypes = {
-  label: PropTypes.string.isRequired,
+  buttonTextTranslationKey: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 }

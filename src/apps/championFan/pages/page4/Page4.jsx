@@ -5,6 +5,7 @@ import styles from '../PageTemplate.module.scss'
 import { translator } from '@globalHelpers/translations'
 import { DataContext } from '@providers/DataProvider'
 import TournamentPool from '@components/tournamentPool/TournamentPool'
+import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 
 function Page({ pageId, isVisible }) {
   const { getJoinedTournamentPools } = useContext(DataContext)
@@ -26,8 +27,8 @@ function Page({ pageId, isVisible }) {
   }, [getJoinedTournamentPools, isVisible])
 
   return (
-    <PageTemplate pageId={pageId} isVisible={isVisible}>
-      <div className={`${styles.contentHeader1} ${styles.centeredText} ${styles.headerMarginBottom}`}>{translator('activeTournamentPools')}</div>
+    <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
+      <div className={`${styles.contentHeader1} ${styles.headerMarginBottom}`}>{translator('activeTournamentPools')}</div>
 
       <div className={styles.container}>
         {pools.map((pool) => (

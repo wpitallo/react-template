@@ -282,8 +282,8 @@ function Page({ pageId, isVisible }) {
         </div>
       </div>
       <div className={templateStyles.container}>
-        <CheckButton label="public" isSelected={selectedButton === 'public'} onClick={() => handleButtonClick('public')} />
-        <CheckButton label="inviteOnly" isSelected={selectedButton === 'inviteOnly'} onClick={() => handleButtonClick('inviteOnly')} />
+        <CheckButton buttonTextTranslationKey="public" isSelected={selectedButton === 'public'} onClick={() => handleButtonClick('public')} />
+        <CheckButton buttonTextTranslationKey="inviteOnly" isSelected={selectedButton === 'inviteOnly'} onClick={() => handleButtonClick('inviteOnly')} />
       </div>
 
       {showModal && <ModalAlert message={translator('copiedToClipboard')} />}
@@ -296,11 +296,11 @@ function Page({ pageId, isVisible }) {
           {chunk.map((sport, index) => (
             <SquareTextAndImageButton
               key={index}
-              mainText={sport.sportsKey}
+              mainTextTranslationKey={sport.sportsKey}
               isSelected={selectedSport === sport.sportsKey}
               onClick={() => handleSportClick(sport.sportsKey)}
               backgroundSvgIcon={`square${sport.sportsKey.charAt(0).toUpperCase() + sport.sportsKey.slice(1)}`}
-              secondText={sport.comingSoon ? 'comingSoon' : undefined}
+              secondTextTranslationKey={sport.comingSoon ? 'comingSoon' : undefined}
               disabled={sport.comingSoon ? true : undefined}
             />
           ))}
@@ -315,7 +315,7 @@ function Page({ pageId, isVisible }) {
             </div>
           </div>
           <div className={templateStyles.container}>
-            <DefaultButton onClick={handleSendInvitationClick} label="sendInvitation" iconClass="icon-send" />
+            <DefaultButton onClick={handleSendInvitationClick} buttonTextTranslationKey="sendInvitation" iconClass="icon-send" />
           </div>
         </div>
       )}
@@ -381,8 +381,8 @@ function Page({ pageId, isVisible }) {
 
       {!showShareLink && (
         <div className={templateStyles.container}>
-          <SaveButton handleSaveClick={handleCreatePoolClick} label={translator('createPool')} />
-          {/* <DefaultButton onClick={handleCreatePoolClick} label={translator('createPool')} iconClass="" buttonClass="actionButton" /> */}
+          <SaveButton handleSaveClick={handleCreatePoolClick} buttonTextTranslationKey={'createPool'} />
+          {/* <DefaultButton onClick={handleCreatePoolClick} buttonTextTranslationKey={translator('createPool')} iconClass="" buttonClass="actionButton" /> */}
         </div>
       )}
     </PageTemplate>

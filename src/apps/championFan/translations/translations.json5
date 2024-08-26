@@ -65,6 +65,7 @@
     sportsSubHeading: 'Search for a pool by sport',
 
     // page 4 - Active Pools
+    makePicks: 'Make Picks',
     activeTournamentPools: 'Active Tournament Pools',
 
     // page 5 - Menu

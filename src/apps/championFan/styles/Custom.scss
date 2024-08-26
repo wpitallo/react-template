@@ -41,6 +41,16 @@ body {
   padding-top: 3px;
 }
 
+.icon-view {
+  font-size: 25px !important;
+  padding-top: 3px;
+}
+
+.icon-leaderboard {
+  padding-bottom: 6px;
+  padding-left: 2px;
+}
+
 /* Customize the FirebaseUI email button */
 .firebaseui-idp-button.firebaseui-idp-password {
   background-color: var(--mainButtonColor) !important; /* Custom background color */

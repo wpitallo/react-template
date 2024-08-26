@@ -1,6 +1,9 @@
 {
     "pageTitle": "Champion Fan",
     "url": "http://championfan.co/",
+    "debug": {
+        "performanceLoggingEnabled": true
+    },
     "componentConfig": {
         "menu": {
             "key": "bubbleMenu",

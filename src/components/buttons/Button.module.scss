@@ -13,7 +13,7 @@ $selectedBorder: 3px;
 }
 
 .button {
-    height: 38px;
+    max-height: 38px;
     flex: 1 1 calc(33.33% - 10px); /* Adjust for padding */
     aspect-ratio: 1 / 1; /* Ensures the height equals the width */
     background-color: var(--mainButtonColor);

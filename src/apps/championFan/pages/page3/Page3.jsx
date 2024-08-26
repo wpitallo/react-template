@@ -10,8 +10,8 @@ function Page({ pageId, isVisible }) {
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={`${templateStyles.container}`}>
-        <DefaultButton onClick={() => {}} label="join" buttonClass="default" />
-        <DefaultButton onClick={() => {}} label="create" buttonClass="default" />
+        <DefaultButton onClick={() => {}} buttonTextTranslationKey="join" buttonClass="default" />
+        <DefaultButton onClick={() => {}} buttonTextTranslationKey="create" buttonClass="default" />
       </div>
 
       <div className={`${templateStyles.contentHeader1} ${templateStyles.headerMarginTop}`}>{translator('featuredPools')}</div>
@@ -30,21 +30,51 @@ function Page({ pageId, isVisible }) {
       <div className={templateStyles.contentHeader2}>{translator('sportsSubHeading')}</div>
 
       <div className={templateStyles.container}>
-        <SquareTextAndImageButton mainText={'soccer'} backgroundSvgIcon={`squareSoccer`} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'rugby'} backgroundSvgIcon={`squareRugby`} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'cricket'} backgroundSvgIcon={`squareCricket`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainTextTranslationKey={'soccer'} backgroundSvgIcon={`squareSoccer`} onClick={() => {}} />
+        <SquareTextAndImageButton mainTextTranslationKey={'rugby'} backgroundSvgIcon={`squareRugby`} onClick={() => {}} />
+        <SquareTextAndImageButton
+          mainTextTranslationKey={'cricket'}
+          backgroundSvgIcon={`squareCricket`}
+          secondTextTranslationKey={'comingSoon'}
+          disabled={true}
+          onClick={() => {}}
+        />
       </div>
 
       <div className={templateStyles.container}>
-        <SquareTextAndImageButton mainText={'tennis'} backgroundSvgIcon={`squareTennis`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'basketball'} backgroundSvgIcon={`squareBasketball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'baseball'} backgroundSvgIcon={`squareBaseball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton mainTextTranslationKey={'tennis'} backgroundSvgIcon={`squareTennis`} secondTextTranslationKey={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton
+          mainTextTranslationKey={'basketball'}
+          backgroundSvgIcon={`squareBasketball`}
+          secondTextTranslationKey={'comingSoon'}
+          disabled={true}
+          onClick={() => {}}
+        />
+        <SquareTextAndImageButton
+          mainTextTranslationKey={'baseball'}
+          backgroundSvgIcon={`squareBaseball`}
+          secondTextTranslationKey={'comingSoon'}
+          disabled={true}
+          onClick={() => {}}
+        />
       </div>
 
       <div className={templateStyles.container}>
-        <SquareTextAndImageButton mainText={'iceHockey'} backgroundSvgIcon={`squareIceHockey`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'afl'} backgroundSvgIcon={`squareAfl`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
-        <SquareTextAndImageButton mainText={'americanFootball'} backgroundSvgIcon={`squareAmericanFootball`} secondText={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton
+          mainTextTranslationKey={'iceHockey'}
+          backgroundSvgIcon={`squareIceHockey`}
+          secondTextTranslationKey={'comingSoon'}
+          disabled={true}
+          onClick={() => {}}
+        />
+        <SquareTextAndImageButton mainTextTranslationKey={'afl'} backgroundSvgIcon={`squareAfl`} secondTextTranslationKey={'comingSoon'} disabled={true} onClick={() => {}} />
+        <SquareTextAndImageButton
+          mainTextTranslationKey={'americanFootball'}
+          backgroundSvgIcon={`squareAmericanFootball`}
+          secondTextTranslationKey={'comingSoon'}
+          disabled={true}
+          onClick={() => {}}
+        />
       </div>
     </PageTemplate>
   )

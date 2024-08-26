@@ -1,5 +1,8 @@
 {
     "pageTitle": "Demo App",
+    "debug": {
+        "performanceLoggingEnabled": true
+    },
     "componentConfig": {
         "menu": {
             "key": "bubbleMenu",

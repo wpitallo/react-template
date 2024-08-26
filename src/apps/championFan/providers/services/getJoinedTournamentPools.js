@@ -1,12 +1,19 @@
-import { collection, doc, getDoc, getDocs, query, where, getFirestore } from 'firebase/firestore';
+
 import { getAuth } from 'firebase/auth';
+import { debug } from '@globalHelpers/debug'
+import { collection, getDocs, query, where, limit, getFirestore } from 'firebase/firestore';
 
 /**
- * Retrieves all tournament pools where the entrants document key matches the current user key.
+ * Retrieves up to 10 tournament pools where the entrants document key matches the current user key.
  * @returns {Promise<Array>} - A promise that resolves to an array of tournament pool documents.
  */
 export const getJoinedTournamentPools = async () => {
+    const performanceLogs = [];
+    const isLoggingEnabled = debug.performanceLoggingEnabled === true;
+
     try {
+        const start = Date.now();
+
         const auth = getAuth();
         const currentUser = auth.currentUser;
 
@@ -14,47 +21,66 @@ export const getJoinedTournamentPools = async () => {
             throw new Error('No authenticated user found.');
         }
 
-        const userKey = currentUser.uid; // Assuming userKey is the UID of the authenticated user
-        const db = getFirestore();
-
-        // Fetch active tournaments for the current user
-        const activeTournamentsSnapshot = await getDocs(collection(db, `users/${userKey}/activeTournaments`));
-        const activeTournamentKeys = activeTournamentsSnapshot.docs.map(doc => doc.id);
-
-        if (activeTournamentKeys.length === 0) {
-            return []; // No active tournaments
+        if (isLoggingEnabled) {
+            performanceLogs.push(`Auth check completed in ${Date.now() - start} ms`);
         }
 
-        // Array to store joined tournament pools
+        const userKey = currentUser.uid;
+        const db = getFirestore();
+
+        // Start query performance logging
+        const queryStart = Date.now();
+
+        // Query tournament pools directly
+        const tournamentPoolsQuery = query(
+            collection(db, 'tournamentPools'),
+            limit(10)
+        );
+
+        const tournamentPoolsSnapshot = await getDocs(tournamentPoolsQuery);
+
+        if (isLoggingEnabled) {
+            performanceLogs.push(`Tournament pools query completed in ${Date.now() - queryStart} ms`);
+        }
+
+        if (tournamentPoolsSnapshot.empty) {
+            return []; // No matching tournament pools
+        }
+
+        // Start filtering performance logging
+        const filterStart = Date.now();
+
         const joinedPools = [];
 
-        for (const tournamentKey of activeTournamentKeys) {
-            // Reference to the specific tournament pool document
-            const tournamentPoolDocRef = doc(db, 'tournamentPools', tournamentKey);
-            const tournamentPoolDocSnap = await getDoc(tournamentPoolDocRef); // Use getDoc for single document
-
-            if (tournamentPoolDocSnap.exists()) {
-                // Reference to the entrants subcollection
-                const entrantsCollectionRef = collection(db, `tournamentPools/${tournamentKey}/entrants`);
-                const entrantsQuery = query(
-                    entrantsCollectionRef,
+        for (const poolDoc of tournamentPoolsSnapshot.docs) {
+            const entrantsSnapshot = await getDocs(
+                query(
+                    collection(db, `tournamentPools/${poolDoc.id}/entrants`),
                     where('__name__', '==', userKey)
-                );
-                const entrantsSnapshot = await getDocs(entrantsQuery);
+                )
+            );
 
-                if (!entrantsSnapshot.empty) {
-                    // If there are entries in the `entrants` subcollection for this pool matching the current user
-                    joinedPools.push({
-                        id: tournamentKey,
-                        ...tournamentPoolDocSnap.data()
-                    });
-                }
+            if (!entrantsSnapshot.empty) {
+                joinedPools.push({
+                    id: poolDoc.id,
+                    ...poolDoc.data(),
+                });
             }
+        }
+
+        if (isLoggingEnabled) {
+            performanceLogs.push(`Filtering results completed in ${Date.now() - filterStart} ms`);
+            performanceLogs.push(`Total execution time: ${Date.now() - start} ms`);
+            console.log('Performance Logs:', performanceLogs);
         }
 
         return joinedPools;
     } catch (error) {
         console.error('Error getting joined tournament pools: ', error);
+        if (isLoggingEnabled) {
+            console.log('Performance Logs:', performanceLogs);
+        }
         return [];
     }
 };
+
