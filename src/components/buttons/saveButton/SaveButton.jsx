@@ -29,7 +29,7 @@ const SaveButton = ({ handleSaveClick, buttonTextTranslationKey, icon }) => {
   return (
     <div className={`${templateStyles.button} ${templateStyles.actionButton} ${templateStyles.halfWidth}`} onClick={handleClick}>
       {!isSavingAnimationVisible && (
-        <div className={`${templateStyles.centeredText} ${templateStyles.largeText} ${!buttonTextTranslationKey ? style.noText : ''} ${icon}`}>
+        <div className={`${templateStyles.centeredText} ${templateStyles.largeText} ${!buttonTextTranslationKey ? style.noText : ''} ${icon ? icon : ''}`}>
           {translator(buttonTextTranslationKey)}
         </div>
       )}

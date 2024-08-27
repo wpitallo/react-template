@@ -228,7 +228,7 @@ const EventsFilter = ({ title, image, children, isOpen, onClose, selectedEvents,
               {children}
               <div className={`${styles.continueButton} `}>
                 <div className={`${eventStyles.eventItemWrapper}`}>
-                  <DefaultButton onClick={handleOnClose} buttonTextTranslationKey="" iconClass="icon-check" buttonClass="actionButton" />
+                  <DefaultButton onClick={handleOnClose} buttonTextTranslationKey="" iconClass="icon-check" buttonClass="actionButton" halfWidth={true} />
                 </div>
               </div>
             </div>

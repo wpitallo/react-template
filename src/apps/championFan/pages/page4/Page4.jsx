@@ -30,11 +30,11 @@ function Page({ pageId, isVisible }) {
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
       <div className={`${styles.contentHeader1} ${styles.headerMarginBottom}`}>{translator('activeTournamentPools')}</div>
 
-      <div className={styles.container}>
-        {pools.map((pool) => (
-          <TournamentPool key={pool.id} pool={pool} />
-        ))}
-      </div>
+      {pools.map((pool) => (
+        <div key={pool.id} className={styles.container}>
+          <TournamentPool pool={pool} />
+        </div>
+      ))}
     </PageTemplate>
   )
 }

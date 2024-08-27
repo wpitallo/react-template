@@ -380,7 +380,7 @@ function Page({ pageId, isVisible }) {
       )}
 
       {!showShareLink && (
-        <div className={templateStyles.container}>
+        <div className={`${templateStyles.container} ${templateStyles.rowSpacer}`}>
           <SaveButton handleSaveClick={handleCreatePoolClick} buttonTextTranslationKey={'createPool'} />
           {/* <DefaultButton onClick={handleCreatePoolClick} buttonTextTranslationKey={translator('createPool')} iconClass="" buttonClass="actionButton" /> */}
         </div>

@@ -27,19 +27,21 @@ function TournamentPool({ pool }) {
           <div className={styles.infoItem}>Points:</div>
           <div className={styles.infoItem}>Strike-rate:</div>
           <div className={styles.infoItem}>Players</div>
-          <div className={styles.infoItem}></div>
+
           <div className={styles.viewButton}>
             <DefaultButton onClick={() => {}} buttonTextTranslationKey="makePicks" iconClass="icon-view" buttonClass="actionButton" />
           </div>
         </div>
         <div className={styles.leaderBoardColumn}>
-          <div className={styles.leaderBoardHeader}>Leader Board</div>
-          <div className={styles.leaderBoardList}>
-            <div className={styles.leaderBoardItem}>1. User Name</div>
-            <div className={styles.leaderBoardItem}>2. User Name</div>
-            <div className={styles.leaderBoardItem}>3. User Name</div>
-            <div className={styles.leaderBoardItem}>4. User Name</div>
-            <div className={styles.leaderBoardItem}>5. User Name</div>
+          <div className={styles.leaderBoardContentWrapper}>
+            <div className={styles.leaderBoardHeader}>Leader Board</div>
+            <div className={styles.leaderBoardList}>
+              <div className={styles.leaderBoardItem}>1. User Name</div>
+              <div className={styles.leaderBoardItem}>2. User Name</div>
+              <div className={styles.leaderBoardItem}>3. User Name</div>
+              <div className={styles.leaderBoardItem}>4. User Name</div>
+              <div className={styles.leaderBoardItem}>5. User Name</div>
+            </div>
           </div>
         </div>
       </div>

@@ -60,6 +60,10 @@
   .menuItem {
     padding: 0.55em 0 0.6em;
   }
+
+  .menuBorderWrapper {
+    height: 40px !important;
+  }
 }
 
 .menuItem::before {
@@ -127,7 +131,7 @@
 }
 
 .menuBorderWrapper {
-  height: 38px;
+  height: 34px;
   position: absolute;
   will-change: transform;
   left: 0;

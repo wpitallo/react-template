@@ -12,7 +12,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-height: 290px;
+    max-height: clamp(260px, 35vw, 318px);
 }
 
 .headerContainer {
@@ -26,16 +26,18 @@
 }
 
 .imageColumn {
-    flex: 1 1 50px;
-    max-height: 80px;
-    max-width: 150px;
-    padding-left: 40px;
-    padding-right: 40px;
+    flex: 1 1 clamp(30px, 5vw, 50px);
+    max-height: clamp(50px, 5vw, 80px);
+    max-width: clamp(100px, 15vw, 180px);
+
+    padding-right: 0px;
+    margin-bottom: 10px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    padding-left: clamp(10px, 5vw, 0px);
 }
 
 .leagueLogo {
@@ -69,43 +71,52 @@
     text-transform: uppercase;
     padding-left: 5px;
     display: block;
-    font-size: 2em;
+    font-size: clamp(1.2em, 2vw, 2em);
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
     unicode-bidi: isolate;
     color: var(--themeTextColor1);
+    padding-bottom: 20px;
 }
 
 .bodyContainer {
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 10px;
+    padding-top: 20px;
     position: relative;
-    top: 80px; /* Adjust this value if needed */
+    top: 80px;
 }
 
 .infoColumn {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: var(--lightBackgroundColor); /* Adjust if needed */
-    padding: 10px;
+    background-color: var(--lightBackgroundColor);
+    // padding: 10px;
+    margin-left: clamp(10px, 5vw, 40px);
+    max-height: clamp(140px, 20vw, 190px);
 }
 
 .infoItem {
     margin-bottom: 10px;
     color: var(--themeTextColor1);
-    padding-left: 50px;
+    font-size: clamp(0.8em, 2vw, 1.2em) !important;
 }
 
 .viewButton {
-    margin-top: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background-color: var(--buttonColor); /* Adjust if needed */
-    color: var(--buttonTextColor); /* Adjust if needed */
+    background-color: var(--buttonColor);
+    color: var(--buttonTextColor);
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    width: 85%;
+    margin-left: 5%;
+}
+
+.viewButton div:nth-child(1) {
+    font-size: clamp(16px, 2vw, var(--controlsFontSize)) !important;
 }
 
 .leaderBoardColumn {
@@ -113,18 +124,22 @@
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    padding: 10px;
+
     border: 1px solid var(--borderColor);
     border-radius: 5px;
-    margin-right: 20px;
-    max-height: 167px;
+    margin-right: clamp(10px, 5vw, 40px);
+    max-height: clamp(140px, 20vw, 190px);
 }
 
 .leaderBoardHeader {
     text-align: center;
-    font-size: 1.2em;
+    font-size: clamp(1em, 2vw, 1.2em);
     font-weight: bold;
-    margin-bottom: 10px;
+}
+
+.leaderBoardContentWrapper {
+    padding: 10px;
+    height: 100%;
 }
 
 .leaderBoardList {
@@ -133,5 +148,6 @@
 }
 
 .leaderBoardItem {
-    margin-bottom: 10px;
+    margin-bottom: clamp(1px, 1vw, 10px);
+    font-size: clamp(0.8em, 2vw, 1.2em) !important;
 }
