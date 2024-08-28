@@ -1,5 +1,5 @@
 import { getDocs, collection } from 'firebase/firestore';
-import { fetchAndCacheImage } from '@globalHelpers/imageHelper';
+import { fetchAndCacheImage } from '@helpers/imageHelper';
 
 export const getSportsLeaguesData = async (db, leaguesData, setLeaguesData, setDataFetched) => {
     const sports = ['soccer', 'rugby']; // Add more sports as needed

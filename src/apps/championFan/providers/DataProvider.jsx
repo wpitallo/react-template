@@ -20,6 +20,8 @@ export const DataProvider = ({ children }) => {
   const [checkedAuthenticated, setCheckedAuthenticated] = useState(false)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
   const [dataFetched, setDataFetched] = useState(false)
+  const [joinedTournamentPoolData, setJoinedTournamentPoolData] = useState([])
+
   const db = getFirestore(app)
 
   const getSportsLeaguesDataCallback = useCallback(() => {
@@ -45,14 +47,13 @@ export const DataProvider = ({ children }) => {
   )
 
   const getJoinedTournamentPoolsCallback = useCallback(async () => {
-    if (user) {
-      const pools = await getJoinedTournamentPools(db, user.uid)
-      return pools
+    if (user && Object.keys(leaguesData.sports).length > 0) {
+      await getJoinedTournamentPools(setJoinedTournamentPoolData)
     } else {
-      console.error('No user is authenticated.')
+      if (!user) console.error('No user is authenticated.')
       return []
     }
-  }, [db, user])
+  }, [user, leaguesData])
 
   useEffect(() => {
     const auth = getAuth(app)
@@ -81,6 +82,7 @@ export const DataProvider = ({ children }) => {
             document.getElementById('firebaseui-auth-container').style.opacity = 0
           }
           getSportsLeaguesDataCallback()
+          setDataFetched(true) // Mark data as fetched to prevent repeated fetching
         }
       } else {
         setUser(null)
@@ -95,6 +97,12 @@ export const DataProvider = ({ children }) => {
     return () => unsubscribe()
   }, [db, dataFetched, getSportsLeaguesDataCallback])
 
+  useEffect(() => {
+    if (user) {
+      getJoinedTournamentPoolsCallback()
+    }
+  }, [user, getJoinedTournamentPoolsCallback])
+
   return (
     <DataContext.Provider
       value={{
@@ -105,6 +113,7 @@ export const DataProvider = ({ children }) => {
         getEventsAndTeamsData: getEventsAndTeamsDataCallback,
         postTournamentPool: postTournamentPoolCallback,
         getJoinedTournamentPools: getJoinedTournamentPoolsCallback,
+        joinedTournamentPoolData,
         dataFetched,
         checkedAuthenticated,
       }}

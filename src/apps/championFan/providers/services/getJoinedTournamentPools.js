@@ -1,13 +1,13 @@
 
 import { getAuth } from 'firebase/auth';
-import { debug } from '@globalHelpers/debug'
-import { collection, getDocs, query, where, limit, getFirestore } from 'firebase/firestore';
+import { debug } from '@helpers/debug'
+import { collection, getDocs, query, where, orderBy, limit, getFirestore } from 'firebase/firestore';
 
 /**
  * Retrieves up to 10 tournament pools where the entrants document key matches the current user key.
  * @returns {Promise<Array>} - A promise that resolves to an array of tournament pool documents.
  */
-export const getJoinedTournamentPools = async () => {
+export const getJoinedTournamentPools = async (setJoinedTournamentPoolData) => {
     const performanceLogs = [];
     const isLoggingEnabled = debug.performanceLoggingEnabled === true;
 
@@ -34,6 +34,8 @@ export const getJoinedTournamentPools = async () => {
         // Query tournament pools directly
         const tournamentPoolsQuery = query(
             collection(db, 'tournamentPools'),
+            where('isActive', '==', true),
+            orderBy('createdUtcTimeStamp', 'desc'),
             limit(10)
         );
 
@@ -74,7 +76,8 @@ export const getJoinedTournamentPools = async () => {
             console.log('Performance Logs:', performanceLogs);
         }
 
-        return joinedPools;
+
+        setJoinedTournamentPoolData(joinedPools)
     } catch (error) {
         console.error('Error getting joined tournament pools: ', error);
         if (isLoggingEnabled) {

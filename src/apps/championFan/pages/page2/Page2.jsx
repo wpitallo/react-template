@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 
 function Page({ pageId, isVisible }) {
   return (

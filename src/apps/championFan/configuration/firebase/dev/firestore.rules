@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Rules for the 'users' collection
+    match /users/{userId} {
+      // Allow read and write access only to the document's owner
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Allow access to subcollections (e.g., 'tournaments')
+      match /{subCollection}/{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Rule to control updates
+      allow update: if request.auth != null && request.auth.uid == userId
+                    && request.resource.data.hasSignedUp == resource.data.hasSignedUp;
+    }
+    
+    // Rules for the 'sports' collection
+    match /sports/{sportId}/{subCollection=**} {
+      // Allow read access to all authenticated users
+      allow read: if request.auth != null;
+
+      // Allow write access only to service accounts
+      allow write: if request.auth != null
+                   && request.auth.token.email_verified == true
+                   && request.auth.token.email.endsWith('gserviceaccount.com');
+    }
+    
+    // Rules for the `tournamentPools` collection
+    match /tournamentPools/{documentId} {
+      // Prevent edits, updates, and deletes to the main collection document
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // Rules for the `entrants` subcollection within `tournamentPools`
+    match /tournamentPools/{poolId}/entrants/{userKey} {
+      // Allow authenticated users to create documents
+      allow create: if request.auth != null && request.auth.uid == userKey;
+      
+      // Prevent updates or deletes by users
+      allow update: if false;
+      allow delete: if false;
+
+      // Allow read access if needed
+      allow read: if request.auth != null;
+    }
+
+    // Global catch-all rules to deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+
+

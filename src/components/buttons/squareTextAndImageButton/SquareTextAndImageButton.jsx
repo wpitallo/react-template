@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import styles from './SquareTextAndImageButton.module.scss'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 import templateStyles from '../Button.module.scss'
 
 const SquareTextAndImageButton = ({ mainTextTranslationKey, isSelected, onClick, backgroundSvgIcon, secondTextTranslationKey, disabled }) => {

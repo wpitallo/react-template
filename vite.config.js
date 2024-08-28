@@ -76,7 +76,7 @@ export default defineConfig({
     alias: {
       '@': '/src',
       '@globalStyles': `/src/styles`,
-      '@globalHelpers': `/src/helpers`,
+      '@helpers': `/src/helpers`,
       '@providers': `/src/apps/${APP_KEY}/providers`,
       '@app': `/src/apps/${APP_KEY}`,
       '@assets': `/src/apps/${APP_KEY}/assets`,

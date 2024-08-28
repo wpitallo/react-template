@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import styles from './Events.module.scss'
 import eventStyles from '../event/Event.module.scss'
-import { getImage } from '@globalHelpers/imageHelper'
+import { getImage } from '@helpers/imageHelper'
 
 const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueTeams }) => {
   const getTeamBadge = useCallback(

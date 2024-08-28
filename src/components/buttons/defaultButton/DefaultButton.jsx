@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 import templateStyles from '../Button.module.scss'
 import styles from './DefaultButton.module.scss'
 

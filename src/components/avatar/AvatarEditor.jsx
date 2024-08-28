@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styles from './AvatarEditor.module.scss'
 import { getOptions, avatarOptions } from '@components/avatar/avatarOptions'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 
 const AvatarEditor = ({ updatedAvatarConfig, avatarRef }) => {
   const [isModalOpen, setModalOpen] = useState(false)

@@ -120,11 +120,17 @@
 }
 
 .leaderBoardColumn {
+    background-color: var(--themeColor6);
+}
+
+.countdownColumn {
+    background-color: var(--themeColor6);
+}
+
+.leftColumn {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-
     border: 1px solid var(--borderColor);
     border-radius: 5px;
     margin-right: clamp(10px, 5vw, 40px);
@@ -133,8 +139,16 @@
 
 .leaderBoardHeader {
     text-align: center;
-    font-size: clamp(1em, 2vw, 1.2em);
+    font-size: clamp(1em, 2vw, 1.4em);
     font-weight: bold;
+}
+
+.countDownHeader {
+    color: var(--themeColor1);
+    text-align: center;
+    font-size: clamp(1em, 2vw, 1.4em);
+    font-weight: bold;
+    margin-top: 24px;
 }
 
 .leaderBoardContentWrapper {
@@ -150,4 +164,24 @@
 .leaderBoardItem {
     margin-bottom: clamp(1px, 1vw, 10px);
     font-size: clamp(0.8em, 2vw, 1.2em) !important;
+}
+
+.counterUl {
+    padding: 0px;
+    text-align: center;
+}
+
+.counterLi {
+    color: var(--themeColor1);
+    display: inline-block;
+    font-size: 1.1em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+}
+
+.counterSpan {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center;
 }

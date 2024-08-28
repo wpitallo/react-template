@@ -1,4 +1,4 @@
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 
 export const avatarOptions = [
   { key: 'topType', value: translator('topType') },

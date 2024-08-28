@@ -40,11 +40,16 @@
     selectEvents: 'Select Events',
     pleaseSelectALeagueOrTournament: '* Please select a league or tournament!',
 
+    //dates
     firstEventDate: 'First event date',
     lastEventDate: 'Last event date',
     numberOfEvents: 'Number of events',
     duration: 'Duration',
     days: 'days',
+    hours: 'hours',
+    minutes: 'minutes',
+    seconds: 'seconds',
+    tournamentStartsIn: 'Tournament starts in',
 
     allEvents: 'All Events',
     thisWeek: 'This Week',

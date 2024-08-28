@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import styles from './PlayerHeader.module.scss'
 import { DataContext } from '@providers/DataProvider'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 import usePage from '@providers/hooks/usePage'
 import Avatar from '@components/avatar/Avatar'
 

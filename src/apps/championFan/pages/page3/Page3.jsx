@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import SquareTextAndImageButton from '@components/buttons/squareTextAndImageButton/SquareTextAndImageButton'

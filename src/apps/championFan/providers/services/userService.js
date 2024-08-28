@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getBackendUrl } from '@globalHelpers/getBackendUrl';
-import { getUserIdToken } from '@globalHelpers/getUserIdToken';
+import { getBackendUrl } from '@helpers/getBackendUrl';
+import { getUserIdToken } from '@helpers/getUserIdToken';
 
 export const postUser = async (userId) => {
     try {

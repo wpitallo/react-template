@@ -4,7 +4,7 @@ import { useState } from 'react'
 import templateStyles from '../Button.module.scss'
 import style from './SaveButton.module.scss'
 import Loader from '@components/loaders/<<componentConfig.saveButtonLoader.key>>/Loader'
-import { translator } from '@globalHelpers/translations'
+import { translator } from '@helpers/translations'
 
 const SaveButton = ({ handleSaveClick, buttonTextTranslationKey, icon }) => {
   const [isSavingAnimationVisible, setSavingAnimationVisible] = useState(false)

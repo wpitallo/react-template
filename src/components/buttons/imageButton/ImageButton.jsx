@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import styles from './ImageButton.module.scss'
 import templateStyles from '../Button.module.scss'
-import { getImage } from '@globalHelpers/imageHelper'
+import { getImage } from '@helpers/imageHelper'
 
 function ImageButton({ leagueId, leagueData, selectedLeague, onClick }) {
   return (
