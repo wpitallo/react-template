@@ -185,3 +185,34 @@
     font-size: 1.5rem;
     text-align: center;
 }
+
+.firstEventContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+
+.eventRow {
+    color: var(--themeTextColor1);
+    align-items: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.eventRowColumn {
+    flex: 1;
+    text-align: center;
+}
+
+.eventRowImage {
+    max-width: 50px;
+    height: auto;
+}
+
+.eventRow:nth-child(1) {
+    margin-top: -25px;
+    font-size: clamp(0.8em, 2vw, 1.2em) !important;
+}

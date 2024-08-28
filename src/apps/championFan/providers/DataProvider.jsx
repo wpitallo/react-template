@@ -35,17 +35,6 @@ export const DataProvider = ({ children }) => {
     [db, leaguesData],
   )
 
-  const postTournamentPoolCallback = useCallback(
-    async (tournamentData) => {
-      if (user) {
-        await postTournamentPool(tournamentData)
-      } else {
-        console.error('No user is authenticated.')
-      }
-    },
-    [user],
-  )
-
   const getJoinedTournamentPoolsCallback = useCallback(async () => {
     if (user && Object.keys(leaguesData.sports).length > 0) {
       await getJoinedTournamentPools(setJoinedTournamentPoolData)
@@ -54,6 +43,18 @@ export const DataProvider = ({ children }) => {
       return []
     }
   }, [user, leaguesData])
+
+  const postTournamentPoolCallback = useCallback(
+    async (tournamentData) => {
+      if (user) {
+        await postTournamentPool(tournamentData)
+        getJoinedTournamentPoolsCallback()
+      } else {
+        console.error('No user is authenticated.')
+      }
+    },
+    [user, getJoinedTournamentPoolsCallback],
+  )
 
   useEffect(() => {
     const auth = getAuth(app)

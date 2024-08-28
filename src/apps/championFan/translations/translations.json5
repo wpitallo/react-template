@@ -9,6 +9,7 @@
     sports: 'Sports',
     comingSoon: 'Coming Soon',
     loading: 'Loading',
+    vs: 'VS',
 
     // sports
     afl: 'Afl',
@@ -72,6 +73,7 @@
     // page 4 - Active Pools
     makePicks: 'Make Picks',
     activeTournamentPools: 'Active Tournament Pools',
+    firstGame: 'First Game',
 
     // page 5 - Menu
     profile: 'Profile',

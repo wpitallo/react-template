@@ -5,10 +5,13 @@ import { getImage } from '@helpers/imageHelper'
 import { DataContext } from '@providers/DataProvider'
 import DefaultButton from '@components/buttons/defaultButton/DefaultButton'
 import { translator } from '@helpers/translations'
+import { getLocalDateTimeString } from '@helpers/getLocalDateTimeString'
+import { v4 as uuidv4 } from 'uuid' // Import uuid for generating unique IDs
 
 function TournamentPool({ pool }) {
   const { leaguesData } = useContext(DataContext)
   const [isFutureEvent, setIsFutureEvent] = useState(false)
+  const [countdownId] = useState(uuidv4()) // Generate a unique ID for this instance
 
   const league = leaguesData.sports[pool.sport][pool.league]
 
@@ -28,10 +31,10 @@ function TournamentPool({ pool }) {
         const now = new Date().getTime()
         const distance = eventTime - now
 
-        document.getElementById('days').innerText = Math.floor(distance / day)
-        document.getElementById('hours').innerText = Math.floor((distance % day) / hour)
-        document.getElementById('minutes').innerText = Math.floor((distance % hour) / minute)
-        document.getElementById('seconds').innerText = Math.floor((distance % minute) / second)
+        document.getElementById(`days-${countdownId}`).innerText = Math.floor(distance / day)
+        document.getElementById(`hours-${countdownId}`).innerText = Math.floor((distance % day) / hour)
+        document.getElementById(`minutes-${countdownId}`).innerText = Math.floor((distance % hour) / minute)
+        document.getElementById(`seconds-${countdownId}`).innerText = Math.floor((distance % minute) / second)
 
         // Clear the interval if the event time is reached
         if (distance < 0) {
@@ -43,7 +46,7 @@ function TournamentPool({ pool }) {
     } else {
       setIsFutureEvent(false)
     }
-  }, [pool.firstEventDate, pool.firstEventDateTime])
+  }, [pool.firstEventDate, pool.firstEventDateTime, countdownId])
 
   return (
     <div className={styles.square}>
@@ -58,13 +61,32 @@ function TournamentPool({ pool }) {
       </div>
       <div className={styles.bodyContainer}>
         <div className={styles.infoColumn}>
-          {!isFutureEvent && (
+          {!isFutureEvent ? (
             <>
               <div className={styles.infoItem}>Rank:</div>
               <div className={styles.infoItem}>Points:</div>
               <div className={styles.infoItem}>Strike-rate:</div>
               <div className={styles.infoItem}>Players:</div>
             </>
+          ) : (
+            <div className={styles.firstEventContainer}>
+              <div className={styles.eventRow}>{translator('firstGame')}</div>
+              <div className={styles.eventRow}>
+                <div className={styles.eventRowColumn}>
+                  <img src={getImage(pool.firstEvent.strHomeTeamBadge)} alt="First Column Image" className={styles.eventRowImage} />
+                </div>
+                <div className={styles.eventRowColumn}>{translator('vs')}</div>
+                <div className={styles.eventRowColumn}>
+                  <img src={getImage(pool.firstEvent.strAwayTeamBadge)} alt="Last Column Image" className={styles.eventRowImage} />
+                </div>
+              </div>
+              <div className={styles.eventRow}>
+                <div className={styles.eventRowColumn}>{pool.firstEvent.strHomeTeam}</div>
+                <div className={styles.eventRowColumn}></div>
+                <div className={styles.eventRowColumn}>{pool.firstEvent.strAwayTeam}</div>
+              </div>
+              <div className={styles.eventRow}>{getLocalDateTimeString(pool.firstEvent.dateEvent, pool.firstEvent.strTime)}</div>
+            </div>
           )}
 
           <div className={styles.viewButton}>
@@ -75,22 +97,22 @@ function TournamentPool({ pool }) {
           <div className={styles.leaderBoardContentWrapper}>
             <div className={styles.countDownHeader}>{translator('tournamentStartsIn')}:</div>
             {isFutureEvent ? (
-              <div id="countDown" className={styles.countDown}>
+              <div id={`countDown-${countdownId}`} className={styles.countDown}>
                 <ul className={styles.counterUl}>
                   <li className={styles.counterLi}>
-                    <span id="days" className={styles.counterSpan}></span>
+                    <span id={`days-${countdownId}`} className={styles.counterSpan}></span>
                     {translator('days')}
                   </li>
                   <li className={styles.counterLi}>
-                    <span id="hours" className={styles.counterSpan}></span>
+                    <span id={`hours-${countdownId}`} className={styles.counterSpan}></span>
                     {translator('hours')}
                   </li>
                   <li className={styles.counterLi}>
-                    <span id="minutes" className={styles.counterSpan}></span>
+                    <span id={`minutes-${countdownId}`} className={styles.counterSpan}></span>
                     {translator('minutes')}
                   </li>
                   <li className={styles.counterLi}>
-                    <span id="seconds" className={styles.counterSpan}></span>
+                    <span id={`seconds-${countdownId}`} className={styles.counterSpan}></span>
                     {translator('seconds')}
                   </li>
                 </ul>
@@ -116,6 +138,14 @@ function TournamentPool({ pool }) {
 
 TournamentPool.propTypes = {
   pool: PropTypes.shape({
+    firstEvent: PropTypes.shape({
+      strHomeTeamBadge: PropTypes.string.isRequired,
+      strAwayTeamBadge: PropTypes.string.isRequired,
+      strHomeTeam: PropTypes.string.isRequired,
+      strAwayTeam: PropTypes.string.isRequired,
+      dateEvent: PropTypes.string.isRequired,
+      strTime: PropTypes.string.isRequired,
+    }).isRequired,
     id: PropTypes.string.isRequired,
     firstEventDate: PropTypes.string.isRequired,
     firstEventDateTime: PropTypes.string.isRequired,

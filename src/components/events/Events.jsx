@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './Events.module.scss'
 import eventStyles from '../event/Event.module.scss'
 import { getImage } from '@helpers/imageHelper'
+import { translator } from '@helpers/translations'
 
 const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueTeams }) => {
   const getTeamBadge = useCallback(
@@ -45,7 +46,7 @@ const Events = ({ eventsData, selectedEvents, setSelectedEvents, selectedLeagueT
               <div className={styles.teamName}>{event.strHomeTeam}</div>
             </div>
             <div className={styles.eventMiddleColumn}>
-              <div>VS</div>
+              <div>{translator('vs')}</div>
               <div className={styles.eventDateMiddle}>&nbsp;</div>
               <div>
                 {event.eventDateLocal} : {event.eventTimeLocal}
