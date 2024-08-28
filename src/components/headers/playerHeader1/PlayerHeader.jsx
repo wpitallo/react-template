@@ -35,13 +35,13 @@ const PlayerHeader = () => {
         <div className={styles.innerColumn}>
           <div className={`${styles.row} ${styles.userName}`}>{userDoc.displayName}</div>
           <div className={styles.row}>
-            {translator('caps')}: {'Loading...'}
+            {translator('caps')}: {userDoc.caps}
           </div>
           <div className={styles.row}>
-            {translator('strikeRate')}: {'Loading...'}
+            {translator('strikeRate')}: {userDoc.strikeRate}
           </div>
           <div className={styles.row}>
-            {translator('tournaments')}: {'Loading...'}
+            {translator('tournaments')}: {userDoc.tournaments}
           </div>
         </div>
       </div>

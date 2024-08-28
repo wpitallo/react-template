@@ -1,12 +1,16 @@
 import { createContext, useState, useEffect, useCallback } from 'react'
+import PropTypes from 'prop-types'
+
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { app } from '@configuration/firebaseConfig'
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore'
-import PropTypes from 'prop-types'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+
 import { getSportsLeaguesData } from './services/getSportsLeaguesData'
 import { getEventsAndTeamsData } from './services/getEventsAndTeamsData'
-import { createTournamentPool } from './services/createTournamentPool'
 import { getJoinedTournamentPools } from './services/getJoinedTournamentPools'
+
+import { postTournamentPool } from './services/tournamentPoolService'
+import { postUser } from './services/userService'
 
 const DataContext = createContext()
 
@@ -29,10 +33,10 @@ export const DataProvider = ({ children }) => {
     [db, leaguesData],
   )
 
-  const createTournamentPoolCallback = useCallback(
+  const postTournamentPoolCallback = useCallback(
     async (tournamentData) => {
       if (user) {
-        await createTournamentPool(tournamentData)
+        await postTournamentPool(tournamentData)
       } else {
         console.error('No user is authenticated.')
       }
@@ -64,8 +68,12 @@ export const DataProvider = ({ children }) => {
           setUserDoc(userData)
         } else {
           // Handle case where user document does not exist
-          await setDoc(userDocRef, {})
-          setUserDoc({})
+          try {
+            await postUser(newUser.uid)
+            setUserDoc({})
+          } catch (error) {
+            throw new Error(error)
+          }
         }
 
         if (!dataFetched) {
@@ -95,7 +103,7 @@ export const DataProvider = ({ children }) => {
         setUserDoc,
         leaguesData,
         getEventsAndTeamsData: getEventsAndTeamsDataCallback,
-        createTournamentPool: createTournamentPoolCallback,
+        postTournamentPool: postTournamentPoolCallback,
         getJoinedTournamentPools: getJoinedTournamentPoolsCallback,
         dataFetched,
         checkedAuthenticated,

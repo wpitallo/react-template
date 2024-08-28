@@ -1,35 +1,41 @@
-import { doc, setDoc } from 'firebase/firestore'
-import { app } from '@configuration/firebaseConfig'
-import { getFirestore } from 'firebase/firestore'
+import axios from 'axios';
+import { getBackendUrl } from '@globalHelpers/getBackendUrl';
+import { getUserIdToken } from '@globalHelpers/getUserIdToken';
 
-const db = getFirestore(app)
-
-export const updateUserDocument = async (userId, displayName, avatar, setUserDoc) => {
+export const postUser = async (userId) => {
     try {
-        // Validate displayName and avatar
-        if (!displayName || typeof displayName !== 'string' || displayName.trim() === '') {
-            throw new Error('Invalid displayName: must be a non-empty string.')
-        }
-        if (!avatar || typeof avatar !== 'string' || avatar.trim() === '') {
-            throw new Error('Invalid avatar: must be a non-empty string.')
-        }
-
-        const userDocRef = doc(db, 'users', userId)
-
-        // Update the document with displayName, hasSignedUp, and avatar
-        const updatedUserDoc = {
-            displayName,
-            hasSignedUp: true,
-            avatar,
-        }
-
-        await setDoc(userDocRef, updatedUserDoc, { merge: true }) // Merge to update specific fields without overwriting the whole document
-
-        // Update the context with the updated user document
-        setUserDoc(updatedUserDoc)
-
+        const response = await axios.post(getBackendUrl('user'), { userId });
+        return response.data;
     } catch (error) {
-        console.error('Error updating user document:', error)
-        throw error // Re-throw the error to be handled by the caller
+        console.error('Error creating user document:', error);
+        throw error;
+    }
+};
+
+export const patchUser = async (userId, displayName, avatar, setUserDoc) => {
+    try {
+        // Prepare the data to send to the backend
+        const payload = {
+            userId,
+            displayName,
+            avatar,
+            idToken: await getUserIdToken(),
+        };
+
+        // Send the POST request to the backend API
+        const response = await axios.patch(getBackendUrl('user'), payload);
+
+        console.log('Backend response:', response.data);
+
+        if (response.status === 200) {
+            console.log('User profile updated successfully');
+
+            // Use the returned user object to update local state
+            setUserDoc(response.data.user);
+        } else {
+            console.error('Failed to update user profile:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error updating user profile:', error.message);
     }
 }

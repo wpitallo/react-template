@@ -49,7 +49,7 @@ function Page({ pageId, isVisible }) {
   const inputRef = useRef(null)
   const pageTemplateRef = useRef(null)
 
-  const { leaguesData, getEventsAndTeamsData, createTournamentPool } = useContext(DataContext)
+  const { leaguesData, getEventsAndTeamsData, postTournamentPool } = useContext(DataContext)
 
   const [selectedEvents, setSelectedEvents] = useState(undefined)
 
@@ -133,7 +133,7 @@ function Page({ pageId, isVisible }) {
       }
 
       try {
-        await createTournamentPool(tournamentData)
+        await postTournamentPool(tournamentData)
         console.log('Tournament pool saved')
         saved()
       } catch (error) {

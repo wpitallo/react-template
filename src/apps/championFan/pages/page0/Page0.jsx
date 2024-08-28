@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import templateStyles from '../PageTemplate.module.scss'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
-import { updateUserDocument } from '@services/userService'
+import { patchUser } from '@services/userService'
 import { DataContext } from '@providers/DataProvider'
 import SaveButton from '@components/buttons/saveButton/SaveButton'
 import Avatar from '@components/avatar/Avatar'
@@ -54,7 +54,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
 
     if (user && user.uid) {
       try {
-        await updateUserDocument(user.uid, displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
+        await patchUser(user.uid, displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
         setSaveClicked(false)
         exitMenuPage()
         setTimeout(() => saved(), 500)
