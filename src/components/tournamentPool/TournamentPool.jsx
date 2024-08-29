@@ -8,12 +8,17 @@ import { translator } from '@helpers/translations'
 import { getLocalDateTimeString } from '@helpers/getLocalDateTimeString'
 import { v4 as uuidv4 } from 'uuid' // Import uuid for generating unique IDs
 
-function TournamentPool({ pool }) {
-  const { leaguesData } = useContext(DataContext)
+function TournamentPool({ pool, setVisiblePage }) {
+  const { leaguesData, setSelectedUserTournamentEntryCallback } = useContext(DataContext)
   const [isFutureEvent, setIsFutureEvent] = useState(false)
   const [countdownId] = useState(uuidv4()) // Generate a unique ID for this instance
 
   const league = leaguesData.sports[pool.sport][pool.league]
+
+  const onMakePicksClicked = () => {
+    setSelectedUserTournamentEntryCallback(pool)
+    setVisiblePage(6)
+  }
 
   useEffect(() => {
     const now = new Date().getTime()
@@ -75,14 +80,14 @@ function TournamentPool({ pool }) {
                 <div className={styles.eventRowColumn}>
                   <img src={getImage(pool.firstEvent.strHomeTeamBadge)} alt="First Column Image" className={styles.eventRowImage} />
                 </div>
-                <div className={styles.eventRowColumn}>{translator('vs')}</div>
+                <div className={`${styles.eventRowColumn} ${styles.eventRowColumnMiddle}`}>{translator('vs')}</div>
                 <div className={styles.eventRowColumn}>
                   <img src={getImage(pool.firstEvent.strAwayTeamBadge)} alt="Last Column Image" className={styles.eventRowImage} />
                 </div>
               </div>
               <div className={styles.eventRow}>
                 <div className={styles.eventRowColumn}>{pool.firstEvent.strHomeTeam}</div>
-                <div className={styles.eventRowColumn}></div>
+                <div className={`${styles.eventRowColumn} ${styles.eventRowColumnMiddle}`}></div>
                 <div className={styles.eventRowColumn}>{pool.firstEvent.strAwayTeam}</div>
               </div>
               <div className={styles.eventRow}>{getLocalDateTimeString(pool.firstEvent.dateEvent, pool.firstEvent.strTime)}</div>
@@ -90,7 +95,7 @@ function TournamentPool({ pool }) {
           )}
 
           <div className={styles.viewButton}>
-            <DefaultButton onClick={() => {}} buttonTextTranslationKey="makePicks" iconClass="icon-view" buttonClass="actionButton" />
+            <DefaultButton onClick={() => onMakePicksClicked()} buttonTextTranslationKey="makePicks" iconClass="icon-view" buttonClass="actionButton" />
           </div>
         </div>
         <div className={`${styles.leftColumn} ${isFutureEvent ? styles.countdownColumn : styles.leaderBoardColumn}`}>
@@ -101,19 +106,19 @@ function TournamentPool({ pool }) {
                 <ul className={styles.counterUl}>
                   <li className={styles.counterLi}>
                     <span id={`days-${countdownId}`} className={styles.counterSpan}></span>
-                    {translator('days')}
+                    <span className={styles.counterSpanText}>{translator('days')}</span>
                   </li>
                   <li className={styles.counterLi}>
                     <span id={`hours-${countdownId}`} className={styles.counterSpan}></span>
-                    {translator('hours')}
+                    <span className={styles.counterSpanText}>{translator('hours')}</span>
                   </li>
                   <li className={styles.counterLi}>
                     <span id={`minutes-${countdownId}`} className={styles.counterSpan}></span>
-                    {translator('minutes')}
+                    <span className={styles.counterSpanText}>{translator('minutes')}</span>
                   </li>
                   <li className={styles.counterLi}>
                     <span id={`seconds-${countdownId}`} className={styles.counterSpan}></span>
-                    {translator('seconds')}
+                    <span className={styles.counterSpanText}>{translator('seconds')}</span>
                   </li>
                 </ul>
               </div>
@@ -154,6 +159,7 @@ TournamentPool.propTypes = {
     sport: PropTypes.string.isRequired,
     createdUtcTimeStamp: PropTypes.object.isRequired,
   }).isRequired,
+  setVisiblePage: PropTypes.func.isRequired,
 }
 
 export default TournamentPool

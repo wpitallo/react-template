@@ -12,7 +12,7 @@ import '@styles/Svg-fonts.scss'
 import '@app/styles/Variables.scss'
 import '@styles/Custom.scss'
 
-import MainLayout from '@components/layouts/default/MainLayout'
+import MainLayout from '@app/layouts/MainLayout'
 
 const AppContent = () => {
   const { user, dataFetched, checkedAuthenticated } = useContext(DataContext)

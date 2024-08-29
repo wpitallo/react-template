@@ -11,6 +11,7 @@ import { getJoinedTournamentPools } from './services/getJoinedTournamentPools'
 
 import { postTournamentPool } from './services/tournamentPoolService'
 import { postUser } from './services/userService'
+import { getUserTournamentEntry } from './services/userTournamentEntryService'
 
 const DataContext = createContext()
 
@@ -19,8 +20,11 @@ export const DataProvider = ({ children }) => {
   const [userDoc, setUserDoc] = useState(null)
   const [checkedAuthenticated, setCheckedAuthenticated] = useState(false)
   const [leaguesData, setLeaguesData] = useState({ sports: {} })
+  const [teamsData, setTeamsData] = useState({ sports: {} })
   const [dataFetched, setDataFetched] = useState(false)
   const [joinedTournamentPoolData, setJoinedTournamentPoolData] = useState([])
+
+  const [selectedUserTournamentEntry, setSelectedUserTournamentEntry] = useState(false)
 
   const db = getFirestore(app)
 
@@ -30,9 +34,9 @@ export const DataProvider = ({ children }) => {
 
   const getEventsAndTeamsDataCallback = useCallback(
     (league, strCurrentSeason, sport) => {
-      return getEventsAndTeamsData(db, leaguesData, setLeaguesData, league, strCurrentSeason, sport)
+      return getEventsAndTeamsData(db, leaguesData, setLeaguesData, teamsData, setTeamsData, league, strCurrentSeason, sport)
     },
-    [db, leaguesData],
+    [db, leaguesData, teamsData],
   )
 
   const getJoinedTournamentPoolsCallback = useCallback(async () => {
@@ -54,6 +58,18 @@ export const DataProvider = ({ children }) => {
       }
     },
     [user, getJoinedTournamentPoolsCallback],
+  )
+
+  const setSelectedUserTournamentEntryCallback = useCallback(
+    async (selectedTournamentKey) => {
+      if (user) {
+        const selectedUserTournamentEntry = await getUserTournamentEntry(selectedTournamentKey.id)
+        setSelectedUserTournamentEntry(selectedUserTournamentEntry)
+      } else {
+        console.error('No user is authenticated.')
+      }
+    },
+    [user],
   )
 
   useEffect(() => {
@@ -114,6 +130,8 @@ export const DataProvider = ({ children }) => {
         getEventsAndTeamsData: getEventsAndTeamsDataCallback,
         postTournamentPool: postTournamentPoolCallback,
         getJoinedTournamentPools: getJoinedTournamentPoolsCallback,
+        setSelectedUserTournamentEntryCallback,
+        selectedUserTournamentEntry,
         joinedTournamentPoolData,
         dataFetched,
         checkedAuthenticated,

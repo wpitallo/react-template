@@ -10,7 +10,7 @@ export const PageProvider = ({ children }) => {
     setActivePage(selectedPage)
   }, [])
 
-  return <PageContext.Provider value={{ activePage, handleMenuClick }}>{children}</PageContext.Provider>
+  return <PageContext.Provider value={{ activePage, handleMenuClick, setActivePage }}>{children}</PageContext.Provider>
 }
 
 PageProvider.propTypes = {

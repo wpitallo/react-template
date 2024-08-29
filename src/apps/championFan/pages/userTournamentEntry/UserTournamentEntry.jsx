@@ -2,13 +2,13 @@ import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import PageTemplate from '../PageTemplate'
 import styles from '../PageTemplate.module.scss'
-import { translator } from '@helpers/translations'
+//import { translator } from '@helpers/translations'
 import { DataContext } from '@providers/DataProvider'
-import TournamentPool from '@components/tournamentPool/TournamentPool'
 import PlayerHeader from '@components/headers/playerHeader1/PlayerHeader'
+//  import Events from '@components/events/Events'
 
-function Page({ pageId, isVisible, setVisiblePage }) {
-  const { joinedTournamentPoolData } = useContext(DataContext)
+function Page({ pageId, isVisible }) {
+  const { selectedUserTournamentEntry } = useContext(DataContext)
 
   // useEffect(() => {
   //   const fetchPools = async () => {
@@ -26,13 +26,9 @@ function Page({ pageId, isVisible, setVisiblePage }) {
 
   return (
     <PageTemplate pageId={pageId} isVisible={isVisible} header={PlayerHeader}>
-      <div className={`${styles.contentHeader1} ${styles.headerMarginBottom}`}>{translator('activeTournamentPools')}</div>
+      <div className={`${styles.contentHeader1} ${styles.headerMarginBottom}`}>{selectedUserTournamentEntry?.tournamentData?.poolName}</div>
 
-      {joinedTournamentPoolData.map((pool) => (
-        <div key={pool.id} className={styles.container}>
-          <TournamentPool pool={pool} setVisiblePage={setVisiblePage} />
-        </div>
-      ))}
+      {/* <Events eventsData={eventsData} selectedEvents={selectedEvents} setSelectedEvents={setSelectedEvents} selectedLeagueTeams={selectedLeagueTeams} translator={translator} /> */}
     </PageTemplate>
   )
 }
@@ -40,7 +36,6 @@ function Page({ pageId, isVisible, setVisiblePage }) {
 Page.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   pageId: PropTypes.string.isRequired,
-  setVisiblePage: PropTypes.func.isRequired,
 }
 
 export default Page

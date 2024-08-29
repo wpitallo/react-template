@@ -174,15 +174,20 @@
 .counterLi {
     color: var(--themeColor1);
     display: inline-block;
-    font-size: 1.1em;
     list-style-type: none;
-    padding: 1em;
+    padding: clamp(0.1em, 1vw, 0.8em);
     text-transform: uppercase;
 }
 
 .counterSpan {
     display: block;
-    font-size: 1.5rem;
+    font-size: clamp(0.8em, 2vw, 1.5em);
+    text-align: center;
+}
+
+.counterSpanText {
+    display: block;
+    font-size: clamp(0.6em, 2vw, 1.5em);
     text-align: center;
 }
 
@@ -190,7 +195,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 10px;
+    // padding: 10px;
 }
 
 .eventRow {
@@ -200,19 +205,25 @@
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
+    font-size: clamp(0.7em, 2vw, 1.5em);
+}
+
+.eventRowColumnMiddle {
+    max-width: 0px;
 }
 
 .eventRowColumn {
     flex: 1;
     text-align: center;
+    // font-size: clamp(0.9em, 2vw, 1.5em);
 }
 
 .eventRowImage {
-    max-width: 50px;
+    max-width: clamp(40px, 2vw, 50px);
     height: auto;
 }
 
 .eventRow:nth-child(1) {
-    margin-top: -25px;
-    font-size: clamp(0.8em, 2vw, 1.2em) !important;
+    margin-top: -20px;
+    color: var(--themeColor2);
 }
