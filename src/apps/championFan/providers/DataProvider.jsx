@@ -87,7 +87,7 @@ export const DataProvider = ({ children }) => {
         } else {
           // Handle case where user document does not exist
           try {
-            await postUser(newUser.uid)
+            await postUser()
             setUserDoc({})
           } catch (error) {
             throw new Error(error)

@@ -2,9 +2,9 @@ import axios from 'axios';
 import { getBackendUrl } from '@helpers/getBackendUrl';
 import { getUserIdToken } from '@helpers/getUserIdToken';
 
-export const postUser = async (userId) => {
+export const postUser = async () => {
     try {
-        const response = await axios.post(getBackendUrl('user'), { userId });
+        const response = await axios.post(getBackendUrl('user'), { idToken: await getUserIdToken() });
         return response.data;
     } catch (error) {
         console.error('Error creating user document:', error);
@@ -12,11 +12,10 @@ export const postUser = async (userId) => {
     }
 };
 
-export const patchUser = async (userId, displayName, avatar, setUserDoc) => {
+export const patchUser = async (displayName, avatar, setUserDoc) => {
     try {
         // Prepare the data to send to the backend
         const payload = {
-            userId,
             displayName,
             avatar,
             idToken: await getUserIdToken(),

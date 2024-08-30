@@ -54,7 +54,7 @@ function Page({ pageId, isVisible, exitMenuPage }) {
 
     if (user && user.uid) {
       try {
-        await patchUser(user.uid, displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
+        await patchUser(displayName, JSON.stringify(updatedAvatarConfig), setUserDoc)
         setSaveClicked(false)
         exitMenuPage()
         setTimeout(() => saved(), 500)
